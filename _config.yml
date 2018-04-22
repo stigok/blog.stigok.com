@@ -16,7 +16,7 @@
 title: blog of stigok
 email: stig@stigok.com
 description: >- # this means to ignore newlines until "baseurl:"
-  Technology blog where I write about stuff I do and problems I solve
+  I write about what I do and the problems I solve to get there
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://blog.stigok.com" # the base hostname & protocol for your site, e.g. http://example.com
 # twitter_username: jekyllrb
