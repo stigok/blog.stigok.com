@@ -1,0 +1,37 @@
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "{{ site.url }}{{ page.url }}"
+    },
+    "headline": "{{ page.title }}",
+    "datePublished": "{{ page.date }}",
+    "dateModified": "{{ page.date }}",
+    "wordCount:" "{{ page.content | number_of_words }}",
+    "keywords": "{{ page.categories | join: ', ' }}",
+    "image": "https://stigok.com/img/stigok.png",
+    "author": {
+      "@type": "Person",
+      "name": "Stig Otnes Kolstad",
+      "image": "https://stigok.com/img/stigok.png",
+      "memberOf": "stigok"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "stigok",
+      "url": "https://stigok.com/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://stigok.com/img/stigok.png"
+      },
+      "contactPoint": {
+        "@type" : "ContactPoint",
+        "contactType": "customer service",
+        "name": "Send message",
+        "url": "https://stigok.com/#contact"
+      }
+    }
+  }
+</script>
