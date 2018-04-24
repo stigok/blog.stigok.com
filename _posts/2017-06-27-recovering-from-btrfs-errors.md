@@ -11,7 +11,7 @@ After vacuuming under my desk, my SSD went into read-only mode while the system
 was on. I have a [LVM on Luks and btrfs](https://fogelholk.io/installing-arch-with-lvm-on-luks-and-btrfs/)
 setup, and after rebooting, it went straight into btrfs emergency rescue mode.
 
-![btrfs lvm luks errors](https://public.42.fm/1498564677730815124.jpg)
+![btrfs lvm luks errors](https://public.stigok.com/img/1498564677730815124.jpg)
 
 ## Attempt backup
 
@@ -62,7 +62,7 @@ this is exactly what the disk was having problems with.
 
     # btrfs check --repair --init-csum-tree --init-extent-tree /dev/mapper/lvmvg-rootvol
 
-![btrfs recovery complete](https://public.42.fm/1498564318738706074.jpg)
+![btrfs recovery complete](https://public.stigok.com/img/1498564318738706074.jpg)
     
 Now ended with success and reporting 0 errors. Time for a reboot.
 

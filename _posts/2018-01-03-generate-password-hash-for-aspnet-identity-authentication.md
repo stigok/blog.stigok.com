@@ -2,7 +2,7 @@
 layout: post
 title: "Generate password hash for ASP.NET Identity authentication"
 date: 2018-01-03 01:06:40 +0100
-categories: C# asp.net security
+categories: csharp aspnet security
 redirect_from:
   - /post/generate-password-hash-for-aspnet-identity-authentication
 ---

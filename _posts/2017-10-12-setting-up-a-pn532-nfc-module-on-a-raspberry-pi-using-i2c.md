@@ -7,7 +7,7 @@ redirect_from:
   - /post/setting-up-a-pn532-nfc-module-on-a-raspberry-pi-using-i2c
 ---
 
-![PN532](https://public.42.fm/1507824522111557533.jpg)
+![PN532](https://public.stigok.com/img/1507824522111557533.jpg)
 
 ## Parts
 
@@ -51,7 +51,7 @@ Probe for I2C devices:
 
 In the above results, a device exists at address `0x24` which is the NFC module.
 
-![Raspberry Pi 3 with PN532 connected over I2C](https://public.42.fm/1507896705867113013.jpg)
+![Raspberry Pi 3 with PN532 connected over I2C](https://public.stigok.com/img/1507896705867113013.jpg)
 
 ### libnfc
 

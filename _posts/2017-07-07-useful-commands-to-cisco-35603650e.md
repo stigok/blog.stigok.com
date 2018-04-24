@@ -7,7 +7,7 @@ redirect_from:
   - /post/useful-commands-to-cisco-35603650e
 ---
 
-![Cisco 3560E shell](https://public.42.fm/1499247045993464200.png)
+![Cisco 3560E shell](https://public.stigok.com/img/1499247045993464200.png)
 
 > All commands will be resolved to their longer equivalents as long as they are unambiguous. E.g. `show ru`
 > will be enough to execute `show running-configuration`, but `show r` *would* be amigous with `show route`

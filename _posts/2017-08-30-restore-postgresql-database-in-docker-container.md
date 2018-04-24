@@ -9,7 +9,7 @@ redirect_from:
 
 I have a backup file `~/tmp/backup.sql` which was created using `pg_dump` from a remote Postgres server. I now want to verify that the backup actually works, and that it can be imported into a new database.
 
-![List tables of a specific PostgreSQL database](https://public.42.fm/1504084167642549943.png)
+![List tables of a specific PostgreSQL database](https://public.stigok.com/img/1504084167642549943.png)
 
 ## Restore database
 

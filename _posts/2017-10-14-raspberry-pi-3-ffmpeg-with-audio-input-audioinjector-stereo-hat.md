@@ -18,10 +18,10 @@ Install the hat physically on the Pi (picture coming)
 > Follow [installation instructions](http://forum.audioinjector.net/viewtopic.php?f=5&t=3#p3) on the official forum, or just go along with mine
 
 Open up alsamixer and enable capture mode on the input devices by selecting the device and pressing the spacebar
-![alsamixer enable capture mode](https://public.42.fm/1508014360377760233.png)
+![alsamixer enable capture mode](https://public.stigok.com/img/1508014360377760233.png)
 
 Change the input muxer in alsamixer to line-in in order to capture audio from the phono jacks instead of the on-board mic. Do this by selecting the device, then press arrow up/down. Look in the upper left corner to see what's currently selected.
-![alsamixer select input mux device](https://public.42.fm/1508013757462968285.png)
+![alsamixer select input mux device](https://public.stigok.com/img/1508013757462968285.png)
 
 ## References
 - http://forum.audioinjector.net/viewtopic.php?f=5&t=3

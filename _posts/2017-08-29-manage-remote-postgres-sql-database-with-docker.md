@@ -60,6 +60,6 @@ So now we can execute `ls` on the container
 
 Now, to make use of these tools, open up a browser with http://localhost:5050 and go to `File->Preferences->Paths->Binary paths`, and enter `/pgbin` into both path fields.
 
-![pgAdmin 4 enter PostreSQL binary path](https://public.42.fm/1504016039125943576.png)
+![pgAdmin 4 enter PostreSQL binary path](https://public.stigok.com/img/1504016039125943576.png)
 
 Now I can import and export my databases.

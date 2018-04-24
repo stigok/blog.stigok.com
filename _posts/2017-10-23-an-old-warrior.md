@@ -9,11 +9,11 @@ redirect_from:
 
 This is my old friend. He is the first computer I built, and his chassis has been with me for 15 years now <3
 
-![My open computer](https://public.42.fm/1508714090497780478.jpg)
+![My open computer](https://public.stigok.com/img/1508714090497780478.jpg)
 
-![GeForce FX5900 with broken fan](https://public.42.fm/1508714092517613600.jpg)
+![GeForce FX5900 with broken fan](https://public.stigok.com/img/1508714092517613600.jpg)
 GeForce FX5900 with broken fan
 
-![Back view](https://public.42.fm/1508714094896291500.jpg)
+![Back view](https://public.stigok.com/img/1508714094896291500.jpg)
 
-![Lower view](https://public.42.fm/1508714096835185442.jpg)
+![Lower view](https://public.stigok.com/img/1508714096835185442.jpg)

@@ -21,7 +21,7 @@ The `-i` option makes less ignore the case of the search string, just how I want
 
 The `-R` option causes "raw" control characters containing ANSI color escape sequences to be output in its raw form, e.g. making colors appear. This is very helpful when using git, to avoid git outputting inline raw control chars like in the image below:
 
-![invalid interpretation of control chars in GIT_PAGER](https://public.42.fm/1507118783243146973.png)
+![invalid interpretation of control chars in GIT_PAGER](https://public.stigok.com/img/1507118783243146973.png)
 
 The `-F` causes less to automatically exit if the entire file can be displayed on the first screen.
 

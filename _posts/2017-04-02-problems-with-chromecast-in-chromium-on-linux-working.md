@@ -46,7 +46,7 @@ This is the current state of Chromecast support in Chromium. I have seen some pe
 
 ## Working in Chromium 59.0.3071.115 (as of 2017-07-10)
 
-![Chromium](https://public.42.fm/1499719245183894519.png)
+![Chromium](https://public.stigok.com/img/1499719245183894519.png)
 
 Works again!
 
