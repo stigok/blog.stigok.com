@@ -2,7 +2,7 @@
 layout: post
 title: "Getting started with tmux"
 date: 2017-02-26 00:18:43 +0100
-categories: linux shell
+categories: linux shell tmux
 redirect_from:
   - /post/getting-started-with-tmux
 ---

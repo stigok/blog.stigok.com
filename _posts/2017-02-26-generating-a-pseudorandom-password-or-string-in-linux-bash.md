@@ -2,7 +2,7 @@
 layout: post
 title: "Generating a pseudorandom password or string in Linux bash"
 date: 2017-02-26 00:12:17 +0100
-categories: linux shell
+categories: linux bash
 redirect_from:
   - /post/generating-a-pseudorandom-password-or-string-in-linux-bash
 ---

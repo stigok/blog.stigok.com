@@ -2,7 +2,7 @@
 layout: post
 title: "Install a package from local directory in Atom"
 date: 2017-02-26 00:17:03 +0100
-categories: atom programming
+categories: atom
 redirect_from:
   - /post/install-a-package-from-local-directory-in-atom
 ---
