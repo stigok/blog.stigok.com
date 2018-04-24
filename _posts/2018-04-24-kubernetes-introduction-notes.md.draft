@@ -1,0 +1,54 @@
+---
+layout: post
+title:  "Kubernetes introduction notes"
+date:   2018-04-24 13:48:07 +0200
+categories: kubernetes
+---
+
+## General
+
+> Kubernetes is a production-grade, open-source infrastructure for the deployment, scaling, management, and composition of application containers across clusters of hosts, inspired by previous work at Google. Kubernetes is more than just a “container orchestrator”. It aims to eliminate the burden of orchestrating physical/virtual compute, network, and storage infrastructure, and enable application operators and developers to focus entirely on container-centric primitives for self-service operation.
+
+## [Replica Sets](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/)
+- You probably want to avoid using this directly. Use Deployment instead.
+- Use a Job instead of a ReplicaSet for pods that are expected to terminate on their own (that is, batch jobs).
+- Use a DaemonSet instead of a ReplicaSet for pods that provide a machine-level function, such as machine monitoring or machine logging. These pods have a lifetime that is tied to a machine lifetime: the pod needs to be running on the machine before other pods start, and are safe to terminate when the machine is otherwise ready to be rebooted/shutdown.
+
+# Kubernetes Node
+
+The Kubernetes node has the services necessary to run application containers and be managed from the master systems.
+
+## Kubelet
+
+- The main controller
+- the primary implementer of the Pod and Node APIs that drive the container execution layer.
+- Kubelet is the final arbiter of what pods can and cannot run on a given node, not the schedulers or DaemonSets
+
+
+# Kubernetes Components
+
+etcd
+- Always have a backup plan for etcd’s data for your Kubernetes cluster. For in-depth information on etcd, see etcd documentation.
+- Kubernetes also stores its serialized state (currently in etcd) in terms of the API resources
+
+## Node Components
+- An agent that runs on each node in the cluster. It makes sure that containers are running in a pod.
+- kube-proxy enables the Kubernetes service abstraction by maintaining network rules on the host and performing connection forwarding
+
+# Kubernetes Objects
+
+- A Kubernetes object is a “record of intent”–once you create the object, the Kubernetes system will constantly work to ensure that object exists
+
+## Namespaces
+- Namespaces are a way to divide cluster resources between multiple users (via resource quota).
+- Namespaces provide a scope for names. Names of resources need to be unique within a namespace, but not across namespaces.
+- use labels to distinguish resources within the same namespace.
+- When you create a Service, it creates a corresponding DNS entry `<service-name>.<namespace-name>.svc.cluster.local`, which means that if a container just uses `<service-name>`, it will resolve to the service which is local to a namespace.
+
+Change default namespace for `kubectl`:
+
+    $ kubectl config set-context $(kubectl config current-context) --namespace=<insert-namespace-name-here>
+
+## References
+- https://github.com/kubernetes/community/blob/master/contributors/design-proposals/architecture/architecture.md
+- https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/
