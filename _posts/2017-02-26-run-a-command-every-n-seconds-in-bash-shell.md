@@ -7,6 +7,8 @@ redirect_from:
   - /post/run-a-command-every-n-seconds-in-bash-shell
 ---
 
+> This post was later superseded by `watch`, and `while true; do $thing; sleep 1; done`
+
 # Bash run a command every n seconds
 
     #!/bin/bash
