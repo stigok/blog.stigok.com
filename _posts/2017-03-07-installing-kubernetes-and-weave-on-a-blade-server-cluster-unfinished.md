@@ -110,12 +110,14 @@ The docker image repository is not IPv6 enabled, so grab the images from the oth
 
 List images 
 
+{% raw %}
     # ssh user@weave-host docker images --format '{{.Repository}}'
     weaveworks/plugin
     weaveworks/weave
     weaveworks/weaveexec
     weaveworks/weavedb
     weaveworks/ubuntu
+{% endraw %}
 
 Ok, so now lets fetch all of those and load them into this host
 
@@ -148,12 +150,14 @@ Ok, so now lets fetch all of those and load them into this host
 
 Verify that the images are now locally available
 
+{% raw %}
     # docker images --format '{{.Repository}}'
     weaveworks/plugin
     weaveworks/weave
     weaveworks/weaveexec
     weaveworks/weavedb
     weaveworks/ubuntu
+{% endraw %}
 
 Launch weave and connect it to the weave host
 

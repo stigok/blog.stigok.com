@@ -18,8 +18,10 @@ My gogs instance is in a docker container and the configuration and data is pers
 
 First I want to get the ID or name of the container
 
+{% raw %}
     $ docker ps --format 'table {{.ID}} {{.Names}}' | grep gogs
     1b3c2f0502ce gogs
+{% endraw %}
 
 Then see where the data volume is located
 
