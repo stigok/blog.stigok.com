@@ -90,11 +90,14 @@ label small {
 blockquote {
   background: #eee;
   border-left: .25rem solid #ddd;
-  padding-left: 1rem;
+  padding: 1rem .5rem;
   margin: .5rem;
 }
 blockquote > :last-child {
   margin-bottom: 0;
+}
+blockquote > :first-child {
+  margin-top: 0;
 }
 
 article > :first-child {
