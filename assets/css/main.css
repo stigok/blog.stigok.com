@@ -67,6 +67,7 @@ pre {
   border: 1px solid rgba(0,0,0,.125);
   background-color: #000;
   color: #fff;
+  overflow-x: auto;
 }
 code {
   border: 1px solid rgba(0,0,0,.125);
