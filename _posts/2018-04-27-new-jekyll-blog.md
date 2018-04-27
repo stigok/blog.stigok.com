@@ -17,7 +17,8 @@ I wanted was to open vim, write some markdown and publish that post with a singl
 Jekyll was perfect match for this
 
   1. Write markdown
-  2. `git commit -am 'New post'`
-  3. `git push`
+  2. Preview `bundle exec jekyll serve --limit_posts=5`
+  2. Commit `git commit -am 'New post'`
+  3. Push `git push`
 
-And that's it (assuming my server is auto-pulling, which it is currently not) !
+And that's it (assuming my server is auto-pulling, which it is)!
