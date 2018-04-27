@@ -9,7 +9,7 @@ redirect_from:
 
 After too long without being able to cast to my speakers, it was time to get it up and running. Started off with starting the `avahi-daemon` and getting `mdns` up and running. That made me able to find the chromecast device in the local mDNS group, but Chromium saw nothing.
 
-![Chromium Cast: no cast destinations found](https://s.42.fm/img/img-1491204315.png)
+![Chromium Cast: no cast destinations found](https://public.stigok.com/s42/img/img-1491204315.png)
 
 Assuming you have chromium installed already. My version information:
 

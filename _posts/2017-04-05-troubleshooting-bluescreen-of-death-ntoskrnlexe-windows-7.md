@@ -15,17 +15,17 @@ Had issues with my Windows 7 box got lots of bluescreens, but it happened mostly
 
 Make sure you have enabled memory dumps on system failures. Open *System* in *All Control Panel Items* (shortcut Win+Break), then open *Advanced system settings* in the sidebar.
 
-![Advanced system settings](https://s.42.fm/img/advanced-system.png)
+![Advanced system settings](https://public.stigok.com/s42/img/advanced-system.png)
 
 Select *Advanced*, then *Startup and Recovery -> Settings...*. Enable *Write debugging information" and select *Kernel memory dump*.
 
-![Write debugging information](https://s.42.fm/img/startup-recovery.PNG)
+![Write debugging information](https://public.stigok.com/s42/img/startup-recovery.PNG)
 
 On the next BSOD, the current system memory will be dumped into a .dmp file for debugging purposes. This will help in determining the cause of the error.
 
 I use [BlueScreenView](http://www.nirsoft.net/utils/blue_screen_view.html) to view the dumps afterward
 
-![BlueScreenView](https://s.42.fm/img/bluescreenview.PNG)
+![BlueScreenView](https://public.stigok.com/s42/img/bluescreenview.PNG)
 
 All of my incidents seemed to occur within `ntoskrnl.exe`. A lot of articles were suggesting issues related to storage and NTFS, but it didn't really seem like the cause for mine.
 

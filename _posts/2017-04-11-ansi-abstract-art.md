@@ -7,6 +7,6 @@ redirect_from:
   - /post/ansi-abstract-art
 ---
 
-![ansi art](https://s.42.fm/img/Untitled.png)
+![ansi art](https://public.stigok.com/s42/img/Untitled.png)
 
 <small>made with <http://andyherbert.github.io/ansiedit/public/index.html></small>
