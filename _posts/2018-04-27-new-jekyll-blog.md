@@ -12,8 +12,7 @@ new posts, and creating new features was getting increasingly dulling.
 It has become apparent how important it is to have simple workflows for small tasks. Creating
 a blog post should not have to be anything more than writing the content and pressing *Post*.
 
-I wanted was to open vim, write some markdown and publish that post with a single command.
-
+I just wanted to open vim, write some markdown and publish that post with a single command.
 Jekyll was perfect match for this
 
   1. Write markdown
