@@ -4,13 +4,13 @@
   <h1>{{ page.title }}</h1>
   {% if page.revisions.size > 1 %}
   <section id="revisions">
-    Post revisions:
+    Revisions:
     <ul id="revisionList">
       {% for rev in page.revisions %}
       {% comment %} Don't show the first version {% endcomment %}
       {% if forloop.last %} {% break %} {% endif %}
         <li>
-          <strong>{{ rev.date | date: "%d %b %Y %T" }}:</strong> {{ rev.message }}
+          <strong>{{ rev.date | date: "%d %b %Y" }}:</strong> {{ rev.message }}
           (<a href="{{ site.upstream }}/commit/{{ rev.hash }}" rel="nofollow">diff</a>)
         </li>
       {% endfor %}
