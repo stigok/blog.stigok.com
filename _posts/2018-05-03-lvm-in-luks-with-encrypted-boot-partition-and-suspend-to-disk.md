@@ -62,11 +62,10 @@ procedure up until partitioning.
 
 The main storage device you want to use should be backed up before continuing.
 
-## Partitioning
-
 You must know wheter or not you're running a UEFI system before continuing.
 You can determine this by running `efivar -l` from the Arch installation shell.
-Upon creating the first partition, select **either the UEFI or BIOS** partition.
+
+## Partitioning
 
 Create a new partition table. Don't exit `gdisk` until we're done setting up
 all of the partitions.
@@ -74,6 +73,8 @@ all of the partitions.
     # gdisk /dev/nvme0n1
     o (new partition table)
     y (confirm)
+
+The next step is determined by whether you are installing on a **UEFI or BIOS** system.
 
 **UEFI:** Create en EFI System Partition (ESP). This is the partiton that will contain
 the EFI image the computer will initially boot from. I'm allocating 512MB to avoid
