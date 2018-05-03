@@ -2,7 +2,7 @@
 title: "LVM in LUKS with encrypted boot and suspend-to-disk"
 layout: post
 date: 2018-05-03 00:42:11 +02:00
-categories: encryption linux luks
+categories: encryption linux luks arch-linux
 ---
 
 ## Preface
