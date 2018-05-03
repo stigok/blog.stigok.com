@@ -22,6 +22,7 @@ description: >- # this means to ignore newlines until "baseurl:"
   I write about what I do and the problems I solve along the way
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://blog.stigok.com" # the base hostname & protocol for your site, e.g. http://example.com
+upstream: "https://github.com/stigok/blog.stigok.com"
 # twitter_username: jekyllrb
 github_username:  stigok
 # permalink: /:categories|first/:year/:month/:day/:title:output_ext
