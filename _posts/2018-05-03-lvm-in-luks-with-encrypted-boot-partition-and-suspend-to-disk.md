@@ -319,8 +319,8 @@ new root is within the new system.
 Configure your keymap and font in `/etc/vconsole.conf` (optional).
 Depending on your password, setting the correct keymap may be crucial
 to be able to boot. **If you forgot to do this and you're reading here
-to try and save your ass**, there are kernel cmdline params that can set the
-keymap for you when booting. [TODO: add link]
+to try and save your ass**, there are [kernel boot params that can set the
+keymap](https://docs.oracle.com/cd/E52668_01/E54669/html/section_a43_3bk_q4.html).
 
     # example /etc/vconsole.conf
     KEYMAP=us
