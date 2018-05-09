@@ -376,6 +376,12 @@ Do the same for the *encrypted-lvm* partition
 
     # cryptsetup luksAddKey /dev/nvme0n1p3 /etc/initcpio/keys/encrypted-lvm.key
 
+Now that the LVM container has a keyfile attached, the passphrase used
+initially when creating the LUKS container can **optionally** be removed
+from the device.
+
+    # cryptsetup luksKillSlot /dev/nvme0n1p3 0 --keyfile /etc/initcpio/keys/encrypted-lvm.key
+
 Create the initial ramdisk environment and make sure it doesn't return any errors.
 Some warning may show, but errors should not occur.
 
