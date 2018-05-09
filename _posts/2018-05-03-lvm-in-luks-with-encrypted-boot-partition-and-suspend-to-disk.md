@@ -392,6 +392,42 @@ are embedded
 
     # chmod 0600 /boot/initramfs-linux*
 
+These permissions will be reset every time `mkinitcpio` is run. Typically it
+is automatically triggered after a package install or upgrade occurs that
+touches either `/boot/vmlinuz-linux` or `/usr/lib/initcpio/*`. To make sure
+permissions are properly set after every upgrade, create a post-transaction
+hook for pacman inside `/etc/pacman.d/hooks/99-initramfs-chmod.hook`:
+
+    [Trigger]
+    Type = File
+    Operation = Install
+    Operation = Upgrade
+    Target = boot/vmlinuz-linux
+    Target = usr/lib/initcpio/*
+
+    [Action]
+    Description = Setting proper permissions for linux initcpios...
+    When = PostTransaction
+    Exec = /usr/bin/chmod 0600 /boot/initramfs-linux.img /boot/initramfs-linux-fallback.img
+
+Make sure this works as intended by re-installing mkinitcpio
+
+    # pacman -S mkinitcpio`
+
+You should see a line in the output confirming the script ran
+
+    :: Running post-transaction hooks...
+    (1/5) Updating linux initcpios...
+    [ redacted ]
+    (2/5) Setting proper permissions for linux initcpios...
+    [ redacted ]
+
+And see that the permissions actually changed
+
+    # stat -c '%a %A %n' /boot/initramfs-linux*
+    400 -r-------- /boot/initramfs-linux-fallback.img
+    400 -r-------- /boot/initramfs-linux.img
+
 ## Create bootloader with GRUB
 
 Update the following line in `/etc/default/grub`
@@ -446,6 +482,7 @@ Links that are not already scattered within the document
 - https://wiki.archlinux.org/index.php/Dm-crypt/Encrypting_an_entire_system#Preparing_the_logical_volumes
 - https://wiki.archlinux.org/index.php/Dm-crypt/System_configuration#mkinitcpio
 - https://wiki.archlinux.org/index.php/GRUB#GUID_Partition_Table_.28GPT.29_specific_instructions
+- https://jlk.fjfi.cvut.cz/arch/manpages/man/alpm-hooks.5
 
 [Arch Wiki hibernation notes]: https://wiki.archlinux.org/index.php/Power_management/Suspend_and_hibernate#About_swap_partition.2Ffile_size
 [random urandom]: https://unix.stackexchange.com/questions/324209/when-to-use-dev-random-vs-dev-urandom
