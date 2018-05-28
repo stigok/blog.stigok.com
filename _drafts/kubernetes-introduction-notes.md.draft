@@ -49,6 +49,14 @@ Change default namespace for `kubectl`:
 
     $ kubectl config set-context $(kubectl config current-context) --namespace=<insert-namespace-name-here>
 
+## Useful commands and stuff
+
+### Use environment in pod container command or argument array
+
+> The environment variable appears in parentheses, "$(VAR)". This is required for the variable to be expanded in the command or args field.
+
+
 ## References
 - https://github.com/kubernetes/community/blob/master/contributors/design-proposals/architecture/architecture.md
 - https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/
+- https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#use-environment-variables-to-define-arguments
