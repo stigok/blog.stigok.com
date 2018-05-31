@@ -12,23 +12,17 @@ wrong. I had used sed before when replacing tokens with URI's, but apparently
 not URI's with multiple query-string parameters which are joined by
 ampersands (`&`).
 
-{{ raw }}
 Let's replace the token `%link%` with a URI
-{{ endraw }}
 
-{{ raw }}
     $ URI='https://example.com/?num=7'
     $ echo 'my_link = %link%' | sed "s|%link%|${URI}|"
     my_link = https://example.com/?num=7
-{{ endraw }}
 
 Seems good. Let's add another parameter to the URI
 
-{{ raw }}
     $ URI='https://example.com/?num=42&type=magic'
     $ echo 'my_link = %link%' | sed "s|%link%|${URI}|"
     my_link = https://example.com/?num=42%link%type=magic
-{{ endraw }}
 
 Surprise. What I expected the link to look like was
 `https://example.com/?num=42&type=magic`
@@ -44,24 +38,63 @@ A quick [search][search] revealed [the culprit][answer];
 What I could do here is to first sanitise the URL by backslashing all
 occurences of `&` before using it as the replacement
 
-{{ raw }}
     URI='https://example.com/?num=42&type=magic'
     $ echo 'my_link = %link%' | sed "s|%link%|$(echo "$URI" | sed 's|&|\\&|g')|"
     my_link = https://example.com/?num=42&type=magic
-{{ endraw }}
 
 But to me, that seems clunky. I would rather switch to a different replacer
 to avoid corner cases like this and excessive code in the init containers.
 Trying with a `perl` script instead
 
-{{ raw }}
     URI='https://example.com/?num=42&type=magic'
-    $ echo 'my_link = %link%' | perl -pi -e "s|%link%|${URI}|"
+    $ echo 'my_link = %link%' | perl -p -e "s|%link%|${URI}|"
     my_link = https://example.com/?num=42&type=magic
-{{ endraw }}
 
-This works like I want it to. It brings a dependency on perl, but I am
-handling a stock debian image right now, so I don't really care.
+This seems to be okay, but let's add login credentials and see what happens
+
+    URI='https://user:pass@example.com/?num=42&type=magic'
+    $ echo 'my_link = %link%' | perl -p -e "s|%link%|${URI}|"
+    my_link = https://user:pass.com/?num=42&type=magic
+
+So this time around perl uses `@` for named capture groups. In which case
+I first have to escape them like `\@`. So I'm where I started out again.
+
+Let's try with `awk`
+
+    URI='https://user:pass@example.com/?num=42&type=magic'
+    $ echo 'my_link = %link%' | awk "{ gsub(/%link%/, \"$URI\"); print }"
+    my_link = https://user:pass@example.com/?num=42%link%type=magic
+
+Same problem as with `sed` in that it replaces `&` with the matching string.
+
+I yield. I found a [nice script][script] written by Ed Morton which sanitises
+both the search and the replacement string before running `sed` one last time.
+I added an option to do in-place file replacements.
+
+    #!/bin/sh
+    # Modified version of Ed Morton's sedstr:
+    # https://stackoverflow.com/a/29626460/90674
+    # stigok, 2018
+
+    # In-place option
+    opts=''
+    if [ "$1" = '-i' ]; then
+      opts='-i ' # note trailing space
+      shift
+    fi
+
+    old="$1"
+    new="$2"
+    file="${3:--}"
+    escOld=$(sed 's/[^^]/[&]/g; s/\^/\\^/g' <<< "$old")
+    escNew=$(sed 's/[&/\]/\\&/g' <<< "$new")
+    sed ${opts}"s/$escOld/$escNew/g" "$file"
+
+This is finally a working solution for me with all the possible special
+characters of the URI in question, without breaking or triggering unwanted
+features and variable expansions in sed and bash.
+
+Cheers!
 
 ## References
 - https://unix.stackexchange.com/questions/341644/using-perl-to-replace-a-string-with-contents-from-file-found-in-an-array
@@ -71,4 +104,4 @@ handling a stock debian image right now, so I don't really care.
 
 [answer]: https://stackoverflow.com/questions/32750591/sed-behavior-with-ampersand#32750675
 [search]: https://duckduckgo.com/?q=sed+ampersand
-
+[script]: https://stackoverflow.com/questions/29613304/is-it-possible-to-escape-regex-metacharacters-reliably-with-sed/29626460#29626460
