@@ -1,3 +1,10 @@
+---
+layout: post
+title: "Creating a Kubernetes cluster in Azure CLI"
+date: 2018-05-31 20:22:07 +0200
+categories: azure kubernetes
+---
+
 Creating a Kubernetes cluster in Azure
 
 This was tested on Azure as it was in May 2018. The platform and the CLI are both moving targets, and Azure AKS is still in preview.
