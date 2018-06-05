@@ -44,13 +44,13 @@ utility. In the details section of the download, **read the README** so that
 you understand the risks of updating the BIOS. The file I downloaded was
 called *r0fuj15wd.iso*.
 
-Download a tool called [`geteltoro`][geteltoro] to extract the boot image from
+Download a tool called [`geteltorito`][geteltorito] to extract the boot image from
 the ISO file. I went through a great deal of trouble to figure out how to make
 a proper bootable USB pen drive from that ISO. This tool was the only one that
 actually yielded proper results. You will need Perl in order to run this
 program.
 
-    $ geteltoro.pl -o ~/lenovo-bios.img ~/downloads/r0fuj15wd.iso
+    $ geteltorito.pl -o ~/lenovo-bios.img ~/downloads/r0fuj15wd.iso
 
 Now you should have a proper disk image ready to be written to a USB drive.
 Write to disk and follow up with a sync of pending IO writes.
