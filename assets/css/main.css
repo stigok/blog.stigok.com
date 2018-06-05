@@ -114,6 +114,10 @@ pre code {
   border: none;
   padding: 0;
 }
+/* Links for code snippets (example: )*/
+a code {
+  color: #a5ff94;
+}
 label {
   display: block;
   margin-bottom: 0;
