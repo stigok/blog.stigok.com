@@ -86,6 +86,16 @@ After the update it looked like this instead
 Didn't solve my ACPI errors, but my screen is brighter on clearer than before.
 Or I'm imagining things. Not sure. Either way I like to have the latest BIOS.
 
+### Update
+
+I recently got a new motherboard from Lenovo, due to some power issues. These
+issues were most likely related to the ACPI errors I was seeing.
+
+With the new motherboard I no longer get these errors.
+
+If you own a Lenovo T470P I think it would be wise to see if it's under
+warranty, and if it is, get it serviced with a new motherboard.
+
 ## References
 - https://workaround.org/article/updating-the-bios-on-lenovo-laptops-from-linux-using-a-usb-flash-stick/
 
