@@ -171,6 +171,9 @@ connect a button to *GPIO05* on the chip.
 I am connecting this chip to a thermal receipt printer, so I will be able to
 read the serial output even though I'm not pysically connected to it.
 
+## References
+- https://www.elecrow.com/download/ESP-12F.pdf
+
 [previous-post]: https://blog.stigok.com/2018/06/01/build-arduino-sketches-from-command-line.html
 [repo]: https://github.com/esp8266/Arduino
 [BasicOTA.ino]: https://github.com/esp8266/Arduino/blob/03baea27efddb819ba15ffed9b47ee9da8410f54/libraries/ArduinoOTA/examples/BasicOTA/BasicOTA.ino
