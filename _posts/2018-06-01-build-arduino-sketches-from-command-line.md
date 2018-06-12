@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "Build Arduino sketches from commandline and flash to ESP8266"
+title: "Build Arduino sketches from command-line and flash to ESP8266 from Pi"
 date: 2018-06-01 19:59:36 +0200
-categories: esp8266 arduino
+categories: esp8266 arduino raspberrypi
 ---
 
 I want to build sketches from the command line so that I don't have to use
