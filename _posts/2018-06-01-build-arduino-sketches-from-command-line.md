@@ -87,8 +87,10 @@ I'm connected over SSH, so I'm going to use `rsync` to transfer the files over.
 
 Note that I'm running the latest raspbian as of June 1st 2018, which means `/dev/serial0` is a symlink to whichever serial is available for me out of `/dev/ttyAMA0` and `/dev/ttyS0`. If you're on an older system, mind the device path in the commands.
 
-I'm not using the raspbian `apt` repo, as the version there is outdated. Instead, download `esptool` using `pip` (`pip3` since it's the python3 `pip` we want) for this. For this post, I'm using version 2.3.1 as it was the latest one when I wrote this.
+I'm not using the raspbian `apt` repo for `esptool`, as the version there is outdated. Instead, download `esptool` using `pip` (`pip3` since it's the python3 `pip` we want) for this. For this post, I'm using version 2.3.1 as it was the latest one when I wrote this.
 
+    $ sudo apt update
+    $ sudo apt install python3-pip
     $ sudo pip3 install esptool==2.3.1
 
 Find the *led_blink.ino.bin* file that was compiled and transfered in the previous step and specify that in the flash command
