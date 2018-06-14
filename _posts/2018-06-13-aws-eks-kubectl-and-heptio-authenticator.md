@@ -1,8 +1,10 @@
 ---
 layout: post
-title:  "Troubleshooting AWS EKS kubectl with heptio-authenticator"
+title:  "Troubleshooting AWS EKS kubectl with haptio-authenticator"
 date:   2018-06-13 15:41:01 +0200
 categories: aws kubernetes
+redirect_from:
+  - /2018/06/13/aws-eks-kubectl-and-haptio-authenticator
 ---
 
 ## Introduction
