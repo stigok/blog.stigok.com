@@ -39,8 +39,8 @@ forward-zone:
   forward-tls-upstream: yes
   # The below end-of-line comments (without spaces) are used for hostname
   # verification of the TLS certificate
-  forward-addr: 2a01:3a0:53:53::@853#anycast.censurfridns.dk
-  forward-addr: 89.223.43.71@853#anycast.censurfridns.dk
+  forward-addr: 2a01:3a0:53:53::@853#unicast.censurfridns.dk
+  forward-addr: 89.223.43.71@853#unicast.censurfridns.dk
 ```
 
 To verify that the hostname check is actually performed, try changing the
