@@ -88,8 +88,11 @@ the pipelines config we can load an environment variable and push remotely.
 An example *bitbucket-pipelines.yml* for this solution now:
 
 ```
+# A base image with `pip` installed, so we can install docker-compose
+image: python:3.6
+
 pipelines:
-  branch:
+  branches:
     develop:
       - step:
           name: image-build-and-push
@@ -97,7 +100,9 @@ pipelines:
             - docker
           caches:
             - docker
+            - pip
           script:
+            - pip install docker-compose
             - export
               IMAGE_NAME_PREFIX="${CONTAINER_REGISTRY}/$DOCKER_USERNAME/"
               IMAGE_TAG="${BITBUCKET_COMMIT}"
@@ -116,3 +121,4 @@ git commit.
 - https://docs.docker.com/compose/compose-file/#variable-substitution
 - https://docs.docker.com/compose/reference/envvars/#docker_cert_path
 - https://confluence.atlassian.com/bitbucket/branch-workflows-856697482.html
+- https://confluence.atlassian.com/bitbucket/caching-dependencies-895552876.html#Cachingdependencies-custom-caches
