@@ -463,9 +463,9 @@ boot partition on successful boot using its keyfile
     # inside /etc/crypttab
     encrypted-boot UUID=%uuid% /etc/initcpio/keys/encrypted-boot.key luks
 
-Again, replace `%uuid%` with the actual UUID of the boot partition at `/dev/nvmen1p2`
+Again, replace `%uuid%` with the actual UUID of the boot partition at `/dev/nvme0n1p2`
 
-    # sed -i s/%uuid%/$(blkid -o value -s UUID /dev/nvme0n2)/ /etc/crypttab
+    # sed -i s/%uuid%/$(blkid -o value -s UUID /dev/nvme0n1p2)/ /etc/crypttab
 
 All set! Rebooting is the only way to figure out if it was set up correctly
 or not.
