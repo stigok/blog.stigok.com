@@ -34,9 +34,11 @@ You can look through the file systems by writing e.g. `FS1:`, then use `ls` and
 
 I determined that my EFI image was at `FS1:\EFI\grub\grubx64.efi`, so I created
 a new boot entry for that path. The program takes care of mapping `FS1` to a
-GUID for you.
+GUID for you. The last argument to the command below is an arbitrary friendly
+name of the EFI boot entry. Since I'm referencing a GRUB image, I might as
+well call it *grub*.
 
-    FS1:\> bcfg boot add 0 fs1:\EFI\grub\grubx64.efi
+    FS1:\> bcfg boot add 0 fs1:\EFI\grub\grubx64.efi grub
     Target = 0000
     bcfg: Add Boot0000 as 0
 
