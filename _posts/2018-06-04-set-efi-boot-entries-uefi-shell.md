@@ -52,6 +52,10 @@ Looks good to me, so I'll reboot
 
 Hope it worked ;)
 
+## Notes
+
+- Add `-b` argument to most commands to get paged output
+
 ## References
 - https://wiki.archlinux.org/index.php/Unified_Extensible_Firmware_Interface#Important_UEFI_Shell_commands
 
