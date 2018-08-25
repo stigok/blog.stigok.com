@@ -443,9 +443,10 @@ easier to do with `sed`
 
     # sed -i s/%uuid%/$(blkid -o value -s UUID /dev/nvme0n3)/ /etc/default/grub
 
-**BIOS:** Register GRUB on the MBR:
+**BIOS:** Register GRUB on the MBR. Note that the reference is to the disk
+(*nvme0n1)*, **not** to the partition (*nvme0n1p1*):
 
-    # grub-mkconfig -o /boot/grub/grub.cfg
+    # grub-install --target=i386-pc /dev/nvme0n1
 
 **UEFI:** verify that the ESP is mounted to `/boot/efi`
 with `lsblk`, then install the bootloader to the ESP
@@ -463,9 +464,9 @@ boot partition on successful boot using its keyfile
     # inside /etc/crypttab
     encrypted-boot UUID=%uuid% /etc/initcpio/keys/encrypted-boot.key luks
 
-Again, replace `%uuid%` with the actual UUID of the boot partition at `/dev/nvmen1p2`
+Again, replace `%uuid%` with the actual UUID of the boot partition at `/dev/nvme0n1p2`
 
-    # sed -i s/%uuid%/$(blkid -o value -s UUID /dev/nvme0n2)/ /etc/crypttab
+    # sed -i s/%uuid%/$(blkid -o value -s UUID /dev/nvme0n1p2)/ /etc/crypttab
 
 All set! Rebooting is the only way to figure out if it was set up correctly
 or not.
