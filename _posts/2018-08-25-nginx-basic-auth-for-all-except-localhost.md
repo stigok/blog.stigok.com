@@ -7,12 +7,13 @@ categories: nginx
 
 ## Introduction
 
-I have a shop order system in a production system where the admin pages are
-password protected using HTTP Basic Auth. However, now I have a program
-monitoring the service that I want to allow access without having to auth.
+I have a shop order system where some admin pages are password protected using
+HTTP Basic Auth in nginx. Now I want to have a monitoring daemon accessing the
+admin pages without it having to authenticate itself.
 
-- If the request comes from the local machine, i.e. `127.0.0.1`, allow without
-  login prompt
+- The monitoring daemon will be running on localhost
+- If the request comes from the loopback device, i.e. `127.0.0.1`, allow without
+  authentication
 - For all other remote addresses require valid credentials with HTTP Basic Auth
 
 ```
