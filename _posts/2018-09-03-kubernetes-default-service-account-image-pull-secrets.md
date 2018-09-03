@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Define imagePullSecrets on the default service account in namespace"
+title:  "Define imagePullSecrets on the default service account in kubernetes namespace"
 date:   2018-09-03 17:43:05 +0200
 categories: kubernetes
 ---
