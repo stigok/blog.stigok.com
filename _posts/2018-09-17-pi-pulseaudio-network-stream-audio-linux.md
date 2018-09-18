@@ -75,11 +75,12 @@ Since I had some problems running pulseaudio on the Pi outside of `--system`
 mode, I am just running with it, although the logs tells me it is not advised.
 
 Appending some lines to the system config file of pulseaudio to enable network
-audio
+audio. Allowing link-local IPv6 addresses is vital if you're on an IPv6-enabled
+network and Avahi is configured for it.
 
 ```
 # tee -a /etc/pulse/system.pa
-load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1;10.1.1.0/24
+load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1;10.1.1.0/24;fe80::/64
 load-module module-zeroconf-publish
 ```
 
