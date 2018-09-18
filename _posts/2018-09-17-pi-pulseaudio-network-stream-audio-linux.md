@@ -20,59 +20,33 @@ Install some pre-reqs
 
 ```
 # apt update
-# apt install pulseaudio pulseaudio-module-zeroconf avahi-daemon xvfb dbus-launch dbus-x11
+# apt install pulseaudio pulseaudio-module-zeroconf avahi-daemon
 ```
 
-First I have to create a virtual X11 frame-buffer, because pulseaudio wants
-an X11 `DISPLAY` to use. I am creating a systemd service for this.
+Define the pulseaudio service file to make it start on boot and log to the
+journal.
 
 ```
-# cat /etc/systemd/system/xvfb@.service
+# cat /etc/systemd/system/pulseaudio.service
 [Unit]
-Description=virtual frame buffer X server for display %I
-After=network.target
+Description=PulseAudio system-wide server
 
 [Service]
-ExecStart=/usr/bin/Xvfb %I -screen 0 1280x1024x24
+Type=forking
+PIDFile=/var/run/pulse/pid
+ExecStart=/usr/bin/pulseaudio --daemonize --system --realtime --log-target=journal
+ExecStop=/usr/bin/pulseaudio -k
+Restart=on-failure
+LimitRTPRIO=1000
+LimitNICE=-20
 
 [Install]
 WantedBy=multi-user.target
 ```
 
-I start this service right away and make sure it starts on boot as well. Since
-the service name ends with `@`, it can be invoked with an argument that will
-be interpolated through the rest of the service file where `%I` appears.
-
-The below is to create a `DISPLAY` at `:77`
-
-```
-# systemctl daemon-reload
-# systemctl start xvfb@:77.service
-# systemctl enable xvfb@:77.service
-```
-
-Then defining the pulseaudio service file to make it also start on boot.
-In this file, we are giving it a `DISPLAY` environment variable specifying
-the display that got created with `xvfb`
-
-```
-# cat /etc/systemd/system/pulseaudio.service
-[Unit]
-Description=PulseAudio Sound System
-Before=sound.target
-
-[Service]
-Environment=DISPLAY=:77
-BusName=org.pulseaudio.Server
-ExecStart=/usr/bin/pulseaudio --system
-Restart=always
-
-[Install]
-WantedBy=default.target
-```
-
-Since I had some problems running pulseaudio on the Pi outside of `--system`
-mode, I am just running with it, although the logs tells me it is not advised.
+Since I had some problems running pulseaudio on the Pi in user mode, I'm just
+going with `--system` mode, although the logs tells me it is not advised.
+This Pi is only used headlessly by me anyway.
 
 Appending some lines to the system config file of pulseaudio to enable network
 audio. Allowing link-local IPv6 addresses is vital if you're on an IPv6-enabled
@@ -84,7 +58,7 @@ load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1;10.1.1.0/24;fe80::/
 load-module module-zeroconf-publish
 ```
 
-Enabling and starting this service too
+Start it right away, but also enable it to make it start on boot automatically.
 
 ```
 # systemctl daemon-reload
@@ -127,3 +101,4 @@ available as outputs at the same time.
 - https://wiki.archlinux.org/index.php/PulseAudio#Networked_audio
 - https://raspberrypi.stackexchange.com/questions/639/how-to-get-pulseaudio-running/44767#44767
 - https://superuser.com/questions/319040/proper-way-to-start-xvfb-on-startup-on-centos/912648#912648
+- https://partofthething.com/thoughts/multi-room-audio-over-wi-fi-with-pulseaudio-and-raspberry-pis/
