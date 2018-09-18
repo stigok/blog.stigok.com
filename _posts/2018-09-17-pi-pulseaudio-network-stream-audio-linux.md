@@ -27,7 +27,7 @@ Define the pulseaudio service file to make it start on boot and log to the
 journal.
 
 ```
-# cat /etc/systemd/system/pulseaudio.service
+# tee /etc/systemd/system/pulseaudio.service
 [Unit]
 Description=PulseAudio system-wide server
 
@@ -72,33 +72,55 @@ Check the logs for errors
 # journalctl -u pulseaudio
 ```
 
+If you need more verbosity in the logs, you can set `log-level = debug` in the
+pulseaudio *daemon.conf*.
+
+Start Avahi to enable automatic service discovery
+
+```
+# systemctl start avahi-daemon.service
+# systemctl enable avahi-daemon.service
+```
+
 ## Client setup
 
 **The below might be Arch Linux specific!**
 
-Set `default-server` to the IP address of the remote pulseaudio
-server inside `/etc/pulse/client.conf`, then restart the user
-service.
+Start Avahi to enable automatic remote speaker discovery
+
+```
+# systemctl start avahi-daemon.service
+# systemctl enable avahi-daemon.service
+```
+
+Restart the user service
 
 ```
 $ systemctl --user restart pulseaudio.service
 ```
 
-### Note
+Some times I was experiencing choppy sound. I did the following to remedy this
 
-The above solution is the only one I've found so far.
-However, this removes the possibility of playing sound locally, and
-everything is sent to the remote server. This *may* be what you want,
-but I'd like to send only select application audio output to the remote
-while the rest is local. For this I would use `pavucontrol`.
+```
+# tee /etc/libao.conf
+default_driver=pulse
+quiet
+buffer_time=50
+dev=combined
+server=localhost
+```
 
-This post will be updates as soon as I figure out how to have them both
-available as outputs at the same time.
+And whenever I'm getting choppy sound again, as I usually do for the initial
+song I play on SoundCloud, I restart the pulseaudio user service again and
+all is fine.
 
+Now I'm able to use `pavucontrol` to select audio outputs for specific
+applications on my system.
 
 ## References
 - https://raspberrypi.stackexchange.com/questions/11735/using-pi-to-stream-all-audio-output-from-my-pc-to-my-stereo
 - https://wiki.archlinux.org/index.php/PulseAudio#Networked_audio
 - https://raspberrypi.stackexchange.com/questions/639/how-to-get-pulseaudio-running/44767#44767
 - https://superuser.com/questions/319040/proper-way-to-start-xvfb-on-startup-on-centos/912648#912648
+- https://wiki.archlinux.org/index.php/PulseAudio/Examples
 - https://partofthething.com/thoughts/multi-room-audio-over-wi-fi-with-pulseaudio-and-raspberry-pis/
