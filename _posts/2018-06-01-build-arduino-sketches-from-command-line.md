@@ -87,6 +87,9 @@ I'm connected over SSH, so I'm going to use `rsync` to transfer the files over.
 
 Note that I'm running the latest raspbian as of June 1st 2018, which means `/dev/serial0` is a symlink to whichever serial is available for me out of `/dev/ttyAMA0` and `/dev/ttyS0`. If you're on an older system, mind the device path in the commands.
 
+Make sure you have disabled login interface being available on `/dev/serial0`. This can be toggled in the interface options of `raspi-config`.
+Failing to do so will give you strange errors when using `esptool`, like invalid headers, failing to write to RAM, or connection failures in general.
+
 I'm not using the raspbian `apt` repo for `esptool`, as the version there is outdated. Instead, download `esptool` using `pip` (`pip3` since it's the python3 `pip` we want) for this. For this post, I'm using version 2.3.1 as it was the latest one when I wrote this.
 
     $ sudo apt update
