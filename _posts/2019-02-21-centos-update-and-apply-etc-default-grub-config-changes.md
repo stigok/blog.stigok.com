@@ -41,4 +41,5 @@ After a, hopefully, successful reboot, I'd want to remove these settings again.
 ## References
 - `man systemd-fsck`
 - https://wiki.centos.org/HowTos/Grub2
+- https://unix.stackexchange.com/a/152249/28043
 
