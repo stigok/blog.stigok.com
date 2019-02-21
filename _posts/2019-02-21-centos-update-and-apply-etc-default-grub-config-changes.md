@@ -5,12 +5,21 @@ date:   2019-02-21 16:20:26 +0100
 categories: centos, grub
 ---
 
-**NOTE**: This is (most probably) distro specific to CentOS 7
-
-I wanted to force `systemd-fsck` to run `fsck` on the next reboot.
+I wanted to forcefully make `systemd-fsck` perform `fsck` on boot.
 
 Make desired changes in */etc/default/grub* or */etc/grub.d/40_custom*.
-I appended `fsck.mode=force fsck.repair=preen` to the `GRUB_CMDLINE_LINUX` variable.
+I appended `fsck.mode=force fsck.repair=preen` to the `GRUB_CMDLINE_LINUX` variable:
+
+```terminal
+$ cat /etc/default/grub
+GRUB_TIMEOUT=5
+GRUB_DISTRIBUTOR="$(sed 's, release .*$,,g' /etc/system-release)"
+GRUB_DEFAULT=saved
+GRUB_DISABLE_SUBMENU=true
+GRUB_TERMINAL_OUTPUT="console"
+GRUB_CMDLINE_LINUX="crashkernel=auto rd.lvm.lv=centos_4/root rd.lvm.lv=centos_4/swap rhgb quiet fsck.mode=force fsck.repair=preen"
+GRUB_DISABLE_RECOVERY="true"
+```
 
 Depending on your system, apply changes using
 - **BIOS**: `grub2-mkconfig -o /boot/grub2/grub.cfg`
