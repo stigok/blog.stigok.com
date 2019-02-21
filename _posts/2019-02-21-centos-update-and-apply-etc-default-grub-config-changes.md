@@ -51,4 +51,5 @@ After a, hopefully, successful reboot, I'd want to remove these settings again.
 - `man systemd-fsck`
 - https://wiki.centos.org/HowTos/Grub2
 - https://unix.stackexchange.com/a/152249/28043
+- https://hackerific.net/2016/03/09/fscking-centos-7/
 
