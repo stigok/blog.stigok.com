@@ -9,7 +9,7 @@ module Jekyll
 
     class Generator < Jekyll::Generator
       def generate(site)
-        return if ARGV.include?("--no-comments")
+        return
 
         sha2 = Digest::SHA2.new
 
