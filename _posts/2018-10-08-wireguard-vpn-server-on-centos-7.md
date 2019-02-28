@@ -169,6 +169,23 @@ Start server client
 # systemctl start wg-quick@wg0-server.service
 ```
 
+### Letting VPN clients connect to each other (optional)
+
+Add wireguard interface to the `internal` firewalld zone
+
+```terminal
+# firewall-cmd --add-interface=wg0-server --zone=internal --permanent
+```
+
+Enable masquerading
+
+```terminal
+# firewall-cmd --zone=internal --add-masquerade --permanent
+```
+
+Enable the services you'd like to be available on this network using `firewall-cmd --zone=internal --add-service [name]`. Remember to add the flag `--permanent` when it works. So easy to forget.
+
+
 ## Client
 
 Attempt to connect to the server
