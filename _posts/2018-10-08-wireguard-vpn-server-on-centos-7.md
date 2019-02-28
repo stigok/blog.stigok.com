@@ -45,6 +45,7 @@ Configure the wireguard network interface
 ```terminal
 # ip link add dev wg0-server type wireguard
 # ip addr add dev wg0-server 10.7.0.1/24
+# ip addr add dev wg0-server fd00:7::1/48
 # wg set wg0-server listen-port 34777 private-key <(wg genkey)
 ```
 
@@ -89,17 +90,19 @@ down one or more WireGuard interfaces
 ```terminal
 # tee /etc/wireguard/wg0.conf
 [Interface]
-Address = 10.7.0.2/24
+Address = 10.7.0.2/24, fd00:7::2/48
 PrivateKey = <replace with the contents of your private key>
 DNS = 10.7.0.1
 
 [Peer]
 PublicKey = <replace with server public key string>
-AllowedIPs = 0.0.0.0/0
-Endpoint = <replace with server IP/hostname>:34777
+AllowedIPs = 0.0.0.0/0, ::/0
+Endpoint = <replace with server IPv6 address/hostname>:34777
+Endpoint = <replace with server IPv4 address/hostname>:34777
 PersistentKeepalive = 15
 ```
 
+- Remove IPv6 configuration if you're not using it
 - Replace the `Address` with the IP address intended for this client
 - Replace the value of `PrivateKey` with the contents of the *private.key* file
 - Replace the value of `PublicKey` with the public key of the server that was
