@@ -27,7 +27,7 @@ The section headers below tells you whether the work is on the CentOS server
 Add the [EPEL][epel-faq] (Extra Packages for Enterprise Linux) RPM repo and
 install WireGuard and utilities
 
-```
+```terminal
 # curl -Lo /etc/yum.repos.d/wireguard.repo https://copr.fedorainfracloud.org/coprs/jdoss/wireguard/repo/epel-7/jdoss-wireguard-epel-7.repo
 # yum install epel-release
 # yum install wireguard-dkms wireguard-tools
@@ -35,14 +35,14 @@ install WireGuard and utilities
 
 Create an empty server config file with proper permissions
 
-```
+```terminal
 # mkdir /etc/wireguard && cd /etc/wireguard
 # bash -c 'umask 077; touch wg0-server.conf'
 ```
 
 Configure the wireguard network interface
 
-```
+```terminal
 # ip link add dev wg0-server type wireguard
 # ip addr add dev wg0-server 10.7.0.1/24
 # wg set wg0-server listen-port 34777 private-key <(wg genkey)
@@ -50,14 +50,14 @@ Configure the wireguard network interface
 
 Save configuration to a file
 
-```
+```terminal
 # wg-quick save wg0-server
 ```
 
 Take note of the public key which all of the clients will need in order to
 establish a wireguard connection to this server
 
-```
+```terminal
 # wg
 interface: wg0-server
   public key: rWIm1TmlDowftuzcp0uipzJQ5FCzTc2brMLzYmirZXc=
@@ -71,13 +71,13 @@ interface: wg0-server
 
 Install wireguard packages
 
-```
+```terminal
 # pacman -S linux-headers wireguard-dkms wireguard-utils
 ```
 
 Create a folder only accessible by root and generate a private key
 
-```
+```terminal
 # mkdir /etc/wireguard/
 # chmod 0600 /etc/wireguard
 # wg genkey > /etc/wireguard/private.key
@@ -86,7 +86,7 @@ Create a folder only accessible by root and generate a private key
 Create a `wg-quick` configuration file which makes it easier to bring up and
 down one or more WireGuard interfaces
 
-```
+```terminal
 # tee /etc/wireguard/wg0.conf
 [Interface]
 Address = 10.7.0.2/24
@@ -110,7 +110,7 @@ PersistentKeepalive = 15
 
 Create a new firewalld service definition for WireGuard
 
-```
+```terminal
 # tee /etc/firewalld/services/wireguard.xml
 <?xml version="1.0" encoding="utf-8"?>
 <service>
@@ -122,19 +122,19 @@ Create a new firewalld service definition for WireGuard
 
 Enable the custom WireGuard service in firewalld
 
-```
+```terminal
 # firewall-cmd --add-service=wireguard zone=public --permanent
 ```
 
 Enable masquerading
 
-```
+```terminal
 # firewall-cmd --zone=public --add-masquerade --permanent
 ```
 
 Reload firewalld and take a look at the zone configuration
 
-```
+```terminal
 # firewall-cmd --reload
 # firewall-cmd --list-all
 public (active)
@@ -154,7 +154,7 @@ public (active)
 
 Enable IPv4 forwarding and make it persistent across reboots
 
-```
+```terminal
 # sysctl net.ipv4.ip_forward=1
 # tee -a /etc/sysctl.d/99-sysctl.conf
 sysctl net.ipv4.ip_forward=1
@@ -162,7 +162,7 @@ sysctl net.ipv4.ip_forward=1
 
 Start server client
 
-```
+```terminal
 # systemctl start wg-quick@wg0-server.service
 ```
 
@@ -170,14 +170,14 @@ Start server client
 
 Attempt to connect to the server
 
-```
+```terminal
 # wg-quick up wg0
 ```
 
 See if you are able to send and receive traffic, and at the same time check
 your IP address
 
-```
+```terminal
 $ curl -i -4 ip.stigok.com
 ```
 
