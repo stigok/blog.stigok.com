@@ -185,6 +185,24 @@ Enable masquerading
 
 Enable the services you'd like to be available on this network using `firewall-cmd --zone=internal --add-service [name]`. Remember to add the flag `--permanent` when it works. So easy to forget.
 
+## Server - Allow client to connect
+
+Now, back in the *server* configuration file, add the client public key and the IP's
+it should be allowed to register with on the server. Copy the public key from the client and paste it into the server configuration, like below.
+
+```
+# The new client
+[Peer]
+PublicKey = BwVtKNSF50L973aQ/YT+s/3lmlLjcbhkwp4uELqwEVU=
+AllowedIPs = 10.7.0.2/32
+AllowedIPs = fd00:7::2/128
+```
+
+Restart the server. No errors should be thrown.
+
+```terminal
+# systemctl restart wireguard@wg0-server
+```
 
 ## Client
 
