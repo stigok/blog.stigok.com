@@ -55,8 +55,8 @@ Save configuration to a file
 # wg-quick save wg0-server
 ```
 
-Take note of the public key which all of the clients will need in order to
-establish a wireguard connection to this server
+Take note of the public key of the server. All of the clients will need it in order to
+establish a wireguard connection to this server.
 
 ```terminal
 # wg
