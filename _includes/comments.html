@@ -1,0 +1,12 @@
+{% assign comments = site.comments | where: "subject_id",page.comments_subject_id %}
+<section id="comments" class="container-fluid">
+  <h4>{{ comments | size }} comment(s)</h4>
+  {% for comment in comments %}
+  <article class="container-fluid">
+    <header><strong>{{comment.author}}</strong> at {{ comment.date }}</header>
+    <pre>
+    {{ comment.content }}
+    </pre>
+  </article>
+  {% endfor %}
+</section>
