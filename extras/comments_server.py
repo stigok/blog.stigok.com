@@ -44,7 +44,7 @@ class CommentRequestHandler(http.server.BaseHTTPRequestHandler):
     sys_version = "0.1"
     protocol_version = "HTTP/1.1"
 
-    def do_PUT(self):
+    def do_POST(self):
         # Only accept GET requests to /comments/<id>
         # with an optional trailing slash
         match = re.match(r"/comments/(?P<id>[-\w]+)/?$", self.path.split("?")[0])
