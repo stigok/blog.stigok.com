@@ -53,6 +53,11 @@ class CommentRequestHandler(http.server.BaseHTTPRequestHandler):
     sys_version = "0.1"
     protocol_version = "HTTP/1.1"
 
+    def address_string(self):
+        """Helpful when running behind an nginx proxy"""
+        orig = super(CommentRequestHandler, self).address_string()
+        return self.headers.get('X-Forwarded-For', orig)
+
     def do_POST(self):
         # Only accept GET requests to /comments/<id>
         # with an optional trailing slash
