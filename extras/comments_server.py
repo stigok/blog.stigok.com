@@ -23,11 +23,11 @@ def get_post_ids():
     return post_ids
 
 
-def write_liquid_file(filename, body, *, metadata=dict):
+def write_liquid_comment_file(post_id, body, *, metadata=dict):
     now = datetime.datetime.utcnow()
-    unixnow = str(round(now.timestamp() * 1000))
 
-    out_file = path.join(OUT_DIR, filename + "-" + unixnow + ".md")
+    out_file = path.join(OUT_DIR, post_id, now.strftime("%Y%m%d-%H%M%S-%f.md"))
+    os.makedirs(os.path.dirname(out_file), exist_ok=True)
 
     # Set comment creation date if not already present
     metadata['date'] = metadata.get('date', now.isoformat())
@@ -112,7 +112,7 @@ class CommentRequestHandler(http.server.BaseHTTPRequestHandler):
         try:
             # Create the comment
             metadata = dict(author=author, email=email)
-            write_liquid_file(post_id, body, metadata=metadata)
+            write_liquid_comment_file(post_id, body, metadata=metadata)
 
             data = b"201 Created"
             self.send_response(201)
