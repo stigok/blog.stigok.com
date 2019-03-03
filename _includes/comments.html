@@ -9,4 +9,22 @@
     </pre>
   </article>
   {% endfor %}
+
+  <h3>Add comment</h3>
+  <form action="http://localhost:8000/comments/{{ page.comments_subject_id }}?return_url={{ page.url }}" method="post" enctype="application/x-www-form-urlencoded">
+    <div>
+      Name<br>
+      <input type="text" name="author" minlength="1" maxlength="100">
+    </div>
+    <div>
+      How to contact you (optional, but will be published)<br>
+      <input type="text" name="contact" minlength="1" maxlength="300">
+    </div>
+    <div>
+      Comment body<br>
+      <textarea name="body" minlength="3" maxlength="9000">
+      </textarea>
+    </div>
+    <button type="submit" name="submit" value="valid">Submit comment</button>
+  </form>
 </section>
