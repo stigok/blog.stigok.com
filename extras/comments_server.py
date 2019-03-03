@@ -11,6 +11,7 @@ import urllib.parse
 
 OUT_DIR        = "collections/_comments"
 JSON_FEED_PATH = "_site/comments_subject_ids.json"
+HTTP_HOST      = ""
 HTTP_PORT      = 8000
 MAX_REQUEST_BODY_BYTES = 10000
 
@@ -126,8 +127,14 @@ class CommentRequestHandler(http.server.BaseHTTPRequestHandler):
             self.log_error("Failed to save comment to file", e)
             return
 
+if __name__ == '__main__':
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--hostname', default=HTTP_HOST)
+    parser.add_argument('--port',     type=int, default=HTTP_PORT)
+    args = parser.parse_args()
 
-server = http.server.HTTPServer(("", HTTP_PORT), CommentRequestHandler)
+    server = http.server.HTTPServer((args.hostname, args.port), CommentRequestHandler)
 
-print("serving at port", HTTP_PORT)
-server.serve_forever()
+    print("Listening on %s:%d" % (args.hostname, args.port))
+    server.serve_forever()
