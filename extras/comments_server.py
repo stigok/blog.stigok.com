@@ -47,7 +47,7 @@ def write_liquid_file(filename, body, *, metadata=dict):
 
 
 class CommentRequestHandler(http.server.BaseHTTPRequestHandler):
-    error_message_format = "%(code)d %(message)s"
+    error_message_format = "%(code)d %(message)s\n"
     server_version = "jecose"
     sys_version = "0.1"
     protocol_version = "HTTP/1.1"
