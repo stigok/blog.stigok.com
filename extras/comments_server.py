@@ -13,6 +13,7 @@ OUT_DIR        = "collections/_comments"
 JSON_FEED_PATH = "_site/comments_subject_ids.json"
 HTTP_HOST      = ""
 HTTP_PORT      = 8000
+TRUST_PROXY    = False
 MAX_REQUEST_BODY_BYTES = 10000
 
 
@@ -56,7 +57,11 @@ class CommentRequestHandler(http.server.BaseHTTPRequestHandler):
     def address_string(self):
         """Helpful when running behind an nginx proxy"""
         orig = super(CommentRequestHandler, self).address_string()
-        return self.headers.get('X-Forwarded-For', orig)
+        if TRUST_PROXY:
+            addresses = self.headers.get('X-Forwarded-For', orig).split(', ')
+            return addresses[-1]
+        else:
+            return orig
 
     def do_POST(self):
         # Only accept GET requests to /comments/<id>
@@ -135,10 +140,14 @@ class CommentRequestHandler(http.server.BaseHTTPRequestHandler):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('--hostname', default=HTTP_HOST)
-    parser.add_argument('--port',     type=int, default=HTTP_PORT)
+    parser.add_argument('--hostname',    default=HTTP_HOST)
+    parser.add_argument('--port',        type=int, default=HTTP_PORT)
+    parser.add_argument('--trust-proxy', action="store_true",
+                        help="Trust X-Forwarded-For header to determine remote address",
+                        default=TRUST_PROXY)
     args = parser.parse_args()
 
+    TRUST_PROXY = args.trust_proxy
     server = http.server.HTTPServer((args.hostname, args.port), CommentRequestHandler)
 
     print("Listening on %s:%d" % (args.hostname, args.port))
