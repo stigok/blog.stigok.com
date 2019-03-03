@@ -92,9 +92,9 @@ class CommentRequestHandler(http.server.BaseHTTPRequestHandler):
             return
 
         # urllib.parse returns values in arrays
-        body   = comment.get('body',   []).pop()
-        author = comment.get('author', []).pop()
-        email  = comment.get('email',  []).pop()
+        body   = comment.get('body',   [None]).pop()
+        author = comment.get('author', [None]).pop()
+        email  = comment.get('email',  [None]).pop()
 
         if not body:
             self.send_error(400, "Field 'body' missing or too short")
