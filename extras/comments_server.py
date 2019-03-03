@@ -12,7 +12,7 @@ import urllib.parse
 OUT_DIR        = "collections/_comments"
 JSON_FEED_PATH = "_site/comments_subject_ids.json"
 HTTP_PORT      = 8000
-MAX_REQUEST_BODY_BYTES = 10_000
+MAX_REQUEST_BODY_BYTES = 10000
 
 
 # TODO: Memoize
