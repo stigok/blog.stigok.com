@@ -8,7 +8,7 @@
   {% endfor %}
 
   <h3>Add comment</h3>
-  <form action="http://localhost:8000/comments/{{ page.comments_subject_id }}?return_url={{ page.url }}" method="post" enctype="application/x-www-form-urlencoded">
+  <form action="/comments/{{ page.comments_subject_id }}?return_url={{ page.url }}" method="post" enctype="application/x-www-form-urlencoded">
     <div>
       Name<br>
       <input type="text" name="author" minlength="1" maxlength="100">
