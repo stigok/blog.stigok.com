@@ -83,7 +83,13 @@ class CommentRequestHandler(http.server.BaseHTTPRequestHandler):
 
         # Read request body
         req_body = self.rfile.read(req_len)
-        comment = urllib.parse.parse_qs(req_body.decode())
+
+        try:
+            comment = urllib.parse.parse_qs(req_body.decode(), strict_parsing=True)
+        except ValueError:
+            # This may indicate invalid content-length in the request
+            self.send_error(400, "Errors while parsing request body. Invalid Content-Length?")
+            return
 
         # urllib.parse returns values in arrays
         body   = comment.get('body',   []).pop()
