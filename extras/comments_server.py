@@ -29,8 +29,8 @@ def write_liquid_comment_file(post_id, body, *, metadata=dict):
     out_file = path.join(OUT_DIR, post_id, now.strftime("%Y%m%d-%H%M%S-%f.md"))
     os.makedirs(os.path.dirname(out_file), exist_ok=True)
 
-    # Set comment creation date if not already present
     metadata['date'] = metadata.get('date', now.isoformat())
+    metadata['subject_id'] = post_id
 
     # Save comment as markdown file to disk
     with open(out_file, mode='x') as f:
