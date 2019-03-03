@@ -1,5 +1,7 @@
 import datetime
+import hashlib
 import http.server
+import json
 import os
 import os.path as path
 import re
@@ -7,24 +9,30 @@ import socketserver
 import urllib.parse
 
 
-COMMENT_PATH   = "collections/_comments"
-JSON_FEED_PATH = "_site/feed.json"
+OUT_DIR        = "collections/_comments"
+JSON_FEED_PATH = "_site/comments_subject_ids.json"
 HTTP_PORT      = 8000
 MAX_REQUEST_BODY_BYTES = 10_000
 
 
 # TODO: Memoize
 def get_post_ids():
+    post_ids = []
     with open(JSON_FEED_PATH, mode='r') as f:
-        feed = json.loads(f)
-        return [post['post_id'] for post in feed]
+        post_ids += json.load(f)
+    return post_ids
 
 
-def write_liquid_file(name, body, *, metadata=dict):
-    now = str(round(datetime.datetime.utcnow().timestamp() * 1000))
-    out_file = path.join(COMMENT_PATH, name, out_dir, now)
-    metadata['date'] = metadata.get('date', now)
+def write_liquid_file(filename, body, *, metadata=dict):
+    now = datetime.datetime.utcnow()
+    unixnow = str(round(now.timestamp() * 1000))
 
+    out_file = path.join(OUT_DIR, filename + "-" + unixnow + ".md")
+
+    # Set comment creation date if not already present
+    metadata['date'] = metadata.get('date', now.isoformat())
+
+    # Save comment as markdown file to disk
     with open(out_file, mode='x') as f:
         # Liquid template front matter
         f.write("---\n")
