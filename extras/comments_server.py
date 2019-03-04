@@ -68,9 +68,17 @@ class CommentRequestHandler(http.server.BaseHTTPRequestHandler):
         # with an optional trailing slash
         match = re.match(r"/comments/(?P<id>[-\w]+)/?$", self.path.split("?")[0])
         post_id = match.group("id") if match else None
+        request_url = urrlib.parse.urlsplit(self.path)
+        request_qs  = urrlib.parse.parse_qs(request_url.query)
+        return_url  = request_qs.get('return_url', None)
 
         if not post_id or post_id not in get_post_ids():
             self.send_error(404)
+            return
+
+        # Ignore requests not having `return_url` in querystring
+        if not return_url:
+            self.send_error(403, "Seems like a spoofed attempt")
             return
 
         # Validate input
@@ -125,10 +133,11 @@ class CommentRequestHandler(http.server.BaseHTTPRequestHandler):
             metadata = dict(author=author, email=email)
             write_liquid_comment_file(post_id, body, metadata=metadata)
 
-            data = b"201 Created"
-            self.send_response(201)
+            data = "Redirecting to <a href=\"{0}\">{0}</a>".format(return_url)
+            self.send_response(303)
             self.send_header("Content-Length", len(data))
             self.send_header("Content-Type", "text/plain")
+            self.send_header("Location", return_url)
             self.end_headers()
             self.wfile.write(data)
             return
