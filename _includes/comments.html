@@ -6,6 +6,9 @@
 
 {{comment.author | strip | escape_once }}, {{ comment.date }}</pre>
   {% endfor %}
+  {% if comments.size == 0 %}
+  <p>No comments yet...</p>
+  {% endif %}
 
   <h3>Add comment</h3>
   <form action="/comments/{{ page.comments_subject_id }}?return_url={{ page.url }}" method="post" enctype="application/x-www-form-urlencoded">
