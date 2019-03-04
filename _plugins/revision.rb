@@ -8,11 +8,9 @@ module Jekyll
     class Generator < Jekyll::Generator
       def generate(site)
         return if ARGV.include?("--no-revision")
-        %w(posts).each do |type|
-          site.send(type).each do |item|
-            item.data['revisions'] = GitLogger.new(site.source, item.path, site.config['revision']).revisions
-            item.data['last_modified_at'] = item.data['revisions'][0]['date']
-          end
+        site.posts.docs.each do |item|
+          item.data['revisions'] = GitLogger.new(site.source, item.path, site.config['revision']).revisions
+          item.data['last_modified_at'] = item.data['revisions'][0]['date']
         end
       end
     end # Revision

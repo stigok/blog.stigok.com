@@ -22,7 +22,7 @@ module Jekyll
       filename = 'comments_subject_ids.json'
 
       mapping = {}
-      site.posts.each do |post|
+      site.posts.docs.each do |post|
         hash = Digest::SHA256.hexdigest post.data['date'].strftime('%s')
         mapping[hash] = post.url
       end
