@@ -18,11 +18,9 @@ MAX_REQUEST_BODY_BYTES = 10000
 
 
 # TODO: Memoize
-def get_post_ids():
-    post_ids = []
+def get_posts():
     with open(JSON_FEED_PATH, mode='r') as f:
-        post_ids += json.load(f)
-    return post_ids
+        return json.load(f)
 
 
 def write_liquid_comment_file(post_id, body, *, metadata=dict):
@@ -65,6 +63,7 @@ class CommentRequestHandler(http.server.BaseHTTPRequestHandler):
 
     def do_POST(self):
         # Only accept request to /comments/<id> with an optional trailing slash
+        post_urls   = get_posts()
         request_url = urllib.parse.urlsplit(self.path)
         request_qs  = urllib.parse.parse_qs(request_url.query)
         return_url  = request_qs.get('return_url', [None])[0]
@@ -72,12 +71,12 @@ class CommentRequestHandler(http.server.BaseHTTPRequestHandler):
         match       = re.match(r"/comments/(?P<id>[-\w]+)/?$", request_url.path)
         post_id     = match.group("id") if match else None
 
-        if not post_id or post_id not in get_post_ids():
+        if not post_id or post_id not in post_urls:
             self.send_error(404)
             return
 
         # Ignore requests not having `return_url` in querystring
-        if not return_url:
+        if not return_url or return_url != post_urls[post_id]:
             self.send_error(403, "Seems like a spoofed attempt")
             return
 

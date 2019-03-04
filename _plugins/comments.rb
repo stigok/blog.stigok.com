@@ -20,10 +20,15 @@ module Jekyll
 
     def generate(site)
       filename = 'comments_subject_ids.json'
-      subject_ids = site.posts.map { |post| Digest::SHA256.hexdigest post.data['date'].strftime('%s') }
+
+      mapping = {}
+      site.posts.each do |post|
+        hash = Digest::SHA256.hexdigest post.data['date'].strftime('%s')
+        mapping[hash] = post.url
+      end
 
       page = PageWithoutAFile.new(site, __dir__, '', filename).tap do |file|
-        file.content = JSON.generate(subject_ids)
+        file.content = JSON.generate(mapping)
         file.output
       end
 
