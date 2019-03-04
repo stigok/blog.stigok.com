@@ -129,6 +129,23 @@ ul.nostyle {
   list-style-type: none;
 }
 
+input, textarea {
+  padding: .5em;
+  border: 1px solid #bbb;
+
+  &:focus {
+    background: #fef;
+  }
+
+  &:hover {
+    border-color: #666;
+  }
+}
+
+textarea {
+  width: 100%;
+}
+
 // Import base theme partials
 @import
   "jekyll-theme-minimal" // Imported as static files, not a gem (assets/css)
