@@ -64,13 +64,13 @@ class CommentRequestHandler(http.server.BaseHTTPRequestHandler):
             return orig
 
     def do_POST(self):
-        # Only accept GET requests to /comments/<id>
-        # with an optional trailing slash
-        match = re.match(r"/comments/(?P<id>[-\w]+)/?$", self.path.split("?")[0])
-        post_id = match.group("id") if match else None
-        request_url = urrlib.parse.urlsplit(self.path)
-        request_qs  = urrlib.parse.parse_qs(request_url.query)
-        return_url  = request_qs.get('return_url', None)
+        # Only accept request to /comments/<id> with an optional trailing slash
+        request_url = urllib.parse.urlsplit(self.path)
+        request_qs  = urllib.parse.parse_qs(request_url.query)
+        return_url  = request_qs.get('return_url', [None])[0]
+
+        match       = re.match(r"/comments/(?P<id>[-\w]+)/?$", request_url.path)
+        post_id     = match.group("id") if match else None
 
         if not post_id or post_id not in get_post_ids():
             self.send_error(404)
@@ -133,7 +133,7 @@ class CommentRequestHandler(http.server.BaseHTTPRequestHandler):
             metadata = dict(author=author, email=email)
             write_liquid_comment_file(post_id, body, metadata=metadata)
 
-            data = "Redirecting to <a href=\"{0}\">{0}</a>".format(return_url)
+            data = "Redirecting to <a href=\"{0}\">{0}</a>".format(return_url).encode()
             self.send_response(303)
             self.send_header("Content-Length", len(data))
             self.send_header("Content-Type", "text/plain")
