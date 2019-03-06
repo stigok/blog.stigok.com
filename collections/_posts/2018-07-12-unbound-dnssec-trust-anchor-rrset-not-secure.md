@@ -66,6 +66,6 @@ Remember to restart the service after configuration changes
 
 ## References
 - [get-trust-anchor][]
-- [https://blog.uncensoreddns.org/]()
+- [https://blog.uncensoreddns.org/](https://blog.uncensoreddns.org/)
 
 [get-trust-anchor]: https://github.com/iana-org/get-trust-anchor
