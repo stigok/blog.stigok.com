@@ -2,7 +2,7 @@
 layout: post
 title: "Setting up wireless network on a Raspberry Pi 3 with Arch Linux Arm armv7h"
 date: 2017-06-05 23:14:36 +0200
-categories: systemd archarm linux networking wpa_supplicant
+categories: systemd archarm linux networking wpa_supplicant raspberrypi
 redirect_from:
   - /post/setting-up-wireless-network-on-a-raspberry-pi-3-with-arch-linux-arm-armv7h
 ---

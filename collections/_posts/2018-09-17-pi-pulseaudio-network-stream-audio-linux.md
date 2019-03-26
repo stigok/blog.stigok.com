@@ -2,7 +2,7 @@
 layout: post
 title:  "Stream audio over network with PulseAudio running on Raspberry Pi"
 date:   2018-09-17 19:33:26 +0200
-categories: pulseaudio audio streaming
+categories: pulseaudio audio streaming raspberrypi
 ---
 
 ## Introduction
