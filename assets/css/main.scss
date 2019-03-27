@@ -146,6 +146,11 @@ textarea {
   width: 100%;
 }
 
+#comments {
+  border: 1px solid #57d1ec;
+  background-color: #57d1ec33;
+}
+
 // Import base theme partials
 @import
   "jekyll-theme-minimal" // Imported as static files, not a gem (assets/css)
