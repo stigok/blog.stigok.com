@@ -31,6 +31,8 @@ This guide will result in the following network configuration:
 - DNS server: `91.239.100.100`
 - Endpoint: `<wireguard server ip>:53`
 
+DHCPv6 is not working as I expected. If you see what's wrong, please tell me.
+
 ## Setup steps
 ### Spoof ethernet MAC address
 
