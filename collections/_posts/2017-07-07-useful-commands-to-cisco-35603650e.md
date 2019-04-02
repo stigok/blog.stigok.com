@@ -89,3 +89,15 @@ Excplicitly pass a deprecated option to `ssh`
 
     $ ssh -o "KexAlgorithms diffie-hellman-group1-sha1" admin@switch.example.com
     (cisco)$
+
+### No matching cipher found
+
+When attempting to connect using SSH, a key error occurs, preventing connection
+
+    $ ssh admin@switch.example.com
+    Unable to negotiate with 10.0.23.16 port 22: no matching cipher found. Their offer: aes128-cbc,3des-cbc,aes192-cbc,aes256-cbc
+
+Excplicitly pass a deprecated cipher from the list above to `ssh`
+
+    $ ssh -o "Ciphers aes128-cbc,3des-cbc,aes192-cbc,aes256-cbc" admin@switch.example.com
+    (cisco)$
