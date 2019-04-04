@@ -7,6 +7,9 @@ redirect_from:
   - /post/reencrypt-luks-boot-partition
 ---
 
+> There is now a better way to do this using `cryptsetup-reencrypt`.
+> See `man cryptsetup-reencrypt` for more information.
+
 I was not happy with the performance I was getting with a key-size of 512, and decided to switch to a length of 256 to reduce time spent decrypting on boot and resume from disk. That balance between security and usability.
 
 Start by booting normally into your OS.
