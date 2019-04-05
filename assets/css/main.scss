@@ -151,6 +151,10 @@ textarea {
   background-color: #57d1ec33;
 }
 
+section + blockquote {
+    margin-top: 1.5em;
+}
+
 // Import base theme partials
 @import
   "jekyll-theme-minimal" // Imported as static files, not a gem (assets/css)
