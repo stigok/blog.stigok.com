@@ -484,6 +484,7 @@ Links that are not already scattered within the document
 - https://wiki.archlinux.org/index.php/Dm-crypt/System_configuration#mkinitcpio
 - https://wiki.archlinux.org/index.php/GRUB#GUID_Partition_Table_.28GPT.29_specific_instructions
 - https://jlk.fjfi.cvut.cz/arch/manpages/man/alpm-hooks.5
+- https://linux-blog.anracom.com/2018/11/30/full-encryption-with-luks-sha512-aes-xts-plain64-grub2-really-slow/
 
 [Arch Wiki hibernation notes]: https://wiki.archlinux.org/index.php/Power_management/Suspend_and_hibernate#About_swap_partition.2Ffile_size
 [random urandom]: https://unix.stackexchange.com/questions/324209/when-to-use-dev-random-vs-dev-urandom
