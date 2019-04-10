@@ -444,7 +444,7 @@ Then replace `%uuid%` with the UUID of the LVM partition.
 This can of course be done manually, but when stuck in a terminal, it might be
 easier to do with `sed`
 
-    # sed -i s/%uuid%/$(blkid -o value -s UUID /dev/nvme0n3)/ /etc/default/grub
+    # sed -i s/%uuid%/$(blkid -o value -s UUID /dev/nvme0n1p3)/ /etc/default/grub
 
 **BIOS:** Register GRUB on the MBR. Note that the reference is to the disk
 (*nvme0n1)*, **not** to the partition (*nvme0n1p1*):
