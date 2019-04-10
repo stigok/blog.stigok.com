@@ -44,6 +44,9 @@ versions of these tools) might be a little different on other distros.
 Desired partitioning scheme may, of course, vary. Sizes of my different
 partitions are based on my personal usage pattern.
 
+Make sure that your hand-typed password is inside the very first key-slot.
+This will reduce boot time. GRUB will try each key-slot in turn.
+
 ### Programs used
 
 Multiple programs are used in the task to make this work. Prepare to get to know
