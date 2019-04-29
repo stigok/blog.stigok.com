@@ -147,7 +147,7 @@ Create a new firewalld service definition for WireGuard
 Enable the custom WireGuard service in firewalld
 
 ```terminal
-# firewall-cmd --add-service=wireguard zone=public --permanent
+# firewall-cmd --add-service=wireguard --zone=public --permanent
 ```
 
 Enable masquerading
