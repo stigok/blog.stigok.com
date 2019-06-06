@@ -22,7 +22,7 @@ Install `boto3` using `pip`
 
 The below Python 3 program will list the name of all the current buckets you have.
 
-```
+```python
 import os
 import boto3
 
