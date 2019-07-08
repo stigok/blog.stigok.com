@@ -16,7 +16,7 @@ Start by booting normally into your OS.
 
 **WARNING** Take a backup of your system before continuing. At the **very least**, make absolutely sure you have all the decryption keys for all devices  backed up on a separate device that you indeed do have un-encrypted access to. I almost lost my decryption key for my LVM device due to having a solution with a decryption file embedded into the initramfs. Take caution!
 
-> It is assumed your system is set up something like in my other post; LVM on LUKS with encrypted boot partition. (TODO: Add link)
+> It is assumed your system is set up something like in my other post; [LVM on LUKS with encrypted boot partition](https://blog.stigok.com/2018/05/03/lvm-in-luks-with-encrypted-boot-partition-and-suspend-to-disk.html).)
 
 Backup the `/boot` partition (this will include the EFI, but doesn't really matter)
 
