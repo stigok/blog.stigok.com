@@ -45,6 +45,18 @@ func Sqrt(x float64) (float64, error) {
 }
 ```
 
+### Wrap existing errors to avoid custom errors
+
+```go
+func ReadConfig() ([]byte, error) {
+        home := os.Getenv("HOME")
+        config, err := ReadFile(filepath.Join(home, ".settings.xml"))
+        return config, errors.Wrap(err, "could not read config")
+}
+```
+
+[ref](https://dave.cheney.net/2016/04/27/dont-just-check-errors-handle-them-gracefully)
+
 ### Rot13Decode
 
 ```go
@@ -69,6 +81,7 @@ func Rot13Decode(encoded []byte) []byte {
 ## References
 - <https://tour.golang.org>
 - 1 <https://www.youtube.com/watch?v=29LLRKIL_TI>
+- <https://dave.cheney.net/2016/04/27/dont-just-check-errors-handle-them-gracefully>
 
 [tour]: https://tour.golang.org
 [1]: https://www.youtube.com/watch?v=29LLRKIL_TI
