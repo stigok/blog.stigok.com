@@ -2,10 +2,13 @@
 layout: post
 title:  "My jump into golang (notes)"
 date:   2019-07-05 16:18:40 +0200
-categories: golang
+categories: golang notes
 ---
 
 ## Introduction
+
+> Disclaimer: This post is not complete, hence does not promise to be a good
+> and valid point of reference in terms of quality for its readers.
 
 I'm learning Go, as one of my latest projects involve doing code review on a
 code base written in it. A very interesting language, with a lot of similarities
