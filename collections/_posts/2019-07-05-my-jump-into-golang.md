@@ -48,6 +48,8 @@ func Sqrt(x float64) (float64, error) {
 ### Wrap existing errors to avoid custom errors
 
 ```go
+import "github.com/pkg/errors"
+
 func ReadConfig() ([]byte, error) {
         home := os.Getenv("HOME")
         config, err := ReadFile(filepath.Join(home, ".settings.xml"))
