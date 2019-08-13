@@ -159,6 +159,11 @@ section + blockquote {
     margin-top: 1.5em;
 }
 
+.badge {
+    border: 1px solid #000;
+    padding: .5em;
+}
+
 // Import base theme partials
 @import
   "jekyll-theme-minimal" // Imported as static files, not a gem (assets/css)
