@@ -80,6 +80,35 @@ func Rot13Decode(encoded []byte) []byte {
 }
 ```
 
+### Filter arrays using higher order functions
+
+```go
+package main
+
+import "fmt"
+import "strings"
+
+func filter(s []string, f func(string) bool) []string {
+	var r []string
+	for _, v := range s {
+		if f(v) == true {
+			r = append(r, v)
+		}
+	}
+	return r
+}
+
+func main() {
+	words := []string{"apple", "orange", "kiwi"}
+	ewords := filter(words, func(w string) bool {
+		return strings.Contains(w, "e")
+	})
+	fmt.Printf("Words with an 'e': %v", ewords)
+}
+```
+
+[ref](https://golangbot.com/first-class-functions/)
+
 ## References
 - <https://tour.golang.org>
 - 1 <https://www.youtube.com/watch?v=29LLRKIL_TI>
