@@ -115,6 +115,7 @@ blockquote > :first-child {
 
 article > :first-child {
   margin-top: 0;
+  margin-bottom: .5rem;
 }
 article a {
   text-decoration: none !important;
@@ -125,6 +126,10 @@ article img {
   display: block;
   margin: 0 auto;
 }
+article h1 + p {
+  margin-top: 0;
+}
+
 ul.nostyle {
   list-style-type: none;
 }
