@@ -50,5 +50,99 @@ ON c._id=n.raw_contact_id
 ORDER BY c.display_name;
 ```
 
-Now I had a list of all the numbers. How I'll go about importing them, I
-don't yet know. Maybe manually...
+This yielded a list of values similar to this:
+
+```
+Ola Nordmann|+4798765432
+John Doe|+11800000000
+Ola Nordmann|+4784422107
+```
+
+Some contacts are returned with multiple numbers, so I want to group them up
+and create vCard records for each of my contacts.
+
+I wrote a script in Python to help me with this:
+
+```python
+"""
+Prints a vCard collection from a file with list of names and numbers.
+Expects a CSV (or pipe-separated) file containing a name and a number for each record.
+
+
+Author: Stig Kolstad (stig@stigok.com), Aug 2019
+License: https://creativecommons.org/licenses/by/4.0/
+
+
+## Example input file contents:
+
+Ola Nordmann|+4798765432
+John Doe|+11800000000
+Ola Nordmann|+4784422107
+
+## Resulting output string:
+
+BEGIN:VCARD
+VERSION:2.1
+N:;Ola Nordmann;;;
+TEL;CELL:+4798765432
+TEL;CELL:+4784422107
+END:VCARD
+BEGIN:VCARD
+VERSION:2.1
+N:;John Doe;;;
+TEL;CELL:+11800000000
+END:VCARD
+"""
+import argparse
+import os
+from collections import defaultdict
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('filename', help="Separated values file")
+    parser.add_argument('-s', '--separator', help="Value separator (default |)", default='|')
+    args = parser.parse_args()
+
+    FILE = args.filename
+    SEP  = args.separator
+
+    contacts = defaultdict(list)
+
+    # Collect all numbers for each distinct name into lists
+    with open(FILE, mode='r') as f:
+        for line in f:
+            name, number = line.strip().split(SEP)
+            contacts[name].append(number)
+
+    # Output VCF formatted records for each contact
+    for name, numbers in contacts.items():
+        print(vcfstr(name, numbers))
+
+
+def vcfstr(name=None, numbers=None):
+    """Returns a VCF vCard 2.1 formatted string"""
+    f = [ "BEGIN:VCARD", "VERSION:2.1", "N:;%s;;;" % name ]
+    for n in numbers:
+        f.append("TEL;CELL:%s" % n)
+    f.append("END:VCARD")
+
+    return os.linesep.join(f)
+
+if __name__ == "__main__":
+    main()
+```
+
+Then I ran this script with the results returned from the sqlite query and saved it to a vcf file.
+
+```
+$ python vcf.py contacts.txt > contacts.vcf
+$ adb push contacts.vcf
+```
+
+Then imported it on my phone again, through the settings menu in the Contacts app
+
+![Contact app import prompt](https://public.stigok.com/img/2019-08-21-023611.png)
+
+After a little second, the contacts were successfully imported!
+
+![Import successful](https://public.stigok.com/img/2019-08-21-024103.png)
