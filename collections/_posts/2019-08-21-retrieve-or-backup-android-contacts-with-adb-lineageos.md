@@ -146,3 +146,6 @@ Then imported it on my phone again, through the settings menu in the Contacts ap
 After a little second, the contacts were successfully imported!
 
 ![Import successful](https://public.stigok.com/img/2019-08-21-024103.png)
+
+## References
+- <https://en.wikipedia.org/wiki/VCard#vCard_2.1>
