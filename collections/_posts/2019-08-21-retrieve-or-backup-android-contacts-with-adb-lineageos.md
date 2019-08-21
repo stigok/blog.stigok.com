@@ -135,8 +135,8 @@ if __name__ == "__main__":
 Then I ran this script with the results returned from the sqlite query and saved it to a vcf file.
 
 ```
-$ python vcf.py contacts.txt > contacts.vcf
-$ adb push contacts.vcf
+$ python vcf.py contacts.txt > old-contacts.vcf
+$ adb push old-contacts.vcf /data/Download/
 ```
 
 Then imported it on my phone again, through the settings menu in the Contacts app
