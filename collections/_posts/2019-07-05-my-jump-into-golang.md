@@ -109,6 +109,99 @@ func main() {
 
 [ref](https://golangbot.com/first-class-functions/)
 
+### Global variable definition pitfalls
+
+```go
+import "fmt"
+
+type CustomInt int
+
+var i CustomInt
+
+func main() {
+	fmt.Printf("type %T, value %v, address %p\n", i, i, &i)
+	// type main.CustomInt, value 0, address 0x1c4be4
+
+	i = 21
+	fmt.Printf("type %T, value %v, address %p\n", i, i, &i)
+	//type main.CustomInt, value 21, address 0x1c4be4
+
+	i := 21
+	fmt.Printf("type %T, value %v, address %p\n", i, i, &i)
+	//type int, value 21, address 0x414030
+
+	i = 7
+	fmt.Printf("type %T, value %v, address %p\n", i, i, &i)
+	//type int, value 7, address 0x414030
+}
+```
+
+Taking a closer look at the code above, a custom type `CustomInt` has been
+defined. It's an `int` itself, and a variable `i` of type `CustomInt` is
+also defined.
+
+In the `main()` function, the type, value and memory address of the objects
+are printed. What I found to be causing a bit of trouble for me, is that I
+am allowed to do `i := 21`, even though the variable already exists (in the
+outer scope), and the `CustomInt` type is replaced with an `int`.
+
+I feel like I'm missing a mesage from the compiler, warning me about
+redefining a global variable. It doesn't even care that `i` is unused,
+even if it's not exported, like in the below example:
+
+```go
+package main
+
+import "fmt"
+
+type CustomInt int
+
+var i CustomInt
+
+func main() {
+	i := "Hello"
+	fmt.Printf("type %T, value %v, address %p\n", i, i, &i)
+}
+```
+
+I had done a similar thing in a project i was working with this week, causing
+some disturbance in my mind. It looked something like the following. Can you
+spot the mistake?
+
+```go
+package main
+
+import "fmt"
+import "time"
+
+var msgs chan string
+
+func printer() {
+	for {
+		select {
+		case m := <-msgs:
+			fmt.Println(m)
+		case <-time.After(1 * time.Millisecond):
+			fmt.Println("... no new messages arrived")
+		}
+	}
+}
+
+func main() {
+	msgs := make(chan string)
+
+	go printer()
+	
+	func(c chan string) {
+		for i := 0; i < 10; i++ {
+			msgs <- fmt.Sprintf("Hello %v", i)
+		}
+	}(msgs)
+}
+```
+
+[ref](https://www.reddit.com/r/golang/comments/bi2k7o/a_variable_which_is_declared_outside_of_the_main/elxmo12/)
+
 ## References
 - <https://tour.golang.org>
 - 1 <https://www.youtube.com/watch?v=29LLRKIL_TI>
