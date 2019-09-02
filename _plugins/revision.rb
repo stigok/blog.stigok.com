@@ -27,7 +27,7 @@ module Jekyll
       def revisions
         return nil unless is_git_repo?
         logs = Executor.sh('git', 'log', '--pretty=%h|%ci|%an|%s', '--max-count=' + max_count.to_s, relative_path_from_git_dir)
-        logs.lines.map do |line|
+        logs.lines.reverse.map do |line|
           parts = line.split('|')
           {"hash" => parts[0], "date" => parts[1], "author" => parts[2], "message" => parts[3..-1].join('|')}
         end
