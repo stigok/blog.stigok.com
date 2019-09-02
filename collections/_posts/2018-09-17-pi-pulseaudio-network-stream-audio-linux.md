@@ -48,13 +48,13 @@ Since I had some problems running pulseaudio on the Pi in user mode, I'm just
 going with `--system` mode, although the logs tells me it is not advised.
 This Pi is only used headlessly by me anyway.
 
-Appending some lines to the system config file of pulseaudio to enable network
-audio. Allowing link-local IPv6 addresses is vital if you're on an IPv6-enabled
-network and Avahi is configured for it.
+Appending some lines to the pulseaudio system configuration file to enable network
+audio. Allow all IPv4 private internet addresses, and allowing link-local IPv6 addresses
+is vital if you're on an IPv6-enabled network and Avahi is configured for it.
 
 ```
 # tee -a /etc/pulse/system.pa
-load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1;10.1.1.0/24;fe80::/64
+load-module module-native-protocol-tcp auth-ip-acl=127.0.0.0/8;10.0.0.0/8;172.16.0.0/12;192.168.0.0/16;fe80::/10
 load-module module-zeroconf-publish
 ```
 
