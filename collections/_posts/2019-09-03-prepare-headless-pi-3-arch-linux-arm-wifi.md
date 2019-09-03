@@ -19,28 +19,27 @@ system at */mnt/root*.
 Pi should never be put on an untrusted network before those are changed
 (there's a reason the username is *alarm*).
 
-Create a symlink to the `wpa_supplicant` systemd instance service file to make
-it start on boot.
+Let's let `dhcpcd` take care of wireless networking (it's not handling wired
+connections with this setup):
 
 ```
-# cd /mnt/root/etc/systemd/system/multi-user.target.wants
-# ln -s /usr/lib/systemd/system/wpa_supplicant@.service wpa_supplicant@wlan0.service
+# ln -s /usr/lib/systemd/system/dhcpcd@.service /mnt/root/etc/systemd/system/multi-user.target.wants/dhcpcd@wlan0.service
 ```
 
-`dhcpcd` also has to start at boot in order to handle DHCP for the wireless
-interface when it connects
+Add a hook so that `dhcpcd` can take care of starting `wpa_supplicant`:
 
 ```
-# ln -s /usr/lib/systemd/system/dhcpcd.service
+# ln -s /usr/share/dhcpcd/hooks/10-wpa_supplicant /mnt/root/usr/lib/dhcpcd/dhcpcd-hooks/
 ```
 
 Create a `wpa_supplicant` configuration file with your wifi connection details
 
 ```
-# wpa_passphrase "My SSID" "My passphrase" > /mnt/root/etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+# echo "ctrl_interface=DIR=/var/run/wpa_supplicant" > /mnt/root/etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+# wpa_passphrase "My SSID" "My passphrase" >> /mnt/root/etc/wpa_supplicant/wpa_supplicant-wlan0.conf
 ```
 
-Place your public key inside the SSH user configuration directory to allow for
+Place your public key inside root user's SSH configuration directory to allow for
 root login
 
 ```
