@@ -76,3 +76,34 @@ Last login: Mon Jul 22 14:30:50 2019 from 192.168.1.19
 ```
 
 Apparently, I need to get `ntpd` or `systemd-timesyncd` running.
+
+## Troubleshooting
+### Network time synchronisation
+
+I had troubles using `systemd-timesyncd`, as it was failing all the time.
+And, initially, I had problems with the default config of `openntpd`, but got
+it working by avoiding hostnames for the `server` directives, and instead
+using plain IPv4 addresses. I got the IPs of the DNS records of `pool.ntp.org`
+(`dig +short pool.ntp.org`).
+
+`/etc/ntpd.conf` (on the Pi):
+
+```
+server 194.192.112.20
+server 92.246.24.228
+server 193.162.159.97
+server 5.103.128.88
+```
+
+Add a hook at `/etc/dhcpcd.exit-hook` (on the Pi):
+
+```
+#!/bin/bash
+
+if $if_up; then
+	# Don't wait for this to finish
+	systemctl start openntpd.service &
+elif $if_down; then
+	systemctl stop openntpd.service
+fi
+```
