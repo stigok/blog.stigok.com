@@ -202,6 +202,10 @@ func main() {
 
 [ref](https://www.reddit.com/r/golang/comments/bi2k7o/a_variable_which_is_declared_outside_of_the_main/elxmo12/)
 
+### Useful videos and presentation
+
+- [GopherCon 2019: Mat Ryer - How I Write HTTP Web Services after Eight Years](https://www.youtube.com/watch?v=rWBSMsLG8po)
+
 ## References
 - <https://tour.golang.org>
 - 1 <https://www.youtube.com/watch?v=29LLRKIL_TI>
