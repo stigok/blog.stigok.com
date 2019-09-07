@@ -14,10 +14,17 @@
     <ul id="revisionList">
       {% for rev in page.revisions %}
         <li>
-          <strong title="{{ rev.date }}">{{ rev.date | date: "%d %b %Y" }}:</strong>
           {% if forloop.first %}
+            {% comment %}
+              - Since creation date might be different than the date it was
+                checked into git.
+              - A static test for the initial commit of the post will probably
+                always be better than the actual commit message.
+            {% endcomment %}
+            <strong title="{{ page.date }}">{{ page.date | date: "%d %b %Y" }}:</strong>
             Post was created
           {% else %}
+            <strong title="{{ rev.date }}">{{ rev.date | date: "%d %b %Y" }}:</strong>
             {{ rev.message }}
           {% endif %}
           (<a href="{{ site.upstream }}/commit/{{ rev.hash }}" rel="nofollow">diff</a>)
