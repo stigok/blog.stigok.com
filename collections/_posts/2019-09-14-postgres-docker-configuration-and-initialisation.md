@@ -14,7 +14,8 @@ SELECT set_config('log_statement', 'all', true);
 ALTER SYSTEM SET log_statement = 'all';
 ```
 
-I can place executable *.sh* and *.sql* files in a special folder inside
+I will be running postgres in a Docker container, and the `postgres:9.4` image
+lets me place executable *.sh* and *.sql* files in a special folder inside
 the container, */docker-entrypoint-initdb.d*, that will be run when the
 container database initialises. These scripts will be executed before the
 server is listening for requests, the first time it is started.
@@ -23,7 +24,7 @@ Mount a configuration file to enable logging of all executed queries:
 
 ```terminal
 $ echo "ALTER SYSTEM SET log_statement = 'all';" > conf.sql
-$ docker run --name psql-test -v $(pwd)/conf.sql:/docker-entrypoint-initdb.d/conf.sql postgres
+$ docker run --name psql-test -v $(pwd)/conf.sql:/docker-entrypoint-initdb.d/conf.sql postgres:9.4
 ```
 
 Now, when I execute a query, it shows up in my logs like:
