@@ -2,7 +2,7 @@
 layout: post
 title:  "Update firmware of Samsung EVO 840 and 850 SSD drives on Linux"
 date:   2019-10-09 23:06:25 +0200
-categories: ssd, firmware
+categories: ssd firmware
 ---
 
 ## Firmware upgrade procedure
