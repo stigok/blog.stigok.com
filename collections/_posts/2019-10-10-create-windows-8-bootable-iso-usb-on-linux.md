@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  ""
+title:  "Create a Windows 8 bootable USB stick from an ISO on Linux"
 date:   2019-10-10 12:28:39 +0200
 categories: windows recovery
 ---
