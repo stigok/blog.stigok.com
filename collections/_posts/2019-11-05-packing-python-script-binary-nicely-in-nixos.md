@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Packaging a Python script binary nicely in Nix for NixOS"
+title:  "Packaging an executable Python script nicely in Nix for NixOS"
 date:   2019-11-05 17:11:33 +0100
 categories: nixos distribution
 ---
