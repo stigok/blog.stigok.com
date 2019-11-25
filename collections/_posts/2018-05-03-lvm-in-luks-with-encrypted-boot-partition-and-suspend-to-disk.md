@@ -398,7 +398,7 @@ Some warning may show, but errors should not occur.
 Set strict permissions for the ramdisk images now that the decryption keys
 are embedded in them
 
-    # chmod 0600 /boot/initramfs-linux*
+    # chmod 0400 /boot/initramfs-linux*
 
 These permissions will be reset every time `mkinitcpio` is run. Typically it
 is automatically triggered after a package install or upgrade occurs that
@@ -416,7 +416,7 @@ hook for pacman inside `/etc/pacman.d/hooks/99-initramfs-chmod.hook`:
     [Action]
     Description = Setting proper permissions for linux initcpios...
     When = PostTransaction
-    Exec = /usr/bin/chmod 0600 /boot/initramfs-linux.img /boot/initramfs-linux-fallback.img
+    Exec = /usr/bin/chmod 0400 /boot/initramfs-linux.img /boot/initramfs-linux-fallback.img
 
 Make sure this works as intended by re-installing mkinitcpio
 
