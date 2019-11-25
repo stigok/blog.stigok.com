@@ -485,6 +485,29 @@ or not.
 
 Please send me an e-mail if you have any troubles -- or if you didn't!
 
+## Troubleshooting
+
+### Dumped to GRUB rescue shell
+
+If you are dumped to grub rescue mode when booting, chances are that there's
+a typo or two somewhere in your configuration files. To avoid having to start
+over again from scratch, you can boot again with the Arch Linux installation
+media and unlock, mount and chroot back to where you were before rebooting.
+
+```terminal
+# cryptsetup open /dev/sda3 encrypted-lvm
+# mount /dev/mapper/Main-root /mnt
+# cryptsetup open /dev/sda2 encrypted-boot
+# mount /dev/mapper/encrypted-boot /mnt/boot
+# mount /dev/sda1 /mnt/boot/efi
+# mount /dev/mapper/Main-home /mnt/home
+# swapon /dev/mapper/Main-swap
+# arch-chroot /mnt
+```
+
+If you want to dig through the rescue mode, you can see my [other post covering
+possible recovery][grub rescue post] from the shell itself.
+
 ## References
 
 Links that are not already scattered within the document
@@ -498,4 +521,5 @@ Links that are not already scattered within the document
 
 [Arch Wiki hibernation notes]: https://wiki.archlinux.org/index.php/Power_management/Suspend_and_hibernate#About_swap_partition.2Ffile_size
 [random urandom]: https://unix.stackexchange.com/questions/324209/when-to-use-dev-random-vs-dev-urandom
+[grub rescue post]: /2017/12/30/decrypt-and-mount-luks-disk-from-grub-rescue-mode.html
 
