@@ -287,7 +287,7 @@ You should now be connected to the internet.
 Install base packages. Add *your* favorite editor instead of `vim` if you'd like,
 and skip adding `efibootmgr` if you are **not** on a **UEFI** system.
 
-    # pacstrap /mnt base base-devel vim grub efibootmgr
+    # pacstrap /mnt base base-devel linux lvm2 vim grub mkinitcpio efibootmgr
 
 Generate the fstab then *open the file to see if it looks right*
 
