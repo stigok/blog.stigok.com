@@ -28,6 +28,8 @@ Mount the encrypted */boot* partition (as attempted from the start). I know that
 
     grub rescue> cryptomount (hd0,gpt2)
 
+If you want to specify a UUID instead, use the `-u` option to [cryptomount][].
+
 Try to enter the correct passphrase
 
     Attempting to decrypt master key...
@@ -47,5 +49,17 @@ Boot normally as GRUB tried to do at first
 
 Now you should be taken to the next step in the boot process, which in my case is the GRUB OS selection menu. Works for me!
 
+## Other commands
+
+The rescue shell does not have a whole lot of commands. It doesn't even have a
+`help` command. For some more information about the available functions, consult
+the GRUB manual section for "*[Commands][1]*" and
+the subsection "*[GRUB only offers a rescue shell][2]*".
+
 ## References
-- https://www.coreboot.org/GRUB2
+- <https://www.coreboot.org/GRUB2>
+- <https://www.gnu.org/software/grub/>
+
+[cryptomount]: https://www.gnu.org/software/grub/manual/grub/html_node/cryptomount.html#cryptomount
+[1]: https://www.gnu.org/software/grub/manual/grub/html_node/Commands.html#Commands
+[2]: https://www.gnu.org/software/grub/manual/grub/html_node/GRUB-only-offers-a-rescue-shell.html#GRUB-only-offers-a-rescue-shell
