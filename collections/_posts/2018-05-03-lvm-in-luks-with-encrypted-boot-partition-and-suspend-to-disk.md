@@ -389,7 +389,7 @@ way** to recover the key-file used to unlock the LVM partition.
 threat-model, this might be unecessary.
 
     # # Skip this step if you don't understand the risks.
-    # cryptsetup luksKillSlot /dev/nvme0n1p3 0 --keyfile /etc/initcpio/keys/encrypted-lvm.key
+    # cryptsetup luksKillSlot /dev/nvme0n1p3 0 --key-file /etc/initcpio/keys/encrypted-lvm.key
 
 Create the initial ramdisk environment and make sure it doesn't return any errors.
 Some warning may show, but errors should not occur.
