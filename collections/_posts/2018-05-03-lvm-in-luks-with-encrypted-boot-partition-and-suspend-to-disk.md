@@ -171,9 +171,10 @@ You have to decide for yourself if customising the parameters for `luksFormat` i
 If you're unsure, remove all of them and use the defaults (`cryptsetup -v luksFormat <device>`).
 
 Read the outputs of these commands carefully. In particular how to say *yes*. Start by creating
-the luks container for encrypted boot
+the luks container for encrypted boot. The boot partition must be of type `luks1` since support
+for LUKS2 headers is missing in GRUB right now ([GRUB bug report](https://savannah.gnu.org/bugs/?55093)).
 
-    # cryptsetup -v --key-size 512 --hash sha256 --iter-time 5000 --use-random luksFormat /dev/nvme0n1p2
+    # cryptsetup -v --key-size 512 --type luks1 --hash sha256 --iter-time 5000 --use-random luksFormat /dev/nvme0n1p2
 
 Then create the root container
 
