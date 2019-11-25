@@ -9,6 +9,14 @@
     </small>
   </p>
   {% endif %}
+  {% if page.categories contains "draft" %}
+  <div class="notice">
+    <strong>Warning:</strong>
+    This post is a draft and is to be considered unfinished.
+    The content might be of poor quality, might not have been tested, or can
+    even be misleading!
+  </div>
+  {% endif %}
   <section id="revisions">
     Revision history
     <ul id="revisionList">
