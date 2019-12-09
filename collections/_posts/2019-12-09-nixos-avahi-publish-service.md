@@ -44,6 +44,12 @@ $ avahi-browse -park | grep nix
 =;wlp3s0;IPv4;nix\032\09100\05830\05818\058a8\058e9\05850\093;_workstation._tcp;local;nix.local;192.168.0.2;9;
 ```
 
+## Troubleshooting
+### Debug mDNS traffic using tcpdump
+
+```
+# tcpdump -ni wlp3s0 port 5353
+```
 
 ## References
 - <https://jarmac.org/category/nixos.html>
