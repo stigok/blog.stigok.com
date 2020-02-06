@@ -24,17 +24,8 @@ LIMIT 1
 ERR: error parsing query: found SUBSCRIPTION, expected identifier, string, number, bool at line 1, char 32
 ```
 
-The next one, double-quoting `subscription` returns an empty result set:
-
-```
-SELECT * FROM azureCosts
-WHERE "subscription" = "Datahub" AND
-      costsReport = "total" AND
-      time = 1580860800000000000
-LIMIT 1
-```
-
-This one, single-quoting all tag names and string values also returns an empty result set:
+This one, single-quoting all tag names and string values returns an empty result
+set, but there's no error:
 
 ```
 SELECT * FROM azureCosts
@@ -44,7 +35,18 @@ WHERE 'subscription' = 'Datahub' AND
 LIMIT 1
 ```
 
-This next one worked as I intended:
+The next one, double-quoting `subscription` and the string values also returns an
+empty result set:
+
+```
+SELECT * FROM azureCosts
+WHERE "subscription" = "Datahub" AND
+      costsReport = "total" AND
+      time = 1580860800000000000
+LIMIT 1
+```
+
+While this last one worked as I intended:
 
 ```
 SELECT * FROM azureCosts
@@ -67,7 +69,7 @@ pointed me on to the [InfluxDB v1.7 FAQ][faq], stating the following:
 
 ## Debugging tips
 
-You can see incoming queries in the `influxdb` systemd unit logs
+You can see incoming queries in the `influxdb` systemd unit logs as they come in
 
 ```
 # export DB=my_database
