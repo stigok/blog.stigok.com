@@ -386,7 +386,7 @@ initially when creating the LUKS container **can optionally** be removed
 from the device. If this is done, unlocking the boot partition is the **only
 way** to recover the key-file used to unlock the LVM partition.
 **Use the below command with caution**. Depending on your security
-threat-model, this might be unecessary.
+threat-model, this might be unnecessary.
 
     # # Skip this step if you don't understand the risks.
     # cryptsetup luksKillSlot /dev/nvme0n1p3 0 --key-file /etc/initcpio/keys/encrypted-lvm.key
