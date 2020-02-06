@@ -6,15 +6,15 @@ categories: linux
 ---
 
 I think CUPS is too much. I just want to print simple files from the command
-line. This is how it works for me with the printers I have been connecting too.
+line. This is how it works for me with the printers I have been connecting to.
 
-Depending on how your printer is connected, the target to which you can pipe
-to will be either
+Depending on how your printer is connected, the target to which you pipe
+will differ
 
 - if connected through the **local network**, you can use `netcat`,
   `nc`, `lp`, or even just pipe to `/dev/tcp/<ip>/<port>` on some systems.
 - if connected through **USB**, the printer might have been made available
-  as a USB device in `/dev/usb/<something>`.
+  as a USB device in `/dev/usb/<something>` or `/dev/usb0` (...or `usb1`).
 
 In the examples below I am using a network printer and connecting to it
 using the following information:
