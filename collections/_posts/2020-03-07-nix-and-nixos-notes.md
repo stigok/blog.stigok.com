@@ -37,6 +37,17 @@ $ nix-instantiate --arg config '{}' --arg pkgs '<nixpkgs>' --eval postgresql.nix
 
 Reference: slack1256 #nixos @ Freenode
 
+### Install a package for current user
+
+```
+$ nix-env -iA nixos.thunderbird
+```
+
+This will make the package available for the current logged in user only, *except*
+when logged in as root, which will make it available for everyone.
+
+Reference: https://nixos.org/nixos/manual/index.html#sec-ad-hoc-packages
+
 ## References
 
 - <https://nixery.dev/nix-1p.html>
