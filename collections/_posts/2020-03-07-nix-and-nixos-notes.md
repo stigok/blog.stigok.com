@@ -37,6 +37,18 @@ $ nix-instantiate --arg config '{}' --arg pkgs '<nixpkgs>' --eval postgresql.nix
 
 Reference: slack1256 #nixos @ Freenode
 
+### Inject `config` and `services` variables to the nix repl
+
+This has to be run on a machine running NixOS itself
+
+```shell
+$ nix repl '<nixpkgs/nixos>'
+> config
+> config.services
+```
+
+Reference: energizer bqv[m] clever #nixos @ Freenode
+
 ### Install a package for current user
 
 ```
