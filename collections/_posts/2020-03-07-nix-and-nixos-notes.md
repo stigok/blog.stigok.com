@@ -12,9 +12,9 @@ of , however, they don't contain the same amount of information. In order to
 find all information available for a certain topic you might look for, prepare
 to look through all of the following sources:
 
-- https://nixos.org/nix/manual/
-- https://nixos.org/nixos/manual/
-- https://nixos.org/nixpkgs/manual/
+- <https://nixos.org/nix/manual/>
+- <https://nixos.org/nixos/manual/>
+- <https://nixos.org/nixpkgs/manual/>
   - [Library functions](https://nixos.org/nixpkgs/manual/#sec-functions-library)
 
 ### String interpolation
