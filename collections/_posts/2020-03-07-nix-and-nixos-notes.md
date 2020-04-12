@@ -5,6 +5,18 @@ date:   2020-03-07 19:18:27 +0100
 categories: nixos draft
 ---
 
+## Manual page sources
+
+When it comes to Nix, there are some different manuals which overlaps in terms
+of , however, they don't contain the same amount of information. In order to
+find all information available for a certain topic you might look for, prepare
+to look through all of the following sources:
+
+- https://nixos.org/nix/manual/
+- https://nixos.org/nixos/manual/
+- https://nixos.org/nixpkgs/manual/
+  - [Library functions](https://nixos.org/nixpkgs/manual/#sec-functions-library)
+
 ### String interpolation
 ### Use variable as map/object key
 
