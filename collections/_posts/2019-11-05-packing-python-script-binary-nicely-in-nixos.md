@@ -149,16 +149,16 @@ Create this file right next to *default.nix*
 { config, lib, pkgs, ... }:
 
 let
-        # The package itself. It resolves to the package installation directory.
-        ruterstop = pkgs.callPackage ./default.nix {};
+    # The package itself. It resolves to the package installation directory.
+    ruterstop = pkgs.callPackage ./default.nix {};
 
-        # An object containing user configuration (in /etc/nixos/configuration.nix)
-        cfg = config.services.ruterstop;
+    # An object containing user configuration (in /etc/nixos/configuration.nix)
+    cfg = config.services.ruterstop;
 
-        # Build a command line argument if user chose direction option
-        directionArg = if cfg.direction == ""
-                          then ""
-                          else "--direction=${cfg.direction} ";
+    # Build a command line argument if user chose direction option
+    directionArg = if cfg.direction == ""
+                   then ""
+                   else "--direction=${cfg.direction} ";
 in {
     # Create the main option to toggle the service state
     options.services.ruterstop.enable = lib.mkEnableOption "ruterstop";
