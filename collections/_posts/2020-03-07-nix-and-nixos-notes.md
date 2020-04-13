@@ -13,6 +13,7 @@ find all information available for a certain topic you might look for, prepare
 to look through all of the following sources:
 
 - <https://nixos.org/nix/manual/>
+  - [Language constructs](https://nixos.org/nix/manual/#sec-constructs)
 - <https://nixos.org/nixos/manual/>
 - <https://nixos.org/nixpkgs/manual/>
   - [Library functions](https://nixos.org/nixpkgs/manual/#sec-functions-library)
