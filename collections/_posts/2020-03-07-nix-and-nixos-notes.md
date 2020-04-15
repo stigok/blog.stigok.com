@@ -18,6 +18,14 @@ to look through all of the following sources:
 - <https://nixos.org/nixpkgs/manual/>
   - [Library functions](https://nixos.org/nixpkgs/manual/#sec-functions-library)
 
+## Package management
+
+### Search for package
+
+```
+$ nix search packagename
+```
+
 ### String interpolation
 ### Use variable as map/object key
 
