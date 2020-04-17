@@ -2,7 +2,7 @@
 layout: post
 title:  "Overriding an existing Perl package in NixOS"
 date:   2020-04-16 01:18:35 +0200
-categories: nixos perl
+categories: nixos nix perl irc irssi
 ---
 
 I am running irssi as my IRC client. Before I moved from CentOS to NixOS,
