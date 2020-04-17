@@ -5,20 +5,17 @@ date:   2020-04-16 01:18:35 +0200
 categories: nixos perl
 ---
 
-I am running irssi as my IRC client on my NixOS server. I have a hightlighter script
-for irssi that notifies me whenever someone mentions my nickname. This script
-is written in Perl, like other irssi plugins.
+I am running irssi as my IRC client. Before I moved from CentOS to NixOS,
+I had a hightlighter script that notified me whenever my nickname was mentioned.
+This script is written in Perl, just like [other irssi scripts](https://scripts.irssi.org/).
 
 ![highlighter, notification-hub and libnotify](https://public.stigok.com/img/2020-04-17-002444.png)
 
-I was having a problem where both the [scriptassist.pl][] and [highlighter][highlighter]
-irssi scripts were unable to load due to missing Perl library dependencies.
+When I migrated to NixOS, the scripts were having some problems.
+[scriptassist.pl][] and [highlightcmd][highlighter] were unable to load due to
+missing Perl library dependencies.
 
 ```
-01:23 -!-  ___           _
-01:23 -!- |_ _|_ _ _____(_)
-01:23 -!-  | || '_(_-<_-< |
-01:23 -!- |___|_| /__/__/_|
 01:23 -!- Irssi v1.2.2 - https://irssi.org
 01:23 -!- Irssi: Error in script scriptassist:
 01:23 Can't locate LWP/UserAgent.pm in @INC (you may need to install the LWP::UserAgent module) (@INC contains: /home/sshow/.irssi/scripts
@@ -103,7 +100,7 @@ for a similar reason. I now came to know some new NixOS swiss army knives:
 - [`pkgs.<package>.overrideAttrs`](https://nixos.org/nixpkgs/manual/#sec-pkg-overrideAttrs): override derivation attributes for a named package
 - [`pkgs.makeWrapper`](https://nixos.org/nixpkgs/manual/#ssec-stdenv-functions): wrap a program to change its runtime environment
 
-All of which came to use in an override derivation for irssi:
+All of which came to use in an override derivation for irssi, *irssi-override.nix*:
 
 ```nix
 # This is an override to support execution of irssi scripts 'scriptassist'
@@ -145,8 +142,8 @@ All of which came to use in an override derivation for irssi:
 }
 ```
 
-Now, I can include this file in my main file */etc/nixos/configuration.nix" and
-add `irssi` to `systemPackages`. The snippet below has redacted
+Now, I can include this file in my main file */etc/nixos/configuration.nix* and
+add `irssi` to `systemPackages`. (The snippet below has been redacted.)
 
 ```
 { config, pkgs, ... }:
@@ -159,19 +156,20 @@ add `irssi` to `systemPackages`. The snippet below has redacted
     ./irssi-override.nix
   ];
 
-  environment.systemPackages = with pkgs; [ irssi ];
+  environment.systemPackages = [ pkgs.irssi ];
 }
 ```
 
-So I rebuild my system and make sure the config has no errors.
+I rebuild my system with that configuration and make sure that no parse or
+build errors occurs.
 
 ```
 $ sudo nixos-rebuild test
 ```
 
-Now, if I'm running `perl -V` from my local shell, I will still get the same `@INC`
-paths as before, but `irssi` will have additional paths included in its
-environment. We can verify this from within irssi:
+Now, if I'm running `perl -V` **from my local shell**, I will still get the same `@INC`
+paths as before, but **`irssi` will have additional paths included in its
+environment**. We can verify this from within irssi:
 
 ```
 /exec perl -V
@@ -212,7 +210,8 @@ environment. We can verify this from within irssi:
 17:14 -!- Irssi: process 0 (perl -V) terminated with return code 0
 ```
 
-The [higlighter script][highlighter] can now load properly.
+That's a long list of library paths. The [higlighter script][highlighter]
+is now able to load properly.
 
 ## References
 - <https://github.com/irssi/irssi/blob/master/INSTALL>
