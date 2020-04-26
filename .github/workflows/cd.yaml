@@ -48,8 +48,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Update Kubernetes deployment container image
-      uses: steebchen/kubectl@v1
+      uses: steebchen/kubectl@v1.0
       env:
         KUBE_CONFIG_DATA: ${{ secrets.KUBECONFIG_DATA }}
       with:
-        args: set image deploy/blog blog=${{ github.repository }}:${{ github.sha }}
+        args: set image deploy/blog blog=${{ secrets.DOCKER_REGISTRY }}/${{ github.repository }}:${{ github.sha }}
