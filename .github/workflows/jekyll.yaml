@@ -11,4 +11,5 @@ jobs:
 
     - name: Jekyll builder
       uses: jekyll/builder:3.8
-      run: jekyll build
+      with:
+        args: jekyll build
