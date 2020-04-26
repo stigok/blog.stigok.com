@@ -1,0 +1,52 @@
+name: Continous deployment
+
+on:
+  push:
+    branches:
+    - master
+  pull_request: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-16.04
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    # Because jekyll user (which doesn't exist in this step) needs write
+    # access to the build folder in the next step
+    - name: Create jekyll build dir
+      run: mkdir build && chmod 777 build
+
+    # Build site
+    - name: Jekyll builder
+      uses: docker://jekyll/builder:3.8
+      with:
+        args: jekyll build -d build
+
+    # Create new image
+    - name: Build and push Docker image
+      uses: elgohr/Publish-Docker-Github-Action@2.14
+      with:
+        name: ${{ github.repository }}
+        dockerfile: .deploy/Dockerfile
+        context: build/
+        tags: latest, ${{ github.sha }}
+
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        registry: ${{ secrets.DOCKER_REGISTRY }}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    # Only deploy if pushed to master
+    if: github.event_name == 'push' && github.ref == 'master'
+    steps:
+    - name: Update Kubernetes deployment container image
+      uses: steebchen/kubectl@v1.0.0
+      env:
+        KUBE_CONFIG_DATA: ${{ secrets.KUBECONFIG_DATA }}
+      with:
+        args: set image deploy/blog blog=${{ secrets.DOCKER_REGISTRY }}/${{ github.repository }}:${{ github.sha }}
