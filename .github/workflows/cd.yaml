@@ -48,7 +48,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Update Kubernetes deployment container image
-      uses: steebchen/kubectl@v1.0
+      uses: steebchen/kubectl@v1.0.0
       env:
         KUBE_CONFIG_DATA: ${{ secrets.KUBECONFIG_DATA }}
       with:
