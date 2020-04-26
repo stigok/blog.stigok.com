@@ -13,4 +13,4 @@ jobs:
       uses: docker://jekyll/builder:3.8
       with:
         entrypoint: /bin/bash
-        args: -c "cd $GITHUB_WORKSPACE && jekyll build"
+        args: -c "cd $GITHUB_WORKSPACE&& pwd && ls -al && jekyll build -d build"
