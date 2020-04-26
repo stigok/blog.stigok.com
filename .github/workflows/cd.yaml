@@ -1,11 +1,10 @@
 name: Continous deployment
 
 on:
-  push
-
-env:
-  IMAGE_NAME: ${{ github.repository }}
-  IMAGE_TAG: ${{ github.sha }}
+  push:
+    branches:
+    - master
+  pull_request: {}
 
 jobs:
   build:
@@ -46,6 +45,9 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+
+    # Only deploy if pushed to master
+    if: github.event_name == 'push' && github.ref == 'master'
     steps:
     - name: Update Kubernetes deployment container image
       uses: steebchen/kubectl@v1.0.0
