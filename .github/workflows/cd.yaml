@@ -35,7 +35,7 @@ jobs:
       uses: elgohr/Publish-Docker-Github-Action@2.14
       with:
         name: ${{ github.repository }}
-        dockerfile: .docker/Dockerfile
+        dockerfile: .deploy/Dockerfile
         context: build/
         tags: latest, ${{ github.sha }}
 
