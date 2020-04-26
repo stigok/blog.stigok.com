@@ -12,4 +12,5 @@ jobs:
     - name: Jekyll builder
       uses: docker://jekyll/builder:3.8
       with:
-        args: jekyll build
+        entrypoint: /bin/bash
+        args: -c 'cd $GITHUB_WORKSPACE; jekyll build'
