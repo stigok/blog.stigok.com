@@ -45,3 +45,26 @@ spec:
   selector:
     app: blog
   type: ClusterIP
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.class: nginx
+  labels:
+    app: blog
+  name: blog
+  namespace: stigok
+spec:
+  rules:
+  - host: blog.stigok.com
+    http:
+      paths:
+      - backend:
+          serviceName: blog
+          servicePort: 80
+  tls:
+  - hosts:
+    - blog.stigok.com
+    secretName: blog-tls-cert
