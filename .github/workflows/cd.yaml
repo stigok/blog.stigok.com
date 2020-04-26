@@ -15,7 +15,9 @@ jobs:
       uses: actions/checkout@v2
     - name: Debug statements
       run: |
-        echo ${{ github.event }}
+        echo truth: ${{ github.event_name }}
+        echo push ${{ contains(github.event, 'push') }}
+        echo pull_request ${{ contains(github.event, 'pull_request') }}
 
     # Because jekyll user (which doesn't exist in this step) needs write
     # access to the build folder in the next step
