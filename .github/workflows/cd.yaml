@@ -28,10 +28,10 @@ jobs:
     - name: Build and push Docker image
       uses: elgohr/Publish-Docker-Github-Action@2.14
       with:
-        name: ${{ IMAGE_NAME }}
+        name: ${{ github.repository }}
         dockerfile: .docker/Dockerfile
         context: build/
-        tags: latest, ${{ IMAGE_TAG }}
+        tags: latest, ${{ github.sha }}
 
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
@@ -46,4 +46,4 @@ jobs:
       env:
         KUBE_CONFIG_DATA: ${{ secrets.KUBECONFIG_DATA }}
       with:
-        args: set image deploy/blog blog=${{ IMAGE_NAME }}:${{ IMAGE_TAG }}
+        args: set image deploy/blog blog=${{ github.repository }}:${{ github.sha }}
