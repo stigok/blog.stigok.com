@@ -11,3 +11,5 @@ jobs:
 
     - name: Build Jekyll site.
       uses: meitar/jekyll-builder-for-github-pages-action@v1 # Or whatever "@ref" you want.
+      env:
+        DEBUG: "true"
