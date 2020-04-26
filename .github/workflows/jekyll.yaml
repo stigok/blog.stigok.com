@@ -8,10 +8,28 @@ jobs:
     runs-on: ubuntu-16.04
     steps:
     - uses: actions/checkout@v2
+
+    # Because jekyll user doesn't exist in this step, make build folder a+w
     - name: Create jekyll build dir
       run: mkdir build && chmod 777 build
+
+    # Build site
     - name: Jekyll builder
       uses: docker://jekyll/builder:3.8
       with:
         entrypoint: /bin/bash
         args: -c "ls -al && jekyll build -d build"
+
+    # Create new image
+    - name: Build and push Docker image
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: ${{ github.repository }}
+        dockerfile: .docker/Dockerfile
+        context: build/
+        tags: latest
+        snapshot: true
+
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        registry: ${{ secrets.DOCKER_REGISTRY }}
