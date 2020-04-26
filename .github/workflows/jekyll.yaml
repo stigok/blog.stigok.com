@@ -9,7 +9,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    # Because jekyll user doesn't exist in this step, make build folder a+w
+    # Because jekyll user (which doesn't exist in this step) needs write
+    # access to the build folder in the next step
     - name: Create jekyll build dir
       run: mkdir build && chmod 777 build
 
@@ -17,12 +18,11 @@ jobs:
     - name: Jekyll builder
       uses: docker://jekyll/builder:3.8
       with:
-        entrypoint: /bin/bash
-        args: -c "ls -al && jekyll build -d build"
+        args: jekyll build -d build
 
     # Create new image
     - name: Build and push Docker image
-      uses: elgohr/Publish-Docker-Github-Action@master
+      uses: elgohr/Publish-Docker-Github-Action@2.14
       with:
         name: ${{ github.repository }}
         dockerfile: .docker/Dockerfile
