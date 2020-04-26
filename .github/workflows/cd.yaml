@@ -11,7 +11,11 @@ jobs:
   build:
     runs-on: ubuntu-16.04
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Debug statements
+      run: |
+        echo ${{ github.event }}
 
     # Because jekyll user (which doesn't exist in this step) needs write
     # access to the build folder in the next step
