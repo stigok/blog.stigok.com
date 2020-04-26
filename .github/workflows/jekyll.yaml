@@ -9,9 +9,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Create jekyll build dir
-      run: mkdir build && chown jekyll:jekyll build
+      run: mkdir build && chmod 777 build
     - name: Jekyll builder
       uses: docker://jekyll/builder:3.8
       with:
         entrypoint: /bin/bash
-        args: -c "set -x; cd $GITHUB_WORKSPACE && id && pwd && ls -al ../ && ls -al && jekyll build -d build"
+        args: -c "ls -al && jekyll build -d build"
