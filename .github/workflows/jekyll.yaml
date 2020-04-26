@@ -8,9 +8,10 @@ jobs:
     runs-on: ubuntu-16.04
     steps:
     - uses: actions/checkout@v2
-
+    - name: Create jekyll build dir
+      run: mkdir build && chown jekyll:jekyll build
     - name: Jekyll builder
       uses: docker://jekyll/builder:3.8
       with:
         entrypoint: /bin/bash
-        args: -c "set -x; cd $GITHUB_WORKSPACE && id && pwd && ls -al ../ && ls -al && mkdir build && jekyll build -d build"
+        args: -c "set -x; cd $GITHUB_WORKSPACE && id && pwd && ls -al ../ && ls -al && jekyll build -d build"
