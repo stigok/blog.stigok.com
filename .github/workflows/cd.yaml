@@ -30,7 +30,7 @@ jobs:
       with:
         name: ${{ github.repository }}
         dockerfile: .deploy/Dockerfile
-        context: build/
+        context: .
         tags: latest, ${{ github.sha }}
 
         username: ${{ secrets.DOCKER_USERNAME }}
