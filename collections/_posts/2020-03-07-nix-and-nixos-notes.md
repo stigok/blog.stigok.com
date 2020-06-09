@@ -81,6 +81,21 @@ when logged in as root, which will make it available for everyone.
 
 Reference: https://nixos.org/nixos/manual/index.html#sec-ad-hoc-packages
 
+### Fetch git repository from private server over SSH
+
+`pkgs.fetchgit` does not use the local *ssh_config*. Use `builtins.fetchGit`
+instead.
+
+```
+src = builtins.fetchGit {
+  url = "ssh://git@git.stigok.com/stigok/utils.git";
+  ref = "master";
+  rev = "f8bdc053406ad28ef4b6cbb29e418ce69f31f05f";
+};
+```
+
+Reference: https://nixos.org/nix/manual/#ssec-builtins
+
 ## NixOps
 
 ### switch-to-configuration throws error deployment fails
