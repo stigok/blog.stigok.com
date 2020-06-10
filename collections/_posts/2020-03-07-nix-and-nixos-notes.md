@@ -96,6 +96,44 @@ src = builtins.fetchGit {
 
 Reference: https://nixos.org/nix/manual/#ssec-builtins
 
+### Change package source to subdirectory after fetchGit
+
+I have a monorepo with multiple utility programs inside. I have to change
+root to a subdirectory, using `sourceRoot`, after I've downloaded its sources.
+
+```
+{ pkgs ? import <nixpkgs> {} }:
+  let
+    package = (import ./default.nix { inherit pkgs system; }).package;
+    newSrc  = builtins.fetchGit {
+      url = "ssh://git@git.stigok.com/stigok/utils.git";
+      ref = "master";
+      rev = "f8bdc053406ad28ef4b6cbb29e418ce69f31f05f";
+    };
+  in
+    package.overrideAttrs (old: {
+      src = newSrc;
+      sourceRoot = "${newSrc.outPath}/{package.packageName}";
+    })
+```
+
+The original package derivation resides in
+*./default.nix* and the package tree that `fetchGit` downloads looks like this:
+
+```
+README.md
+my-package-src-in-a-subdir/
+my-package-src-in-a-subdir/package.json
+my-package-src-in-a-subdir/package-lock.json
+my-package-src-in-a-subdir/index.js
+```
+
+I can now build the overridden package using `nix-build override.nix`.
+
+References:
+- https://github.com/tfc/node2nix_bootstrap/blob/master/override.nix
+- infinisil #nixos @ Freenode
+
 ## NixOps
 
 ### switch-to-configuration throws error deployment fails
