@@ -40,11 +40,8 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-
-    # Only deploy if pushed to master
-    if: github.event_name == 'push' && github.ref == 'master'
     steps:
-    - name: Update Kubernetes deployment container image
+    - name: Update Kubernetes deployment
       uses: steebchen/kubectl@v1.0.0
       env:
         KUBE_CONFIG_DATA: ${{ secrets.KUBECONFIG_DATA }}
