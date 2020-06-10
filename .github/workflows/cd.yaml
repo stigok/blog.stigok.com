@@ -12,6 +12,9 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+      with:
+        # Full revision history
+        fetch-depth: 0
 
     # Because jekyll user (which doesn't exist in this step) needs write
     # access to the build folder in the next step
