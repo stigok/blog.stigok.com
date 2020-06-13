@@ -134,6 +134,26 @@ References:
 - https://github.com/tfc/node2nix_bootstrap/blob/master/override.nix
 - infinisil #nixos @ Freenode
 
+### Create a tar archive of a fetchGit
+
+The title could have been "create a tar archive", but using it straight after
+`builtins.fetchGit` is what I needed to know.
+
+```
+gitSrc = builtins.fetchGit {
+  url = "ssh://git@git.stigok.com/stigok/utils.git";
+  ref = "master";
+  rev = "c3c4be782efd79518ddbac006a7fcb3532c35f7e";
+};
+tarSrc = runCommand "tar-src" {} "${gnutar}/bin/tar -cf $out ${gitSrc}";
+```
+
+`tarSrc` now contains a path to the tar file.
+
+References:
+- euank #nixos @ Freenode
+- https://nixos.org/nixpkgs/manual/#chap-trivial-builders
+
 ## NixOps
 
 ### switch-to-configuration throws error deployment fails
