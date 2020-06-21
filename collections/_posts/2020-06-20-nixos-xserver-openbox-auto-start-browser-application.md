@@ -16,7 +16,7 @@ disk.
 
 ## Prerequisites
 
-- A machine with [NixOS][https://nixos.org/] installed
+- A machine with [NixOS](https://nixos.org/) installed
 - **Basic** know-how of how to configure NixOS
 
 ## Setup
@@ -123,8 +123,7 @@ after rebuild. You will have to restart it manually.
 
 ## References
 
-https://github.com/NixOS/nixpkgs/pull/11273
-http://openbox.org/wiki/Help:Autostart
-https://wiki.archlinux.org/index.php/LightDM
-https://wiki.archlinux.org/index.php/Openbox#Autostart
-
+- <https://github.com/NixOS/nixpkgs/pull/11273>
+- <http://openbox.org/wiki/Help:Autostart>
+- <https://wiki.archlinux.org/index.php/LightDM>
+- <https://wiki.archlinux.org/index.php/Openbox#Autostart>
