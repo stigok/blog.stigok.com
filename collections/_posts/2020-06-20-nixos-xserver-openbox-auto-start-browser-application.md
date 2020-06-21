@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  ""
+title:  "Setup a browser kiosk in NixOS with Xorg and Openbox"
 date:   2020-06-20 01:53:35 +0200
 categories: nixos xorg openbox kiosk
 ---
