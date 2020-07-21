@@ -14,7 +14,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-timezone: Europe/Amsterdam
+timezone: Europe/Oslo
 title: blog of stigok
 email: stig@stigok.com
 author: stigok
