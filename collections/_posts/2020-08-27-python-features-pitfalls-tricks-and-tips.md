@@ -3,6 +3,7 @@ layout: post
 title:  "Python 3: pitfalls, tips and tricks"
 date:   2020-08-27 13:37:11 +0200
 categories: python talk draft
+processors: pymd
 ---
 
 I wanted to write a post about some common things I see when reading
