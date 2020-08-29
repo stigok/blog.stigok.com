@@ -67,7 +67,6 @@ DEPENDENCIES
   jekyll-feed (~> 0.11.0)
   jekyll-json-feed (~> 1.0)
   jekyll-redirect-from
-  tzinfo-data
 
 BUNDLED WITH
    2.1.4
