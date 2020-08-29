@@ -29,16 +29,15 @@ jobs:
 
     # Create new image
     - name: Build and push Docker image
-      uses: elgohr/Publish-Docker-Github-Action@2.14
+      uses: docker/build-push-action@v1
       with:
-        name: ${{ github.repository }}
-        dockerfile: .deploy/Dockerfile
-        workdir: .
-        tag_names: latest, ${{ github.sha }}
-
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         registry: ${{ secrets.DOCKER_REGISTRY }}
+        repository: ${{ github.repository }}
+        dockerfile: .deploy/Dockerfile
+        path: .
+        tags: latest,${{ github.sha }}
 
   deploy:
     needs: build
