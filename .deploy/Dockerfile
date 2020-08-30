@@ -16,9 +16,10 @@ RUN gem install jekyll bundler
 ADD Gemfile Gemfile.lock ./
 RUN bundle install
 
-ADD . .
-RUN bundle exec jekyll build -d _site -t
+ADD --chown=jekyll:jekyll . ./src
+WORKDIR /home/jekyll/src
+RUN bundle exec jekyll build --destination ../build --trace
 
 FROM nginx:1.19-alpine
-COPY --from=base /home/jekyll/_site /usr/share/nginx/html
+COPY --from=base /home/jekyll/build /usr/share/nginx/html
 COPY ./.deploy/default.conf /etc/nginx/conf.d/default.conf
