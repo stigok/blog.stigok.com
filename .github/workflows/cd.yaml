@@ -16,9 +16,6 @@ jobs:
         # Full revision history
         fetch-depth: 0
 
-    - name: Install build dependencies
-      run: sudo apt-get install python3
-
     # Because jekyll user (which doesn't exist in this step) needs write
     # access to the build folder in the next step
     - name: Create jekyll build dir
