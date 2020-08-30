@@ -16,6 +16,12 @@ jobs:
         # Full revision history
         fetch-depth: 0
 
+    # My pymd plugin needs Python
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
     # Because jekyll user (which doesn't exist in this step) needs write
     # access to the build folder in the next step
     - name: Create jekyll build dir
