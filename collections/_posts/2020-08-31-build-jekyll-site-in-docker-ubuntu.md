@@ -21,12 +21,12 @@ I'm not going to use the Jekyll HTTP server, but instead copy the site into
 a slim `nginx` image using Docker multi-stage builds.
 
 ```dockerfile
-FROM ubuntu:20.04 AS base
+FROM ubuntu:20.10 AS base
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
                ruby-full build-essential zlib1g-dev \
                git python3 \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
     && groupadd -g 1000 jekyll \
     && useradd -mu 1000 -g jekyll jekyll
 
@@ -39,11 +39,13 @@ RUN gem install jekyll bundler
 ADD Gemfile Gemfile.lock ./
 RUN bundle install
 
-ADD . .
-RUN bundle exec jekyll build -d _site -t
+ADD --chown=jekyll:jekyll . ./src
+WORKDIR /home/jekyll/src
+RUN bundle exec jekyll build --destination ../build --trace
 
 FROM nginx:1.19-alpine
-COPY --from=base /home/jekyll/_site /var/www/html
+COPY --from=base /home/jekyll/build /usr/share/nginx/html
+COPY ./.deploy/default.conf /etc/nginx/conf.d/default.conf
 ```
 
 This gives for a very small image in the end.
