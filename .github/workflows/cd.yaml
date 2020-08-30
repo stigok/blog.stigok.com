@@ -16,23 +16,6 @@ jobs:
         # Full revision history
         fetch-depth: 0
 
-    # My pymd plugin needs Python
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8
-
-    # Because jekyll user (which doesn't exist in this step) needs write
-    # access to the build folder in the next step
-    - name: Create jekyll build dir
-      run: mkdir build && chmod 777 build
-
-    # Build site
-    - name: Jekyll builder
-      uses: docker://jekyll/builder:3.8
-      with:
-        args: jekyll build -d build
-
     # Create new image
     - name: Build and push Docker image
       uses: docker/build-push-action@v1
