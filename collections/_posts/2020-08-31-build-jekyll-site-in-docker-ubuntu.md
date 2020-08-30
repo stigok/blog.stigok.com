@@ -54,7 +54,9 @@ Take a look at the [current source of this Dockerfile][1] for updates.
 It's the very file that builds this blog.
 
 ## References
-- https://github.com/docker-library/mongo/blob/master/4.4/Dockerfile
-- https://jekyllrb.com/docs/installation/ubuntu/
-- https://hub.docker.com/r/jekyll/builder/tags
-- https://github.com/stigok/jekyll-docker/blob/master/repos/jekyll/Dockerfile
+- <https://github.com/docker-library/mongo/blob/master/4.4/Dockerfile>
+- <https://jekyllrb.com/docs/installation/ubuntu/>
+- <https://hub.docker.com/r/jekyll/builder/tags>
+- <https://github.com/stigok/jekyll-docker/blob/master/repos/jekyll/Dockerfile>
+
+[1]: https://github.com/stigok/blog.stigok.com/blob/master/.deploy/Dockerfile
