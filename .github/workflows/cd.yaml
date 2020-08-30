@@ -33,8 +33,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Update Kubernetes deployment
-      uses: steebchen/kubectl@v1.0.0
+      uses: steebchen/kubectl@v1.0.1
       env:
         KUBE_CONFIG_DATA: ${{ secrets.KUBECONFIG_DATA }}
+        KUBECTL_VERSION: "1.18"
       with:
         args: set image deploy/blog blog=${{ secrets.DOCKER_REGISTRY }}/${{ github.repository }}:${{ github.sha }}
