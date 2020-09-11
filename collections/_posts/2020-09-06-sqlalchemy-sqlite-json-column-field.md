@@ -10,14 +10,15 @@ excerpt: I use this approach in a web app I'm writing to save user-defined templ
 ## Preface
 
 I use this approach in a web app I am writing to save user-defined templates and
-data that has arbitrary column names and values. Saving it as JSON feels good to
-me. If the project grows I'll move over to Postgres, and that also supports JSON
-fields.
+data that have arbitrary column names and values. Saving it as JSON feels good to
+me. If the project grows I'll probably move over to Postgres, which also also
+supports JSON columns.
 
 ## Example code
 
 Neither a small, nor simple example, but this is a way to feed a column in SQLite
 a `dict` and getting it stored as JSON using SQLAlchemy v1.3.
+I am using the [*declarative system*][1] for mapping up the database.
 
 ```python
 from sqlalchemy import create_engine, Integer, JSON, Column, Sequence
@@ -59,6 +60,8 @@ for item in session.query(Item).all():
 ```
 
 ## References
-- https://www.sqlite.org/json1.html
-- https://stackoverflow.com/questions/31804378/how-to-query-on-a-json-type-field-with-sqlalchemy
-- https://docs.sqlalchemy.org/en/13/
+- <https://www.sqlite.org/json1.html>
+- <https://stackoverflow.com/questions/31804378/how-to-query-on-a-json-type-field-with-sqlalchemy>
+- <https://docs.sqlalchemy.org/en/13/>
+
+[1]: https://docs.sqlalchemy.org/en/13/orm/extensions/declarative/basic_use.html
