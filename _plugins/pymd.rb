@@ -13,10 +13,12 @@ module Jekyll
           next unless post.data.has_key?('processors')
           next unless post.data['processors'].include?('pymd')
 
-          puts "pymd processing: \"#{post.data['title']}\""
+          puts "pymd: processing \"#{post.data['title']}\""
           stdout, stderr, res = Open3.capture3("/usr/bin/python3 #{__dir__}/pymd.py -", :stdin_data=>post.content)
 
-          puts "pymd errors: #{stderr}"
+          stderr.to_s.each_line do |line|
+            puts "pymd: #{line}"
+          end
 
           if res != 0 then
             raise "pymd failed: #{res}"

@@ -7,7 +7,7 @@ NUM_PROCESSED = 0
 
 
 def log(*args):
-    print(NUM_PROCESSED, *args, file=sys.stderr)
+    print("[script %d]" % NUM_PROCESSED, *args, file=sys.stderr)
 
 
 def run_script(script_str):
@@ -41,11 +41,13 @@ def process_text(text):
 
         try:
             # Add output of the program
-            log("running script")
+            log("running...")
             res = run_script(script)
         except subprocess.CalledProcessError as e:
             if e.returncode == 1:
                 res = e.output
+            else:
+                log("failed with code", e.returncode)
 
         # Build replacement string
         out = "```python\n"
