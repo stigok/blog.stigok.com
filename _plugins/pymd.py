@@ -3,6 +3,12 @@ import re
 import subprocess
 import sys
 
+NUM_PROCESSED = 0
+
+
+def log(*args):
+    print(NUM_PROCESSED, *args, file=sys.stderr)
+
 
 def run_script(script_str):
     """
@@ -16,6 +22,7 @@ def run_script(script_str):
         text=True,
         check=True,
     )
+
     return p.stdout
 
 
@@ -28,10 +35,13 @@ def process_text(text):
     """
 
     def _replacer(match):
+        global NUM_PROCESSED
+        NUM_PROCESSED += 1
         script = match.group(1).strip()
 
         try:
             # Add output of the program
+            log("running script")
             res = run_script(script)
         except subprocess.CalledProcessError as e:
             if e.returncode == 1:

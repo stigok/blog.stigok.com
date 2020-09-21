@@ -14,10 +14,12 @@ module Jekyll
           next unless post.data['processors'].include?('pymd')
 
           puts "pymd processing: \"#{post.data['title']}\""
-          stdout, res = Open3.capture2("/usr/bin/python3 #{__dir__}/pymd.py -", :stdin_data=>post.content)
+          stdout, stderr, res = Open3.capture3("/usr/bin/python3 #{__dir__}/pymd.py -", :stdin_data=>post.content)
+
+          puts "pymd errors: #{stderr}"
 
           if res != 0 then
-            #raise "pymd failed: #{res}"
+            raise "pymd failed: #{res}"
             Process.exit 1
           end
 
