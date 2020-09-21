@@ -61,7 +61,7 @@ def process_text(text):
 
         return out
 
-    return re.sub(r"```python\n([^`]+)^#eval$\n```", _replacer, text, flags=re.M)
+    return re.sub(r"```python\n(.+?)^#eval$\n```", _replacer, text, flags=re.M | re.S)
 
 
 if __name__ == "__main__":
