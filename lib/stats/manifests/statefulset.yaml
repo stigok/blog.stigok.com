@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: stats
+spec:
+  podManagementPolicy: OrderedReady
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: stats
+  serviceName: stats
+  updateStrategy:
+    rollingUpdate: {}
+  template:
+    metadata:
+      labels:
+        app: stats
+    spec:
+      containers:
+      - name: stats
+        image: rg.fr-par.scw.cloud/fireto/blog.stigok.com-stats:latest
+        env:
+          - name: LISTEN_ADDRESS
+            value: 0.0.0.0:8000
+          - name: DATABASE_NAME
+            value: /data/stats.sqlite.db
+        resources:
+          requests:
+            memory: 100Mi
+            cpu: 50m
+          limits:
+            memory: 100Mi
+            cpu: 50m
+        ports:
+          - name: http
+            containerPort: 8000
+            protocol: TCP
+        volumeMounts:
+          - name: data
+            mountPath: /data
+        livenessProbe:
+          initialDelaySeconds: 5
+          httpGet:
+            path: /health
+            port: http
+        readinessProbe:
+          initialDelaySeconds: 5
+          httpGet:
+            path: /health
+            port: http
+        volumeMounts:
+          - name: data
+            mountPath: /data
+      restartPolicy: Always
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        storageClassName: scw-bssd-retain-expansible
+        resources:
+          requests:
+            storage: 5Gi
