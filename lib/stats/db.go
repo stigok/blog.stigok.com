@@ -27,27 +27,30 @@ func NewDatabase(filename string) *Database {
 	log.Printf("%s created", db.Filename)
 
 	sqliteDatabase, _ := sql.Open("sqlite3", db.Filename)
-	sqliteDatabase.Close()
 
 	db.Database = sqliteDatabase
 	return &db
 }
 
-func createTables(db *sql.DB) {
+func (db *Database) Close() {
+	db.Database.Close()
+}
+
+func (db *Database) CreateTables() {
 	var statements []string = []string{
 		`CREATE TABLE IF NOT EXISTS visits (
 			"id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
 			"post" TEXT,
 			"hash" TEXT,
-			"date" DATETIME
+			"date" DATETIME DEFAULT (DATETIME('now'))
 		);
-		CREATE INDEX IF NOT EXISTS idx_visits_post_hash
-		ON visits (post, hash);
+		CREATE INDEX IF NOT EXISTS idx_visits_post
+		ON visits (post);
 		`,
 	}
 
 	for _, stmt := range statements {
-		s, err := db.Prepare(stmt)
+		s, err := db.Database.Prepare(stmt)
 		if err != nil {
 			log.Fatal(err.Error())
 		}
@@ -56,7 +59,6 @@ func createTables(db *sql.DB) {
 }
 
 func (db *Database) RecordVisit(post, hash string) error {
-	log.Println("recording visit")
 	stmt, err := db.Database.Prepare(
 		`INSERT INTO visits (post, hash) VALUES (?, ?)`)
 	if err != nil {
@@ -68,7 +70,10 @@ func (db *Database) RecordVisit(post, hash string) error {
 
 func (db *Database) GetVisitCount(post string) int {
 	stmt, err := db.Database.Prepare(
-		`SELECT SUM(hash) FROM visits GROUP BY hash WHERE post=?`)
+		`SELECT COUNT(DISTINCT hash)
+		 FROM visits
+		 WHERE post=? GROUP BY post;
+	`)
 	if err != nil {
 		log.Fatal(err)
 	}
