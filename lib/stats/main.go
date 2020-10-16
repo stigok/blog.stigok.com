@@ -3,24 +3,25 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
 	"time"
-
-	"github.com/gorilla/mux"
 )
 
 var db *Database
 
 func main() {
-	// Setup database
-	db = NewDatabase("mydb.sqlite.db")
+	dbname := os.Getenv("DATABASE_NAME")
+	if dbname == "" {
+		dbname = MEMORY_DB
+	}
+	log.Printf("using database %s", dbname)
 
-	// Routes
-	r := mux.NewRouter()
-	r.PathPrefix("/visits/").Handler(VisitsRouter(db))
+	// Setup database
+	db = NewDatabase(dbname)
 
 	// HTTP server
 	srv := &http.Server{
-		Handler:      r,
+		Handler:      VisitsRouter(db),
 		Addr:         "0.0.0.0:8000",
 		WriteTimeout: 3 * time.Second,
 		ReadTimeout:  3 * time.Second,

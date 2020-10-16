@@ -46,8 +46,8 @@ func VisitsRouter(db *Database) *mux.Router {
 		return
 	}
 
-	r.Methods("GET").PathPrefix("/{post}/get").HandlerFunc(get)
-	r.Methods("GET").PathPrefix("/{post}/hit").HandlerFunc(hit)
+	r.Methods("GET").PathPrefix("/visits/{post}/get").HandlerFunc(get)
+	r.Methods("GET").PathPrefix("/visits/{post}/hit").HandlerFunc(hit)
 
 	return r
 }
