@@ -16,13 +16,18 @@ func main() {
 	}
 	log.Printf("using database %s", dbname)
 
+	addr := os.Getenv("LISTEN_ADDRESS")
+	if addr == "" {
+		addr = "0.0.0.0:8000"
+	}
+
 	// Setup database
 	db = NewDatabase(dbname)
 
 	// HTTP server
 	srv := &http.Server{
 		Handler:      VisitsRouter(db),
-		Addr:         "0.0.0.0:8000",
+		Addr:         addr,
 		WriteTimeout: 3 * time.Second,
 		ReadTimeout:  3 * time.Second,
 	}
