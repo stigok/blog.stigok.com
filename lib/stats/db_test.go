@@ -5,9 +5,19 @@ import (
 )
 
 func getDb() *Database {
-	db := NewDatabase("::memory::")
-	db.CreateTables()
+	db := NewDatabase(MEMORY_DB)
 	return db
+}
+
+func TestNewDatabase(t *testing.T) {
+	db := getDb()
+	defer db.Close()
+
+	if db.Filename != MEMORY_DB {
+		t.Fatal("Database not in memory")
+	}
+
+	db.Close()
 }
 
 func TestRecordsVisits(t *testing.T) {

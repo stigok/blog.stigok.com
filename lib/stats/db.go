@@ -9,6 +9,8 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
+const MEMORY_DB = "file::memory:?cache=shared"
+
 type Database struct {
 	Database *sql.DB
 	Filename string
@@ -19,16 +21,21 @@ func NewDatabase(filename string) *Database {
 		Filename: filename,
 	}
 
-	file, err := os.OpenFile(db.Filename, os.O_RDWR|os.O_CREATE, 660)
-	if err != nil {
-		log.Fatal(err.Error())
+	if db.Filename != MEMORY_DB {
+		file, err := os.OpenFile(db.Filename, os.O_RDWR|os.O_CREATE, 0660)
+		if err != nil {
+			log.Fatal(err.Error())
+		}
+		file.Close()
 	}
-	file.Close()
-	log.Printf("%s created", db.Filename)
 
 	sqliteDatabase, _ := sql.Open("sqlite3", db.Filename)
+	log.Printf("%s initialised", db.Filename)
 
 	db.Database = sqliteDatabase
+	db.createTables()
+	db.Database.SetMaxOpenConns(1)
+
 	return &db
 }
 
@@ -36,7 +43,7 @@ func (db *Database) Close() {
 	db.Database.Close()
 }
 
-func (db *Database) CreateTables() {
+func (db *Database) createTables() {
 	var statements []string = []string{
 		`CREATE TABLE IF NOT EXISTS visits (
 			"id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
