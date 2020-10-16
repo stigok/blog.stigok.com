@@ -49,6 +49,7 @@ func visitsHandler(w http.ResponseWriter, r *http.Request) {
 	db.RecordVisit(post, hash)
 
 	// Return a tiny gif
+	w.Header().Add("Content-Type", "image/gif")
 	w.Write(tinyGif)
 	return
 }
