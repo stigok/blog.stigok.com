@@ -25,6 +25,7 @@ func GetVisits(db *Database) func(http.ResponseWriter, *http.Request) {
 		cnt := db.GetVisitCount(post)
 		log.Printf("get visit: %d %s", cnt, post)
 
+		// Determine what format to return
 		t := r.Header.Get("Accept")
 
 		// Return JSON
@@ -76,6 +77,7 @@ func RecordVisit(db *Database) func(http.ResponseWriter, *http.Request) {
 		log.Printf("visit: %s -> %s", hash, post)
 		db.RecordVisit(post, hash)
 
+		// Determine what format to return
 		t := r.Header.Get("Accept")
 
 		// Return JSON
