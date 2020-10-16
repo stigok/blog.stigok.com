@@ -30,7 +30,6 @@ func NewDatabase(filename string) *Database {
 	}
 
 	sqliteDatabase, _ := sql.Open("sqlite3", db.Filename)
-	log.Printf("%s initialised", db.Filename)
 
 	db.Database = sqliteDatabase
 	db.createTables()
