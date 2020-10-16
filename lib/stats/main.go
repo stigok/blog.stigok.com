@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"os"
 	"time"
+
+	"github.com/gorilla/mux"
 )
 
 var db *Database
@@ -24,9 +26,17 @@ func main() {
 	// Setup database
 	db = NewDatabase(dbname)
 
+	// Configure routes
+	r := mux.NewRouter()
+	r.Methods("GET").PathPrefix("/visits/{post}/get").HandlerFunc(GetVisits(db))
+	r.Methods("GET").PathPrefix("/visits/{post}/hit").HandlerFunc(RecordVisit(db))
+	r.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("ok"))
+	})
+
 	// HTTP server
 	srv := &http.Server{
-		Handler:      VisitsRouter(db),
+		Handler:      r,
 		Addr:         addr,
 		WriteTimeout: 3 * time.Second,
 		ReadTimeout:  3 * time.Second,

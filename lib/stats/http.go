@@ -17,11 +17,8 @@ import (
 // http://probablyprogramming.com/2009/03/15/the-tiniest-gif-ever
 const gif_b64 string = "R0lGODlhAQABAIABAP///wAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
 
-func VisitsRouter(db *Database) *mux.Router {
-	r := mux.NewRouter()
-
-	// Get visit
-	get := func(w http.ResponseWriter, r *http.Request) {
+func GetVisits(db *Database) func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
 		post := vars["post"]
 
@@ -60,9 +57,11 @@ func VisitsRouter(db *Database) *mux.Router {
 		// gif, _ := base64.StdEncoding.DecodeString(gif_b64)
 		// w.Write(gif)
 	}
+}
 
-	// Record visit
-	hit := func(w http.ResponseWriter, r *http.Request) {
+func RecordVisit(db *Database) func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		// Record visit
 		vars := mux.Vars(r)
 		post := vars["post"]
 
@@ -104,9 +103,4 @@ func VisitsRouter(db *Database) *mux.Router {
 		gif, _ := base64.StdEncoding.DecodeString(gif_b64)
 		w.Write(gif)
 	}
-
-	r.Methods("GET").PathPrefix("/visits/{post}/get").HandlerFunc(get)
-	r.Methods("GET").PathPrefix("/visits/{post}/hit").HandlerFunc(hit)
-
-	return r
 }
