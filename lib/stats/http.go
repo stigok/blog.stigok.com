@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"net"
 	"net/http"
 	"strings"
 
@@ -64,7 +65,13 @@ func VisitsRouter(db *Database) *mux.Router {
 	hit := func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
 		post := vars["post"]
-		hash := fmt.Sprintf("%x", sha256.Sum256([]byte(r.RemoteAddr+r.Header.Get("User-Agent"))))
+
+		ip, _, err := net.SplitHostPort(r.RemoteAddr)
+		if err != nil {
+			ip = ""
+		}
+
+		hash := fmt.Sprintf("%x", sha256.Sum256([]byte(ip+r.Header.Get("User-Agent"))))
 
 		// Log visit
 		log.Printf("visit: %s -> %s", hash, post)
