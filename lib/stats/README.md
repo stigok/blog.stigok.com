@@ -23,14 +23,14 @@ $ docker run stats:latest
 
 ## API
 
-- `GET /visit/{post}/hit`
+- `GET /visits/{post}/hit`
   - `{post}` is a token to record visits to
   - Returns JSON if `Accept` contains `application/json`
     - `{"success": true, "error": ""}`
   - Returns text if `Accept` contains `text/plain`
   - Returns a 1x1 `image/gif` if `Accept` header does not match any of the above.
 
-- `GET /visit/{post}/get`
+- `GET /visits/{post}/get`
   - `{post}` is a token to return visit count for
   - If `{post}` doesn't exist, return a count of `0`
   - Returns JSON if `Accept` contains `application/json`
