@@ -19,7 +19,7 @@ func NewDatabase(filename string) *Database {
 		Filename: filename,
 	}
 
-	file, err := os.Create(db.Filename)
+	file, err := os.OpenFile(db.Filename, os.O_RDWR|os.O_CREATE, 660)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
