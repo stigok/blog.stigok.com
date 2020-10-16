@@ -25,7 +25,8 @@ func main() {
 
 	// Main router
 	r := mux.NewRouter()
-	r.Methods("GET").PathPrefix("/visits/{post}").HandlerFunc(visitsHandler)
+	r.Methods("GET").PathPrefix("/visits/{post}/record").HandlerFunc(recordVisitHandler)
+	r.Methods("GET").PathPrefix("/visits/{post}").HandlerFunc(getVisitHandler)
 
 	// HTTP server
 	srv := &http.Server{
@@ -39,7 +40,21 @@ func main() {
 	srv.ListenAndServe()
 }
 
-func visitsHandler(w http.ResponseWriter, r *http.Request) {
+func getVisitHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	post := vars["post"]
+
+	cnt := db.GetVisitCount(post)
+
+	// Log visit
+	log.Printf("get visit: %d %s", cnt, post)
+
+	// Return count
+	w.Header().Add("Content-Type", "text/plain")
+	w.Write(tinyGif)
+}
+
+func recordVisitHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	post := vars["post"]
 	hash := fmt.Sprintf("%x", sha256.Sum256([]byte(r.RemoteAddr+r.Header.Get("User-Agent"))))
