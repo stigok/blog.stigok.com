@@ -3,9 +3,11 @@ package main
 import (
 	"crypto/sha256"
 	"encoding/base64"
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
+	"strings"
 
 	"github.com/gorilla/mux"
 )
@@ -25,8 +27,33 @@ func VisitsRouter(db *Database) *mux.Router {
 		cnt := db.GetVisitCount(post)
 		log.Printf("get visit: %d %s", cnt, post)
 
-		w.Header().Add("Content-Type", "text/plain")
-		fmt.Fprintf(w, "%d", cnt)
+		t := r.Header.Get("Accept")
+
+		// Return JSON
+		if strings.Contains(t, "application/json") {
+			obj, _ := json.Marshal(struct {
+				Post  string `json:"post"`
+				Count int    `json:"count"`
+			}{
+				post,
+				cnt,
+			})
+			w.Header().Set("Content-Type", "application/json")
+			w.Write(obj)
+			return
+		}
+
+		// Return plaintext
+		//if strings.Contains(t, "text/plain") {
+		w.Write([]byte("ok\n"))
+		//	return
+		//}
+
+		// Return gif to use in <img> tags
+		// fmt.Fprintf(w, "%d", cnt)
+		// w.Header().Add("Content-Type", "image/gif")
+		// gif, _ := base64.StdEncoding.DecodeString(gif_b64)
+		// w.Write(gif)
 	}
 
 	// Record visit
@@ -39,11 +66,32 @@ func VisitsRouter(db *Database) *mux.Router {
 		log.Printf("visit: %s -> %s", hash, post)
 		db.RecordVisit(post, hash)
 
-		// Return a tiny gif
+		t := r.Header.Get("Accept")
+
+		// Return JSON
+		if strings.Contains(t, "application/json") {
+			obj, _ := json.Marshal(struct {
+				Success bool   `json:"success"`
+				Error   string `json:"error"`
+			}{
+				true,
+				"",
+			})
+			w.Header().Set("Content-Type", "application/json")
+			w.Write(obj)
+			return
+		}
+
+		// Return plaintext
+		if strings.Contains(t, "text/plain") {
+			w.Write([]byte("ok\n"))
+			return
+		}
+
+		// Return gif to use in <img> tags
 		w.Header().Add("Content-Type", "image/gif")
 		gif, _ := base64.StdEncoding.DecodeString(gif_b64)
 		w.Write(gif)
-		return
 	}
 
 	r.Methods("GET").PathPrefix("/visits/{post}/get").HandlerFunc(get)
