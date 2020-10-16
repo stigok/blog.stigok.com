@@ -33,5 +33,5 @@ func main() {
 	}
 
 	log.Printf("Listening on %s", srv.Addr)
-	srv.ListenAndServe()
+	log.Fatal(srv.ListenAndServe())
 }
