@@ -50,5 +50,5 @@ jobs:
             lib/stats/manifests/deployment.yaml
             lib/stats/manifests/service.yaml
             lib/stats/manifests/ingress.yaml
-          images:
+          images: |
             ${{ secrets.DOCKER_REGISTRY }}/${{ github.repository }}-stats:${{ github.sha}}
