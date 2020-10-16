@@ -40,7 +40,7 @@ jobs:
         with:
           method: service-account
           k8s-url: K8S_API_URL
-          k8s-secret: K8S_SA_SECRET
+          k8s-secret: K8S_SECRET
       - name: Deploy
         uses: azure/k8s-deploy@v1
         with:
@@ -48,5 +48,6 @@ jobs:
           manifests: |
             lib/stats/manifests/deployment.yaml
             lib/stats/manifests/service.yaml
+            lib/stats/manifests/ingress.yaml
           images:
             ${{ secrets/DOCKER_REGISTRY }}/${{ github.repository }}-stats:${{ github.sha}}
