@@ -21,4 +21,4 @@ spec:
   tls:
   - hosts:
     - stats.kube.fireto.no
-    secretName: state-tls
+    secretName: tls-state
