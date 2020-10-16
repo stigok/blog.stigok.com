@@ -32,9 +32,13 @@ func VisitsRouter(db *Database) *mux.Router {
 		// Return JSON
 		if strings.Contains(t, "application/json") {
 			obj, _ := json.Marshal(struct {
-				Post  string `json:"post"`
-				Count int    `json:"count"`
+				Success bool   `json:"success"`
+				Error   string `json:"error"`
+				Post    string `json:"post"`
+				Count   int    `json:"count"`
 			}{
+				true,
+				"",
 				post,
 				cnt,
 			})
