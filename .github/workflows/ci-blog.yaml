@@ -18,32 +18,39 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-      with:
-        # Full revision history
-        fetch-depth: 0
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          # Full revision history
+          fetch-depth: 0
 
-    # Create new image
-    - name: Build and push Docker image
-      uses: docker/build-push-action@v1
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-        registry: ${{ secrets.DOCKER_REGISTRY }}
-        repository: ${{ github.repository }}
-        dockerfile: .deploy/Dockerfile
-        path: .
-        tags: latest,${{ github.sha }}
+      # Create new image
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          registry: ${{ secrets.DOCKER_REGISTRY }}
+          repository: ${{ github.repository }}
+          dockerfile: .deploy/Dockerfile
+          path: .
+          tags: latest,${{ github.sha }}
 
   deploy:
     needs: build
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
-    - name: Update Kubernetes deployment
-      uses: steebchen/kubectl@v1.0.0
-      env:
-        KUBE_CONFIG_DATA: ${{ secrets.KUBECONFIG_DATA }}
-      with:
-        args: set image deploy/blog blog=${{ secrets.DOCKER_REGISTRY }}/${{ github.repository }}:${{ github.sha }}
+      - uses: azure/k8s-set-context@v1
+        with:
+          method: service-account
+          k8s-url: ${{ secrets.K8S_API_URL }}
+          k8s-secret: ${{ secrets.K8S_SECRET }}
+      - name: Deploy
+        uses: azure/k8s-deploy@v1
+        with:
+          namespace: stigok
+          manifests: |
+            .deploy/deployment.yaml
+          images: |
+            ${{ secrets.DOCKER_REGISTRY }}/${{ github.repository }}:${{ github.sha }}
