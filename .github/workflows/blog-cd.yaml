@@ -1,4 +1,4 @@
-name: Continous deployment
+name: CI Blog
 
 on:
   push:
