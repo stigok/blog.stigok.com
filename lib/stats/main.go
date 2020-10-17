@@ -24,7 +24,8 @@ func main() {
 	}
 
 	// Setup database
-	db = NewDatabase(dbname)
+	db = OpenDatabase(dbname)
+	go db.Worker()
 
 	// Configure routes
 	r := mux.NewRouter()

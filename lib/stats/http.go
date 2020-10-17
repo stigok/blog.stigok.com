@@ -9,6 +9,7 @@ import (
 	"net"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/gorilla/mux"
 )
@@ -62,7 +63,6 @@ func GetVisits(db *Database) func(http.ResponseWriter, *http.Request) {
 
 func RecordVisit(db *Database) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		// Record visit
 		vars := mux.Vars(r)
 		post := vars["post"]
 
@@ -73,9 +73,9 @@ func RecordVisit(db *Database) func(http.ResponseWriter, *http.Request) {
 
 		hash := fmt.Sprintf("%x", sha256.Sum256([]byte(ip+r.Header.Get("User-Agent"))))
 
-		// Log visit
+		// Record visit
 		log.Printf("visit: %s -> %s", hash, post)
-		db.RecordVisit(post, hash)
+		db.Visits <- Visit{post, hash, time.Now()}
 
 		// Determine what format to return
 		t := r.Header.Get("Accept")
