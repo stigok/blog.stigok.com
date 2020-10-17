@@ -49,7 +49,7 @@ jobs:
         with:
           namespace: stigok
           manifests: |
-            lib/stats/manifests/deployment.yaml
+            lib/stats/manifests/statefulset.yaml
             lib/stats/manifests/service.yaml
             lib/stats/manifests/ingress.yaml
           images: |
