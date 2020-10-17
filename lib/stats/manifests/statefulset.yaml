@@ -49,9 +49,6 @@ spec:
           httpGet:
             path: /health
             port: http
-        volumeMounts:
-          - name: data
-            mountPath: /data
       restartPolicy: Always
   volumeClaimTemplates:
     - metadata:
