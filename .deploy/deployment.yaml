@@ -4,7 +4,6 @@ metadata:
   labels:
     app: blog
   name: blog
-  namespace: stigok
 spec:
   replicas: 2
   revisionHistoryLimit: 5
@@ -38,7 +37,6 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: stigok
   name: blog
 spec:
   ports:
@@ -48,8 +46,9 @@ spec:
   selector:
     app: blog
   type: ClusterIP
+  sessionAffinity: None
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
@@ -58,16 +57,18 @@ metadata:
   labels:
     app: blog
   name: blog
-  namespace: stigok
 spec:
   rules:
-  - host: blog.stigok.com
-    http:
-      paths:
-      - backend:
-          serviceName: blog
-          servicePort: 80
+    - host: blog.stigok.com
+      http:
+        paths:
+          - backend:
+              service:
+                name: blog
+                port:
+                  number: 80
+            pathType: ImplementationSpecific
   tls:
-  - hosts:
-    - blog.stigok.com
-    secretName: blog-tls-cert
+    - hosts:
+        - blog.stigok.com
+      secretName: blog-tls-cert
