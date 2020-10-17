@@ -17,6 +17,17 @@ spec:
       labels:
         app: stats
     spec:
+      initContainers:
+        - name: chown
+          image: busybox
+          command:
+            - chown
+            - -R
+            - 999:999
+            - /data
+          volumeMounts:
+            - name: data
+              mountPath: /data
       containers:
       - name: stats
         image: rg.fr-par.scw.cloud/fireto/stigok/blog.stigok.com-stats:latest
