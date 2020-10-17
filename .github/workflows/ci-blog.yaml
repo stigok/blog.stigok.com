@@ -5,14 +5,14 @@ on:
     branches:
       - master
       - main
-    paths:
-      - !lib/**
+    paths-ignore:
+      - lib/**
   pull_request:
     branches:
       - master
       - main
-    paths:
-      - !lib/**
+    paths-ignore:
+      - lib/**
 
 jobs:
   build:
