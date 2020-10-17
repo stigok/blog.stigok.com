@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  labels:
+    app: stats
+  name: stats
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: stats.kube.fireto.no
+    http:
+      paths:
+      - backend:
+          service:
+            name: stats
+            port:
+              name: http
+        pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - stats.kube.fireto.no
+    secretName: tls-state
