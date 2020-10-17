@@ -7,12 +7,14 @@ on:
       - main
     paths:
       - lib/stats/**
+      - .github/workflows/ci-stats.yaml
   pull_request:
     branches:
       - master
       - main
     paths:
       - lib/stats/**
+      - .github/workflows/ci-stats.yaml
 
 jobs:
   build:
