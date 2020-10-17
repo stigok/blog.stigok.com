@@ -2,10 +2,11 @@ package main
 
 import (
 	"testing"
+	"time"
 )
 
 func getDb() *Database {
-	db := NewDatabase(MEMORY_DB)
+	db := OpenDatabase(MEMORY_DB)
 	return db
 }
 
@@ -24,11 +25,12 @@ func TestRecordsVisits(t *testing.T) {
 	db := getDb()
 	defer db.Close()
 
-	if err := db.RecordVisit("hello", "a"); err != nil {
+	v := Visit{"hello", "a", time.Now()}
+	if err := db.recordVisit(v); err != nil {
 		t.Error(err)
 	}
 
-	cnt := db.GetVisitCount("hello")
+	cnt := db.GetVisitCount(v.Post)
 	if cnt != 1 {
 		t.Errorf("count should be 1, was %d", cnt)
 	}
@@ -38,22 +40,23 @@ func TestMultipleVisitsSameHash(t *testing.T) {
 	db := getDb()
 	defer db.Close()
 
-	p := "post"
+	v := Visit{"post", "a", time.Now()}
 
-	db.RecordVisit(p, "a")
-	db.RecordVisit(p, "a")
-	db.RecordVisit(p, "a")
+	db.recordVisit(v)
+	db.recordVisit(v)
+	db.recordVisit(v)
 
-	cnt := db.GetVisitCount(p)
+	cnt := db.GetVisitCount(v.Post)
 	if cnt != 1 {
 		t.Errorf("count should be 1, was %d", cnt)
 	}
 
-	db.RecordVisit(p, "b")
-	db.RecordVisit(p, "b")
-	db.RecordVisit(p, "b")
+	v.Hash = "b"
+	db.recordVisit(v)
+	db.recordVisit(v)
+	db.recordVisit(v)
 
-	cnt = db.GetVisitCount(p)
+	cnt = db.GetVisitCount(v.Post)
 	if cnt != 2 {
 		t.Errorf("count should be 2, was %d", cnt)
 	}

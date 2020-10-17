@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -14,11 +15,20 @@ const MEMORY_DB = "file::memory:?cache=shared"
 type Database struct {
 	Database *sql.DB
 	Filename string
+	Visits   chan Visit
+	done     chan struct{}
 }
 
-func NewDatabase(filename string) *Database {
+type Visit struct {
+	Post, Hash string
+	Date       time.Time
+}
+
+func OpenDatabase(filename string) *Database {
 	db := Database{
 		Filename: filename,
+		Visits:   make(chan Visit),
+		done:     make(chan struct{}),
 	}
 
 	if db.Filename != MEMORY_DB {
@@ -39,6 +49,10 @@ func NewDatabase(filename string) *Database {
 }
 
 func (db *Database) Close() {
+	select {
+	case db.done <- struct{}{}:
+	default:
+	}
 	db.Database.Close()
 }
 
@@ -64,13 +78,34 @@ func (db *Database) createTables() {
 	}
 }
 
-func (db *Database) RecordVisit(post, hash string) error {
+// Database write worker. Reads from db.Visits and writes them to the database.
+// Must be run as a goroutine.
+func (db *Database) Worker() {
+	log.Println("starting db write worker")
+outer:
+	for {
+		select {
+		case <-db.done:
+			break outer
+		case v := <-db.Visits:
+			db.recordVisit(v)
+		case <-time.After(5 * time.Second):
+			if err := db.Database.Ping(); err != nil {
+				log.Fatalln("failed to ping db:", err)
+			}
+		}
+	}
+	log.Println("stopped db write worker")
+}
+
+// Write to database
+func (db *Database) recordVisit(v Visit) error {
 	stmt, err := db.Database.Prepare(
 		`INSERT INTO visits (post, hash) VALUES (?, ?)`)
 	if err != nil {
 		return fmt.Errorf("Failed to record visit: %w", err)
 	}
-	stmt.Exec(post, hash)
+	stmt.Exec(v.Post, v.Hash)
 	return nil
 }
 
