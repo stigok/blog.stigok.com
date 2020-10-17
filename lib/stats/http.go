@@ -48,7 +48,7 @@ func GetVisits(db *Database) func(http.ResponseWriter, *http.Request) {
 
 		// Return plaintext
 		//if strings.Contains(t, "text/plain") {
-		w.Write([]byte("ok\n"))
+		fmt.Fprintf(w, "%x", cnt)
 		//	return
 		//}
 
