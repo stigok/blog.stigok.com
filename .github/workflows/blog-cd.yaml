@@ -6,13 +6,13 @@ on:
       - master
       - main
     paths:
-      - !lib/stats/**
+      - !lib/**
   pull_request:
     branches:
       - master
       - main
     paths:
-      - !lib/stats/**
+      - !lib/**
 
 jobs:
   build:
