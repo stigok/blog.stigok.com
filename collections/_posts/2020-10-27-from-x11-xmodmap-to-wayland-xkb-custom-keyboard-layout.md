@@ -129,6 +129,7 @@ for later, I guess.
 
 ## References
 
+- Thanks to [Håvard Moen](https://github.com/umglurf/) for helping out with configuration
 - <https://askubuntu.com/a/100228/20164>
 - <https://superuser.com/a/848050/5075>
 - <https://askubuntu.com/a/1274619/20164>
