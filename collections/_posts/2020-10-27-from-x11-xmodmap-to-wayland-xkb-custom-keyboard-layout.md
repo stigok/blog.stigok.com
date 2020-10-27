@@ -10,7 +10,7 @@ excerpt: Moving from Xmodmap in X11 to xkb in Wayland
 
 Earlier I used *.Xmodmap* to define my custom keyboard layout for Norwegian
 characters behind Caps-Lock. It was surprisingly easy, as described [in an
-earlier blog post][1].
+earlier blog post][1]. ([gist][2])
 
 However, moving to Wayland, this no longer works. It was actually
 surprisingly hard to get right.
@@ -135,3 +135,4 @@ for later, I guess.
 - <https://askubuntu.com/a/1274619/20164>
 
 [1]: https://blog.stigok.com/2017/07/10/norwegian-keys-on-us-keyboard-layout-with-xmodmap.html
+[2]: https://gist.github.com/stigok/2aabc44c3a151fc3d3fed119f2c1f44f/
