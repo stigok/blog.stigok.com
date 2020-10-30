@@ -127,6 +127,12 @@ XDG_CONFIG_HOME DEFAULT=${HOME}/.config
 I think I have to import complete layouts there to get it working. Something
 for later, I guess.
 
+**Update:** as the comments in the  *pam_env.conf* file says, `$HOME` might not
+always be set for the calling applications. This seemed to set the path for `xkb`
+correctly, but not for `lpass` (of all things), which had the `XDF_CONFIG_HOME`
+set as `/.config/lpass` instead of `~/.config/lpass`. This need further investigation
+to get working properly.
+
 ## References
 
 - Thanks to [Håvard Moen](https://github.com/umglurf/) for helping out with configuration
