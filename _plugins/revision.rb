@@ -10,7 +10,11 @@ module Jekyll
         return if ARGV.include?("--no-revision")
         site.posts.docs.each do |item|
           item.data['revisions'] = GitLogger.new(site.source, item.path, site.config['revision']).revisions
-          item.data['last_modified_at'] = item.data['revisions'][0]['date']
+          if item.data['revisions'].length > 0
+            item.data['last_modified_at'] = item.data['revisions'][0]['date']
+          else
+            item.data['last_modified_at'] = Time.now
+          end
         end
       end
     end # Revision
