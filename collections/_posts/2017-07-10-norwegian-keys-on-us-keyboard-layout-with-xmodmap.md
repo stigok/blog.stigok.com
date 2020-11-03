@@ -11,28 +11,33 @@ Was first looking at how to configure using xkbcomp and setxkbmap, but just went
 
 > xmodmap settings are reset by setxkbmap, which not only alters the alphanumeric keys to the values given in the map, but also resets all other keys to the startup default.
 
-The following `.Xmodmap` configuration binds Caps Lock as the modifier key to trigger the Norwegian letters on a US keyboard layout.
+The following `.Xmodmap` configuration binds Caps Lock as the modifier key to trigger the Norwegian on a US keyboard layout.
 
-    ! ~/.Xmodmap
-    clear lock
-    !Maps Caps-Lock as Level3 Shift
-    keycode 66 = Mode_switch ISO_Level3_Shift
-    !Norwegian alpha chars ÆØÅ
-    keycode 47 = semicolon colon oslash Oslash
-    keycode 48 = apostrophe quotedbl ae AE
-    keycode 34 = bracketleft braceleft aring Aring
+```
+clear lock
+
+! Caps-Lock
+keycode 66 = Mode_switch ISO_Level3_Shift
+
+! Norwegian characters æÆ øØ åÅ
+keycode 47 = semicolon colon oslash Oslash
+keycode 48 = apostrophe quotedbl ae AE
+keycode 34 = bracketleft braceleft aring Aring
+```
 
 ## Usage
 
-[[Caps-Lock]] + [[\']] = æ  
-[[Caps-Lock]] + [[;]] = ø  
-[[Caps-Lock]] + [[&#91;]] = å  
-[[Caps-Lock]] + [[Shift]] + [[\']] = Æ  
-[[Caps-Lock]] + [[Shift]] + [[;]] = Ø  
-[[Caps-Lock]] + [[Shift]] + [[&#91;]] = Å
+<kbd>Caps-Lock</kbd> is no longer a toggle switch.
+
+- <kbd>Caps-Lock</kbd> + <kbd>'</kbd> (single quote) = æ
+- <kbd>Caps-Lock</kbd> + <kbd>;</kbd> = ø
+- <kbd>Caps-Lock</kbd> + <kbd>&#91;</kbd> = å
+- <kbd>Caps-Lock</kbd> + <kbd>Shift</kbd> + <kbd>'</kbd> (single quote) = Æ
+- <kbd>Caps-Lock</kbd> + <kbd>Shift</kbd> + <kbd>;</kbd> = Ø
+- <kbd>Caps-Lock</kbd> + <kbd>Shift</kbd> + <kbd>&#91;</kbd> = Å
 
 ## References
-- https://wiki.archlinux.org/index.php/Xmodmap
-- https://wiki.archlinux.org/index.php/Keyboard_configuration_in_Xorg
-- https://github.com/gulrotkake/Ubuntu-MacBook-Norwegian-keyboard
-- http://wiki.linuxquestions.org/wiki/List_of_Keysyms_Recognised_by_Xmodmap
+- <https://wiki.archlinux.org/index.php/Xmodmap>
+- <https://wiki.archlinux.org/index.php/Keyboard_configuration_in_Xorg>
+- <https://github.com/gulrotkake/Ubuntu-MacBook-Norwegian-keyboard>
+- <http://wiki.linuxquestions.org/wiki/List_of_Keysyms_Recognised_by_Xmodmap>
