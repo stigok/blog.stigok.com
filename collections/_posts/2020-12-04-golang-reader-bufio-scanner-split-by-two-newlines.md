@@ -9,9 +9,11 @@ excerpt: Normal bufio.NewScanner splits by single newline. This splits by double
 
 ## Preface
 
-During the [Advent of Code 2020](https://adventofcode.com/2020), my chosen
-path to solve it required me to read text from a file and buffer the output
-by two consecutive newlines.
+During the [Advent of Code 2020](https://adventofcode.com/2020), some of the challenges have so
+far contained input data separated by two consecutive newlines. I chose to try and figure out
+how to make use of `bufio.Scanner` to give me the multiline items one by one.
+
+## Golang's `bufio.Scanner`
 
 The builtin `bufio.NewScanner` uses `bufio.ScanLines` that buffers the output
 by a single newline. Meaning that given a `Reader` interface reading from
@@ -45,8 +47,8 @@ must be written.
 ## Writing a custom bufio.Scanner
 
 I first took a look at [the original implementation](https://github.com/golang/go/blob/2975b27bbd3d4e85a2488ac289e112bc0dedfebe/src/bufio/scan.go#L336-L364)
-It's much easier to write a new implementation when having a full working example
-that behaves almost exactly as I'd want it to;
+It's much easier to write a new implementation when having a full working example,
+especially when it already behaves almost exactly as I'd want it to.
 
 ```go
 // dropCR drops a terminal \r from the data.
@@ -81,16 +83,17 @@ func ScanLines(data []byte, atEOF bool) (advance int, token []byte, err error) {
 ```
 
 Updating the function to split by two consecutive newlines instead shouldn't be too hard.
-Additionally, I want it to join the single newlines together, so that I can return
-a single string when calling `scanner.Text()`. Meaning that `foo\nbar\n\nbaz`
-will yield two strings; `foo bar` and `baz`. Hence, standalone newlines will be replaced with
+Additionally, I want it to join the single newlines together, so that it yields
+a concatenated string without newlines when calling `scanner.Text()`. Meaning that `foo\nbar\n\nbaz`
+yields two strings; `foo bar` and `baz`. Hence, standalone newlines replaced with
 spaces.
 
 To make things easier for myself, I am using regex lookup instead of slice indices. This lets
-me replace both `\n` and `\r` in a single operation, but it will probably be more expensive
-perfomance-wise, but my computer is fast and my input is short, so I shouldn't worry about that.
+me replace both `\n` and `\r` in a single operation, while at the same time giving me the
+indices that I need to return on each invokation. It will probably be more expensive
+perfomance-wise, but computers are fast and my input is short, so I shouldn't worry about that.
 
-This leads to the following implementation:
+This led me to the following implementation:
 
 ```go
 var (
