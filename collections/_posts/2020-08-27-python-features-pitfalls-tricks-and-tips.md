@@ -187,6 +187,73 @@ except ValueError:
 
 See the logging section for neat ways to log exceptions.
 
+## Classes
+
+### Get a `dict` of class members/variables
+
+For this purpose, there's a bultin module [`inspect`](https://docs.python.org/3/library/inspect.html).
+
+For an example class `Page` I have a bound method `render` that uses the class instance variables to
+render a template file.
+
+```python
+# demo function
+render_template = lambda a, b: print(a, b)
+
+class Page:
+    site = "blog.stigok.com"
+
+    def __init__(self, title, body):
+        self.title = title
+        self.body = body
+
+    def render(self):
+        render_template("page.tpl", dict(site=self.site, title=self.title, body=self.body))
+
+p = Page(title="hello", body="world")
+p.render()
+#eval
+```
+
+As you can see, I am passing all the members to the `render_template` function.
+In this example, the amount of variables is no big deal, but if it's more it might be a problem.
+To avoid having to manually pass all the variables to the `render` function, while
+at the same time making the `render` method more generic, I can generate a `dict` of the variables
+and pass that along instead.
+
+```python
+import inspect
+
+# demo function
+render_template = lambda a, b: print(a, b)
+
+class Page:
+    site = "blog.stigok.com"
+    license = "copyleft"
+    contact = "blog@example.com"
+    foo = 1
+    bar = 2
+
+    def __init__(self, title, body):
+        self.title = title
+        self.body = body
+
+    def render(self):
+        # Ignore member names that start with underscore or are bound methods
+        data = dict(
+            (k, v) for k, v in inspect.getmembers(self) if not k.startswith("_") and not inspect.ismethod(v)
+        )
+        render_template("page.tpl", data)
+
+p = Page(title="hello", body="world")
+p.render()
+#eval
+```
+
+`inspect.getmembers` will return all members, including Python's builtins, so it needs some filtering
+to fit your needs.
+
+
 ## Logging
 ### String interpolation
 
