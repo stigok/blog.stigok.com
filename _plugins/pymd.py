@@ -3,11 +3,17 @@ import re
 import subprocess
 import sys
 
+DEBUG = False
 NUM_PROCESSED = 0
 
 
 def log(*args):
     print("[script %d]" % NUM_PROCESSED, *args, file=sys.stderr)
+
+
+def debug(*args):
+    if DEBUG:
+        log(*args)
 
 
 def run_script(script_str):
@@ -37,11 +43,17 @@ def process_text(text):
     def _replacer(match):
         global NUM_PROCESSED
         NUM_PROCESSED += 1
-        script = match.group(1).strip()
+        script = match.group("script").strip()
+        do_eval = bool(match.group("eval"))
+
+        # Don't process if no eval
+        if not do_eval:
+            return match.group(0)
 
         try:
             # Add output of the program
             log("running...")
+            debug("script content:\n", script)
             res = run_script(script)
         except subprocess.CalledProcessError as e:
             if e.returncode == 1:
@@ -63,7 +75,12 @@ def process_text(text):
 
         return out
 
-    return re.sub(r"```python\n(.+?)^#eval$\n```", _replacer, text, flags=re.M | re.S)
+    return re.sub(
+        r"^```python\n(?P<script>.+?)(?P<eval>#eval\n)?```$",
+        _replacer,
+        text,
+        flags=re.M | re.S,
+    )
 
 
 if __name__ == "__main__":
@@ -71,9 +88,18 @@ if __name__ == "__main__":
         description="Execute inline Python code in a markdown document and add a comment with the execution results."
     )
     parser.add_argument(
-        "file", help="a markdown file with inline python scripts ending with #eval"
+        "file",
+        help="a markdown file with inline python scripts ending with #eval",
+    )
+    parser.add_argument(
+        "debug",
+        action="store_true",
+        help="enable debug output",
     )
     args = parser.parse_args()
+
+    if args.debug:
+        DEBUG = True
 
     if args.file == "-":
         res = process_text(sys.stdin.read())
