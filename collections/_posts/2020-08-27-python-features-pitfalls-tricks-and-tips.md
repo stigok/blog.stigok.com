@@ -159,7 +159,7 @@ fail. This can save you time and potential headaches while writing or debugging.
 **Warning:** `assert` statements are ignored when `__debug__ == False`,
 i.e. when Python is started with optimisations enabled (`python -O`).
 
-### Exceptions
+## Exceptions
 
 If you are simply re-throwing the exception you've caught, you don't have to
 assign it to a variable if you're not going to process it.
