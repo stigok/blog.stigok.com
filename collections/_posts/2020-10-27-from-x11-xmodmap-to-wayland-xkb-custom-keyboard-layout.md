@@ -85,21 +85,31 @@ Now, to get this visible for the Display Manager, I am adding a new node to the
     <layout>
       <configItem>
         <name>stigok</name>
-        <shortDescription>en</shortDescription>
-        <description>STIGOK English (US)</description>
+        <shortDescription>stigok-us-no</shortDescription>
+        <description>English (US) with Norwegian keys behind Caps-Lock</description>
+        <countryList>
+          <iso3166Id>US</iso3166Id>
+          <iso3166Id>NO</iso3166Id>
+        </countryList>
         <languageList>
           <iso639Id>eng</iso639Id>
+          <iso639Id>nor</iso639Id>
+          <iso639Id>nob</iso639Id>
+          <iso639Id>nno</iso639Id>
         </languageList>
       </configItem>
-      <!--[redacted]-->
     </layout>
+    <!--[more layouts redacted]-->
+  <layoutList>
 <!--[redacted]-->
 ```
 
-I.e. the only portion you need to add is the `<layout>...</layout>` under `<layoutList>`.
-- The value for `<name>` is the name of the symbols file we created earlier.
-- The `<description>` is what shows up in the Settings dialog in gnome-shell
-- The other values are mirrored from other similar configurations
+I.e. the only portion you need to add or touch is the `<layout>...</layout>` under `<layoutList>`.
+- `<name>` is the name of the symbols file we created earlier.
+- `<description>` is what shows up in the Settings dialog in gnome-shell
+- `<short-description>` is what shows up in the system tray in the inout source drop-down menu
+- `<countryList>` is what countries the layout should be listed under
+- `<languageList>` is what languages the layout should be linked to
 
 Now you have to restart Gnome. In Wayland it can't be done using *Alt+F2 -> R*,
 so I'm restarting by either killing all processes named something with Wayland,
