@@ -134,6 +134,14 @@ cluster.
 
 ## References
 
+- <https://pkg.go.dev/k8s.io/client-go/tools/clientcmd>
+- <https://pkg.go.dev/k8s.io/client-go/kubernetes>
+- <https://pkg.go.dev/k8s.io/metrics/pkg/client/clientset/versioned>
+- <https://pkg.go.dev/k8s.io/apimachinery/pkg/apis/meta/v1#ListOptions>
+- <https://pkg.go.dev/k8s.io/metrics@v0.20.5/pkg/client/clientset/versioned/typed/metrics/v1beta1#PodMetricsInterface>
+- <https://v1-19.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/>
+- <https://pkg.go.dev/k8s.io/api/core/v1#PodList>
+
 [clientcmd]: https://pkg.go.dev/k8s.io/client-go/tools/clientcmd
 [client-go-kubernetes]: https://pkg.go.dev/k8s.io/client-go/kubernetes
 [k8s-metrics]: https://pkg.go.dev/k8s.io/metrics/pkg/client/clientset/versioned
