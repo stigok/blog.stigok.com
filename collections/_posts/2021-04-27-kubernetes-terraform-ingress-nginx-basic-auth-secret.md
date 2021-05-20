@@ -116,6 +116,11 @@ make your ingress match a single route only using `/health$` as the path in the 
 However, if your monitoring solution allows you to provide basic auth credentials this will not be a problem.
 You can create new set of credentials for it and have it authenticate like all other clients.
 
+### State is always dirty
+A big pain here is that `bcrypt` uses a randomly selected salt value causing it to return a new hash on
+every call. This has the effect of making your state dirty on each and every plan. For those who strives
+to always have a clean state (like me) this is a tad annoying. I haven't figured out a work-around yet.
+
 ## References
 - <https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/>
 - <https://www.terraform.io/docs/language/functions/bcrypt.html>
