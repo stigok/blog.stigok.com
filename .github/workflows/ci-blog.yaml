@@ -48,6 +48,7 @@ jobs:
       - name: Tag and push tag latest
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: |
+          docker pull ${{ secrets.DOCKER_REGISTRY }}/${{ github.repository }}:${{ github.sha }}
           docker tag ${{ secrets.DOCKER_REGISTRY }}/${{ github.repository }}:${{ github.sha }} ${{ secrets.DOCKER_REGISTRY }}/${{ github.repository }}:latest
           docker push ${{ secrets.DOCKER_REGISTRY }}/${{ github.repository }}:latest
 
