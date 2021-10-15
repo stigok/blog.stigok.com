@@ -1,4 +1,4 @@
-FROM ubuntu:20.10 AS base
+FROM ubuntu:20.04 AS base
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
                ruby-full ruby-bundler python3 \
