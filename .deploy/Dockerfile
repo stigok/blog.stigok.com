@@ -20,6 +20,6 @@ ADD --chown=jekyll:jekyll . ./src
 WORKDIR /home/jekyll/src
 RUN bundle exec jekyll build --destination /home/jekyll/build --trace
 
-FROM nginx:1.19-alpine
+FROM nginx:1.21-alpine
 COPY ./.deploy/default.conf /etc/nginx/conf.d/default.conf
 COPY --from=generate /home/jekyll/build /usr/share/nginx/html
