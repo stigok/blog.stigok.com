@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Internation chars (UTF-8) not displaying properly over SSH"
+title:  "International chars (UTF-8) not displaying properly over SSH"
 date:   2021-09-27 11:04:38 +0200
 categories: linux debian locales
 excerpt: UTF-8 chars are displayed as underscores over SSH to a Debian box
