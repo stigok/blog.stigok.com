@@ -9,21 +9,23 @@ excerpt: When defining interfaces to be rendered by oto I wanted to specify vali
 
 ## Preface
 
-If you have no idea what [oto][] is, it is a RPC code generation tool which let's you generate server
+If you have no idea what [oto][] is, it is a RPC code generation tool which lets you generate server
 and client code based on Go `interface`s. I recommend to take a look, not just to learn the tool
 itself, but to get some new perspectives on what *simple* can mean in programming.
-Mat Ryer has two videos on the subject I quite liked ([1](https://www.youtube.com/watch?v=VRZZeJwIAIM), [2](https://www.youtube.com/watch?v=DUg4ZITwMys)).
+Mat Ryer (one of the authors) has two videos on the subject I quite liked ([1](https://www.youtube.com/watch?v=VRZZeJwIAIM), [2](https://www.youtube.com/watch?v=DUg4ZITwMys)).
 
 When working with oto and defining the interfaces for my data structures I felt a need to include
-`validate` tags for my struct's fields so that I could run `validate.Validate(request)` in all my
-Go server HTTP handlers. However, this does not come automatically out of the box --
-it has to be written manually within the plush templates.
+`validate` tags for my struct fields so that I could run `validate.Validate(request)` in all my
+Go server HTTP handlers. However, this requires some extra work in the plush templates.
+If you don't know the [plush template language][plush]; I didn't either. But the language has few surprises
+and good documentation, so I don't mind.
 
-The `validate` tags are used for the [goplayground/validator][] package which let's us write
-validation rules for each field within a struct.
+The `validate` tags are used with the [goplayground/validator][] package which let's us write
+validation rules for fields in a struct.
 
 [oto]: https://github.com/pacedotdev/oto/
 [goplayground/validator]: https://github.com/go-playground/validator
+[plush]: https://github.com/gobuffalo/plush/#usage
 
 ## oto parser
 
@@ -46,7 +48,8 @@ with `a["myaddress"].Street`, however it's in a version much newer than what oto
 <p><%= a["myaddress"].Street %></p>
 ```
 
-Directly accessing the field like this in plush in a version earlier than v4.1.4 will result in an error resembling
+Directly accessing the field, like in the above example, in plush version &lt;4.1.4
+will result in an error resembling:
 
 ```
 line 58: no prefix parse function for DOT found
@@ -61,9 +64,9 @@ by first assigning the map or array item to a variable:
 
 ## An example definition and rendering
 
-This means that we can put `validate` struct tags in the oto definitions (and all other kinds if we want).
-Here is a simplified example of how it will be rendered. Note that the service objects are redacted
-from this plush template. See the examples in the [oto repo][oto] for full templates.
+This means that we can put `validate` struct tags in the oto definitions (and all other kinds of tags
+if we want). Note that the service objects are redacted from this plush template. See the examples in
+the [oto repo][oto] for full templates.
 
 ```go
 # def/my.go
@@ -97,6 +100,10 @@ type AddProductResponse struct {
 	Product Product
 }
 ```
+
+The plush templates typically start with the `// DO NOT EDIT` comment to help you rembember
+that the generated files shouldn't be touched by hand. But the templates themselves should
+of course be editable!
 
 ```plush
 # templates/my.go.plush
@@ -155,7 +162,8 @@ type Product struct {
 }
 ```
 
-Now it's easier to validate the request structs in the handlers
+Now it's easier to validate the request structs in the handlers while still having the validation
+logic at a single place, namely at the structs definitions.
 
 ```go
 type productsService struct {
