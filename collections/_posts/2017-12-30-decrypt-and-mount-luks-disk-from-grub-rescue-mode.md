@@ -24,7 +24,7 @@ List all devices found (out of curiosity)
 
     grub rescue> ls
 
-Mount the encrypted */boot* partition (as attempted from the start). I know that partition number 2 on the first (and only) disk is mine, hence `(hd2,gpt2)`.
+Mount the encrypted */boot* partition (as attempted from the start). I know that partition number 2 on the first (and only) disk is mine, hence `(hd0,gpt2)`.
 
     grub rescue> cryptomount (hd0,gpt2)
 
