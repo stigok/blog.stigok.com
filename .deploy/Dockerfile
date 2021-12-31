@@ -6,17 +6,15 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && groupadd -g 1000 jekyll \
     && useradd -mu 1000 -g jekyll jekyll
-
 USER jekyll
 WORKDIR /home/jekyll
 ENV GEM_HOME=/home/jekyll/gems \
     PATH="/home/jekyll/gems/bin:${PATH}"
-
-ADD Gemfile Gemfile.lock ./
+COPY Gemfile Gemfile.lock ./
 RUN bundle install
 
 FROM base AS generate
-ADD --chown=jekyll:jekyll . ./src
+COPY --chown=jekyll:jekyll . ./src
 WORKDIR /home/jekyll/src
 RUN bundle exec jekyll build --destination /home/jekyll/build --trace
 
