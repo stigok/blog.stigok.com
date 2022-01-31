@@ -2,16 +2,16 @@
   <h3>Posts sharing categories with this post</h3>
   {% assign categories = site.categories %}
   {% for category in site.categories %}
-    {% if page.categories contains category.first %}
-      {% assign except_current = category.last | where_exp:"post", "post.id != page.id" %}
-      {% if except_current.size > 0 %}
-        <h4>{{ category.first }}</h4>
-        <ul>
-        {% for post in except_current %}
-          <li><a href="{{ post.url }}">{{ post.title }}</a></li>
-        {% endfor %}
-        </ul>
-      {% endif %}
-    {% endif %}
+  {% if page.categories contains category.first %}
+  {% assign except_current = category.last | where_exp:"post", "post.id != page.id" %}
+  {% if except_current.size > 0 %}
+  <h4>{{ category.first }}</h4>
+  <ul>
+    {% for post in except_current %}
+    <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  {% endif %}
   {% endfor %}
 </section>
