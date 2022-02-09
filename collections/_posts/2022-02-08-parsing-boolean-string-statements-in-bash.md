@@ -15,9 +15,10 @@ I want the users to be able to pass boolean variables as `true` and `false`,
 
 ## Using a function with a regular expression
 
-I first went with `return 0` and `return 1` in the function,
-but I found this to increase my cognitive load due to `0` being success, i.e.
-true, and `1` being false. I found that returning a string gives for easier reading.
+I first went with `return 0` and `return 1` in the function, relying on the
+function's exit code, but I felt this increased my cognitive load due to
+`0` being success, i.e. true, and `1` being false.
+I found that instead echoing a string gives for easier reading.
 
 ```bash
 # Returns a string `true` if the string is considered a boolean true,
