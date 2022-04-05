@@ -3,7 +3,7 @@ layout: post
 title:  "Using conditional dynamic blocks in Terraform"
 date:   2022-04-05 12:27:25 +0200
 categories: terraform
-excerpt: Dynamic blocks do not have count, but a hacked for_each will do.
+excerpt: Dynamic blocks do not have count, but a conditional map with for_each will do.
 #proccessors: pymd
 ---
 
@@ -14,12 +14,13 @@ but `dynamic` does not support `count`.
 
 ## Conditional dynamic block
 
-Instead of `count` we can use `for_each` with a conditional map using `merge`:
+Instead of `count` we can use `for_each` with a conditional map, yielding an
+empty map for a `false` value, and a populated map with a single field for a `true` value:
 
 ```terraform
 dynamic "env" {
   # A bogus map for a conditional block
-  for_each = merge(var.enable_vault ? {} : { vault_disabled = true })
+  for_each = var.enable_vault ? {} : { vault_disabled = true }
 
   content {
     name  = "DOCKER_CONFIG"
@@ -62,7 +63,7 @@ resource "kubernetes_pod_v1" "test" {
 
       dynamic "env" {
         # A bogus map for a conditional block
-        for_each = merge(var.enable_vault ? {} : { vault_disabled = true })
+        for_each = var.enable_vault ? {} : { vault_disabled = true }
 
         content {
           name  = "DOCKER_CONFIG"
@@ -72,7 +73,7 @@ resource "kubernetes_pod_v1" "test" {
 
       dynamic "volume_mount" {
         # A bogus map for a conditional block
-        for_each = merge(var.enable_vault ? {} : { vault_disabled = true })
+        for_each = var.enable_vault ? {} : { vault_disabled = true }
 
         content {
           name       = "dockerconfig"
@@ -84,7 +85,7 @@ resource "kubernetes_pod_v1" "test" {
 
     dynamic "volume" {
       # A bogus map for a conditional block
-      for_each = merge(var.enable_vault ? {} : { vault_disabled = true })
+      for_each = var.enable_vault ? {} : { vault_disabled = true }
 
       content {
         name = "dockerconfig"
@@ -102,4 +103,3 @@ resource "kubernetes_pod_v1" "test" {
 ## References
 - <https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/pod_v1>
 - <https://www.terraform.io/language/expressions/dynamic-blocks>
-- <https://www.terraform.io/language/functions/merge>
