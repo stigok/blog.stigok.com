@@ -197,6 +197,28 @@ nixops needs to know what system it is targetting explicitly.
 
 Reference: <https://github.com/NixOS/nixops/issues/864>
 
+### Use a specific channel for nixos-rebuild
+
+Add the desired channel/version
+
+```
+$ NIXOS_VERSION=21.11
+$ nix-channel --add https://nixos.org/channels/nixos-${NIXOS_VERSION} nixos-${NIXOS_VERSION}
+$ nix-channel --update
+```
+
+Then reference the channel by path in `~/.nix-defexpr/channels/<channel>/nixpkgs`
+
+```
+$ nixos-rebuild build -I ~/.nix-defexpr/channels/nixos-${NIXOS_VERSION}/nixpkgs'
+```
+
+### Use a different configuration.nix file for nixos-rebuild
+
+```
+$ nixos-rebuild -I nixos-config=./configuration-21.11.nix
+```
+
 ## References
 
 - <https://nixery.dev/nix-1p.html>
