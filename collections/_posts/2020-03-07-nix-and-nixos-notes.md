@@ -26,7 +26,6 @@ to look through all of the following sources:
 $ nix search packagename
 ```
 
-### String interpolation
 ### Use variable as map/object key
 
 ```nix
@@ -154,9 +153,20 @@ References:
 - euank #nixos @ Freenode
 - https://nixos.org/nixpkgs/manual/#chap-trivial-builders
 
-## NixOps
+### Determine NixOS machine architecture
 
-### switch-to-configuration throws error deployment fails
+To figure out what architecture your box is running, you can run `nix-info` or
+for example `nix-eval`:
+
+```nix
+$ nix-info
+system: "x86_64-linux", multi-user?: yes, version: nix-env (Nix) 2.3.3, channels(username): "", channels(root): "nixos-19.09.2213.71c6a1c4a83", nixpkgs: /nix/var/nix/profiles/per-user/root/channels/nixos
+
+$ nix eval nixpkgs.system
+"x86_64-linux"
+```
+
+### NixOps: switch-to-configuration throws error deployment fails
 
 ```
 [...]
@@ -186,19 +196,6 @@ nixops needs to know what system it is targetting explicitly.
 ```
 
 Reference: <https://github.com/NixOS/nixops/issues/864>
-
-### Determine NixOS machine architecture
-
-To figure out what architecture your box is running, you can run `nix-info` or
-for example `nix-eval`:
-
-```nix
-$ nix-info
-system: "x86_64-linux", multi-user?: yes, version: nix-env (Nix) 2.3.3, channels(username): "", channels(root): "nixos-19.09.2213.71c6a1c4a83", nixpkgs: /nix/var/nix/profiles/per-user/root/channels/nixos
-
-$ nix eval nixpkgs.system
-"x86_64-linux"
-```
 
 ## References
 
