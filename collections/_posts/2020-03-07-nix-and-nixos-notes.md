@@ -213,6 +213,8 @@ Then reference the channel by path in `~/.nix-defexpr/channels/<channel>/nixpkgs
 $ nixos-rebuild build -I ~/.nix-defexpr/channels/nixos-${NIXOS_VERSION}/nixpkgs'
 ```
 
+Reference: clever #nixos @ Libera.chat
+
 ### Use a different configuration.nix file for nixos-rebuild
 
 ```
