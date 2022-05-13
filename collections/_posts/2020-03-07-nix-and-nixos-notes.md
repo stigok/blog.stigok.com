@@ -55,7 +55,7 @@ $ nix-instantiate --arg config <val1> --arg nixpkgs <val2> myfile.nix
 $ nix-instantiate --arg config '{}' --arg pkgs '<nixpkgs>' --eval postgresql.nix
 ```
 
-Reference: slack1256 #nixos @ Freenode
+Reference: slack1256 #nixos @ Libera.chat
 
 ### Inject `config` and `services` variables to the nix repl
 
@@ -67,7 +67,7 @@ $ nix repl '<nixpkgs/nixos>'
 > config.services
 ```
 
-Reference: energizer bqv[m] clever #nixos @ Freenode
+Reference: energizer bqv[m] clever #nixos @ Libera.chat
 
 ### Install a package for current user
 
@@ -131,7 +131,7 @@ I can now build the overridden package using `nix-build override.nix`.
 
 References:
 - https://github.com/tfc/node2nix_bootstrap/blob/master/override.nix
-- infinisil #nixos @ Freenode
+- infinisil #nixos @ Libera.chat
 
 ### Create a tar archive of a fetchGit
 
@@ -150,7 +150,7 @@ tarSrc = runCommand "tar-src" {} "${gnutar}/bin/tar -cf $out ${gitSrc}";
 `tarSrc` now contains a path to the tar file.
 
 References:
-- euank #nixos @ Freenode
+- euank #nixos @ Libera.chat
 - https://nixos.org/nixpkgs/manual/#chap-trivial-builders
 
 ### Determine NixOS machine architecture
