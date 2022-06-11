@@ -3,13 +3,11 @@ name: CI Blog
 on:
   push:
     branches:
-      - master
       - main
     paths-ignore:
       - lib/**
   pull_request:
     branches:
-      - master
       - main
     paths-ignore:
       - lib/**
@@ -46,7 +44,7 @@ jobs:
           cache-to: type=inline
 
       - name: Tag and push tag latest
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           docker pull ${{ secrets.DOCKER_REGISTRY }}/${{ github.repository }}:${{ github.sha }}
           docker tag ${{ secrets.DOCKER_REGISTRY }}/${{ github.repository }}:${{ github.sha }} ${{ secrets.DOCKER_REGISTRY }}/${{ github.repository }}:latest
@@ -54,7 +52,7 @@ jobs:
 
   deploy:
     needs: build
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
