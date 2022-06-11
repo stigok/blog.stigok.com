@@ -110,6 +110,8 @@ Vue.createApp({
 
 ### Complete solution
 
+Below is the code. You can [see it in action here](https://stigok.com/projects/vue3-native-autocomplete/).
+
 ```html
 <!DOCTYPE html>
 
