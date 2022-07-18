@@ -103,3 +103,4 @@ resource "kubernetes_pod_v1" "test" {
 ## References
 - <https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/pod_v1>
 - <https://www.terraform.io/language/expressions/dynamic-blocks>
+- <https://spacelift.io/blog/terraform-dynamic-blocks>
