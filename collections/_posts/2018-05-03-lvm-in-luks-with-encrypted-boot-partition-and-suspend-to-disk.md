@@ -5,6 +5,13 @@ date: 2018-05-03 00:42:11 +02:00
 categories: encryption linux luks arch-linux
 ---
 
+## WARNING
+
+**This post is over 3 years old and may contain outdated advice, command line
+arguments and technologies.** The order of the steps described might still be
+relevant, but do make sure to read the latest news about LUKS when issuing
+`cryptsetup` commands.
+
 ## Preface
 
 ### Motivation
