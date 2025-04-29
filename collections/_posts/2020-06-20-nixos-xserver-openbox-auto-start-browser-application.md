@@ -25,7 +25,7 @@ I have done my best to comment the file to make it easily understandable.
 If you read the source, you should be able to understand what I am settings up
 here.
 
-Save this file to */etc/nixos/xorg.conf*.
+Save this file to */etc/nixos/xorg.nix*.
 
 ```nix
 { pkgs, ... }:
