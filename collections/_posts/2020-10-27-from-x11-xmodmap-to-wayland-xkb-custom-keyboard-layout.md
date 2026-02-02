@@ -60,10 +60,17 @@ xkb_symbols "euro" {
     include "level3(ralt_switch)"
     // End contents of original us(euro)
 
-    // Norwegian keys hiding in Level 3
+    // Other special characters hiding in Level 3
+    // Norwegian
     key <AC10> { [ semicolon, colon, oslash, Oslash ] };
     key <AC11> { [ apostrophe, quotedbl, ae, AE ] };
     key <AD11> { [ bracketleft, braceleft, aring, Aring ] };
+    key <E>    { [ e, E, eacute, Eacute ] };
+    // Portuguese
+    key <A>    { [ a, A, atilde, Atilde ] };
+    key <C>    { [ c, C, ccedil, Ccedil ] };
+    // Polish
+    key <L>    { [ l, L, lstroke, Lstroke ] };
 
     // Toggle Level 3 with Caps-Lock
     key <CAPS> { [ ISO_Level3_Shift ] };
